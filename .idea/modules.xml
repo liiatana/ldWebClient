@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/wcApi.iml" filepath="$PROJECT_DIR$/.idea/modules/wcApi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/wcTests.iml" filepath="$PROJECT_DIR$/.idea/modules/wcTests.iml" />
     </modules>
   </component>
 </project>
