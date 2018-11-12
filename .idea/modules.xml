@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/wcTests.iml" filepath="$PROJECT_DIR$/.idea/modules/wcTests.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/wcTests_main.iml" filepath="$PROJECT_DIR$/.idea/modules/wcTests_main.iml" group="wcTests" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/wcTests_test.iml" filepath="$PROJECT_DIR$/.idea/modules/wcTests_test.iml" group="wcTests" />
     </modules>
   </component>
 </project>
