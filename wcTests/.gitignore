@@ -1,5 +1,8 @@
 .gradle
 /build/
+/allure-results/
+/.idea/
+/.idea/moduls/
 
 # Ignore Gradle GUI config
 gradle-app.setting
@@ -12,12 +15,11 @@ gradle-app.setting
 
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
-.idea/workspace.xml
-*.class
-*.class
-*.class
-*.class
+
 *.class
 *.iml
-
 *.log
+
+#ignore settings for test enviroment
+users.json
+local.properties

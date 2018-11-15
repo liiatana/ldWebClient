@@ -2,9 +2,10 @@ package ru.lanit.ld.wc.model;
 
 import java.util.Objects;
 
-public class User {
+public class UserInfo {
 
     private int id;
+    private String Login;
     private String UserName;
     private String Password;
 
@@ -12,16 +13,24 @@ public class User {
         return id;
     }
 
-    public User withId(int id) {
+    public UserInfo withId(int id) {
         this.id = id;
         return this;
+    }
+    public UserInfo withLogin(String Login) {
+        this.Login = Login;
+        return this;
+    }
+
+    public String getLogin() {
+        return Login;
     }
 
     public String getUserName() {
         return UserName;
     }
 
-    public User withUserName(String userName) {
+    public UserInfo withUserName(String userName) {
         this.UserName = userName;
         return this;
     }
@@ -30,7 +39,7 @@ public class User {
         return Password;
     }
 
-    public User withPassword(String password) {
+    public UserInfo withPassword(String password) {
         this.Password = password;
         return this;
     }
@@ -39,10 +48,10 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return id == user.id &&
-                Objects.equals(UserName, user.UserName) &&
-                Objects.equals(Password, user.Password);
+        UserInfo userInfo = (UserInfo) o;
+        return id == userInfo.id &&
+                Objects.equals(UserName, userInfo.UserName) &&
+                Objects.equals(Password, userInfo.Password);
     }
 
     @Override

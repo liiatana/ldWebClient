@@ -10,11 +10,19 @@ dependencies{
     compile 'com.codeborne:selenide:5.0.1'
     compile 'io.qameta.allure:allure-testng:2.8.1'
     compile 'io.qameta.allure:allure-selenide:2.8.1'
-
-
-
 }
 
 test{
 	useTestNG()
+    if(project.hasProperty('browser'))    {
+        systemProperty 'browser', "&{browser}"
+    }
+    if(project.hasProperty('target'))    {
+        systemProperty 'target', "&{target}"
+
+    }
+    if(project.hasProperty('verifyUI'))    {
+        systemProperty 'verifyUI', "&{verifyUI}"
+    }
 }
+
