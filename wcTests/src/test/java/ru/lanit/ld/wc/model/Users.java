@@ -2,10 +2,12 @@ package ru.lanit.ld.wc.model;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import sun.misc.BASE64Encoder;
 
 import java.io.*;
 import java.util.ArrayList;
 
+import java.util.Base64;
 import java.util.List;
 
 
@@ -37,5 +39,14 @@ public class Users {
         }
 
 
+        BASE64Encoder encoder = new BASE64Encoder();
+
+        for (UserInfo user: this.users){
+              user.withAuth("Basic "+ encoder.encode(String.format("%s:%s",user.getLogin(),user.getPassword()).getBytes()));
+        }
+
     }
+
+
+
 }

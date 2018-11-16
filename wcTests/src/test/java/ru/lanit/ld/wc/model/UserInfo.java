@@ -8,6 +8,16 @@ public class UserInfo {
     private String Login;
     private String UserName;
     private String Password;
+    private String Auth;
+
+    public String getAuth() {
+        return Auth;
+    }
+
+    public UserInfo withAuth(String auth) {
+        this.Auth = auth;
+        return this;
+    }
 
     public int getId() {
         return id;
