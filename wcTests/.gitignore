@@ -1,9 +1,7 @@
 .gradle
 /build/
 /allure-results/
-/.idea/
-/.idea/moduls/
-/.idea/libraries/
+.idea/
 
 # Ignore Gradle GUI config
 gradle-app.setting
