@@ -27,7 +27,8 @@ public class ApplicationManager {
 
         String target = System.getProperty("target", "local");
         properties.load(new FileReader(new File(String.format("src\\test\\resources\\%s.properties", target))));
-        UserList.load(properties.getProperty("data.usersFilePath"));
+        //UserList.load(properties.getProperty("data.usersFilePath"));
+        UserList.load(this);
         //wd.get(properties.getProperty("web.baseUrl"));
 
     }

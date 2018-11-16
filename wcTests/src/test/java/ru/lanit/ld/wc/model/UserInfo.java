@@ -1,5 +1,7 @@
 package ru.lanit.ld.wc.model;
 
+import ru.lanit.ld.wc.appmanager.RestApiHelper;
+
 import java.util.Objects;
 
 public class UserInfo {
@@ -9,6 +11,8 @@ public class UserInfo {
     private String UserName;
     private String Password;
     private String Auth;
+    private boolean isAdmin;
+    private RestApiHelper UserApi;
 
     public String getAuth() {
         return Auth;
@@ -51,6 +55,24 @@ public class UserInfo {
 
     public UserInfo withPassword(String password) {
         this.Password = password;
+        return this;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public UserInfo withisAdmin(boolean admin) {
+        this.isAdmin = admin;
+        return this;
+    }
+
+    public RestApiHelper getUserApi() {
+        return UserApi;
+    }
+
+    public UserInfo withUserApi(RestApiHelper userApi) {
+        this.UserApi = userApi;
         return this;
     }
 

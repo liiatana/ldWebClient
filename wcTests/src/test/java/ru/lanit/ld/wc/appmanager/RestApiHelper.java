@@ -17,28 +17,26 @@ public class RestApiHelper {
 
         Response response = RestAssured
                 .given().header("Authorization", user.getAuth())
-                //.get("http://195.26.187.231:8080/LanDocs.WebApi.NetCore/api/v1/auth/basic");
                 .get(String.format("%s/auth/basic", apiPath));
         cookies = String.format("landocs.claims=%s; landocs_sessionid=%s", response.getCookie("landocs.claims"), response.getCookie("landocs_sessionid"));
 
     }
 
-    public int me() {
-
+    public JsonElement me() {
 
         String json = RestAssured
                 .given().header("Cookie", cookies)
                 .get(String.format("%sme", apiPath))
                 .asString();
 
-        JsonElement parsed = new JsonParser().parse(json);
+       /* JsonElement parsed = new JsonParser().parse(json);
         //parsed=parsed.getAsJsonObject().get("effectiveUserId");
 
         return parsed.getAsJsonObject().get("effectiveUserId").getAsInt();
                 //.getAsJsonArray().get(0)
-                //.getAsJsonObject().get("state").getAsInt();
+                //.getAsJsonObject().get("state").getAsInt();*/
 
-
+        return new JsonParser().parse(json);
 
 
     }

@@ -1,13 +1,17 @@
 package ru.lanit.ld.wc.model;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
+import ru.lanit.ld.wc.appmanager.ApplicationManager;
+import ru.lanit.ld.wc.appmanager.RestApiHelper;
 import sun.misc.BASE64Encoder;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
-
-import java.util.Base64;
 import java.util.List;
 
 
@@ -18,10 +22,10 @@ public class Users {
     }
 
 
-    public void load(String path) throws IOException {
+    public void load(ApplicationManager app) throws IOException {
         List<Object[]> list = new ArrayList<Object[]>();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(new File(path)))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(new File(app.properties.getProperty("data.usersFilePath"))))) {
             String line = reader.readLine();
             String json = "";
             while (line != null) {
@@ -41,12 +45,17 @@ public class Users {
 
         BASE64Encoder encoder = new BASE64Encoder();
 
-        for (UserInfo user: this.users){
-              user.withAuth("Basic "+ encoder.encode(String.format("%s:%s",user.getLogin(),user.getPassword()).getBytes()));
+        for (UserInfo user : this.users) {
+            user.withAuth("Basic " + encoder.encode(String.format("%s:%s", user.getLogin(), user.getPassword()).getBytes()));
+            //RestApiHelper uapi = new RestApiHelper(user, app);
+            user.withUserApi(new RestApiHelper(user, app));
+            JsonElement parsed = user.getUserApi().me();
+            user.withId(parsed.getAsJsonObject().get("effectiveUserId").getAsInt())
+                    .withUserName(parsed.getAsJsonObject().get("name").getAsString())
+                     .withisAdmin(parsed.getAsJsonObject().get("isAdmin").getAsBoolean());
         }
 
     }
-
 
 
 }
