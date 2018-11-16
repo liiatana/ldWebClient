@@ -13,6 +13,7 @@ public class ApplicationManager {
 
     public final Properties properties;
     public Users UserList;
+    //public RestApiHelper focusedUserApi;
 
 
     public ApplicationManager(String browser) {

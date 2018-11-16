@@ -27,11 +27,10 @@ public class TestBase {
     //@BeforeMethod // если beforemethod-то запускается перед каждым тестовым методом lecture 5.1
     @BeforeSuite
     public void setUp() throws Exception {
-
         app.init();
     }
 
-    //@AfterMethod //после каждого медода
+
     @AfterSuite(alwaysRun = true)
     public void tearDown() {
         app.stop();
@@ -43,7 +42,8 @@ public class TestBase {
 
     }
 
-    @AfterMethod(alwaysRun = true)
+
+    @AfterMethod(alwaysRun = true) //@AfterMethod //после каждого меnода
     public void logTestStop(Method m) {
         logger.info("end " + m.getName());
 
