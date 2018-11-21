@@ -53,6 +53,9 @@ public class Users {
             user.withId(parsed.getAsJsonObject().get("effectiveUserId").getAsInt())
                     .withUserName(parsed.getAsJsonObject().get("name").getAsString())
                      .withisAdmin(parsed.getAsJsonObject().get("isAdmin").getAsBoolean());
+
+
+
         }
 
     }

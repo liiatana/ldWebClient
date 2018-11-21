@@ -1,5 +1,6 @@
 package ru.lanit.ld.wc.appmanager;
 
+import ru.lanit.ld.wc.model.InstructionTypes;
 import ru.lanit.ld.wc.model.Users;
 
 import java.io.File;
@@ -13,6 +14,7 @@ public class ApplicationManager {
 
     public final Properties properties;
     public Users UserList;
+    public InstructionTypes InstructionList;
     //public RestApiHelper focusedUserApi;
 
 
@@ -20,6 +22,7 @@ public class ApplicationManager {
 
         properties = new Properties();
         UserList = new Users();
+        InstructionList=new InstructionTypes() ;
 
     }
 
@@ -29,6 +32,8 @@ public class ApplicationManager {
         properties.load(new FileReader(new File(String.format("src\\test\\resources\\%s.properties", target))));
         //UserList.load(properties.getProperty("data.usersFilePath"));
         UserList.load(this);
+        InstructionList.load(this);
+
         //wd.get(properties.getProperty("web.baseUrl"));
 
     }

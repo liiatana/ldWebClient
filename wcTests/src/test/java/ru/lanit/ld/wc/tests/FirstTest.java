@@ -27,5 +27,15 @@ public class FirstTest extends TestBase {
         assertThat(api.me(),equalToObject(app.UserList.users.get(1).getId()));
 
     }
+    @Test(enabled = true)
+    public void secondTest() {
+        //System.out.println(app.properties.getProperty("web.baseUrl"));
+        //System.out.println(app.UserList.users.get(1).getLogin());
+        //RestApiHelper api= new RestApiHelper(app.UserList.users.get(1),app);
+       // System.out.println(String.format("Id = %d", api.instructionTypesInfo()));
+
+
+    }
+
 
 }
