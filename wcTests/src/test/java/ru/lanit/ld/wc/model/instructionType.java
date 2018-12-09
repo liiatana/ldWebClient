@@ -91,7 +91,7 @@ public class instructionType {
         this.redirectAsControl = redirectAsControl;
     }
 
-    public boolean isUseControl() {
+    public boolean getUseControl() {
         return useControl;
     }
 

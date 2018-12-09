@@ -26,4 +26,8 @@ public class InstructionTypes {
     public void load (ApplicationManager app){
         this.typeList=app.UserList.users.get(0).getUserApi().instructionTypesInfo();
     }
+
+    public instructionType getType(int n) {
+        return typeList.get(n);
+    }
 }
