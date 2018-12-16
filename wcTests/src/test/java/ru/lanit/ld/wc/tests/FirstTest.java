@@ -1,9 +1,11 @@
 package ru.lanit.ld.wc.tests;
 
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.lanit.ld.wc.appmanager.RestApiHelper;
 import ru.lanit.ld.wc.model.Instruction;
+import ru.lanit.ld.wc.model.instResponse;
 
 import static org.hamcrest.CoreMatchers.equalToObject;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -41,7 +43,9 @@ public class FirstTest extends TestBase {
         instr.withInitiatorID(app.UserList.users.get(0).getId())
                 .withReceiverID(receivers);
 
-        app.UserList.users.get(0).getUserApi().instructionSavePrj(instr);
+        instResponse response=app.UserList.users.get(0).getUserApi().instructionSavePrj(instr);
+        Assert.assertEquals(response.message,""); // .assertTrue(Boolean.parseBoolean(response.message));
+        Assert.assertNotNull(response.instructionId);
     }
 
 
