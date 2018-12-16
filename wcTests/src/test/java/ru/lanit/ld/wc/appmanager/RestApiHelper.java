@@ -3,14 +3,12 @@ package ru.lanit.ld.wc.appmanager;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.response.Headers;
 import com.jayway.restassured.response.Response;
-import ru.lanit.ld.wc.Serializer.instructionSerializer;
 import ru.lanit.ld.wc.model.Instruction;
+import ru.lanit.ld.wc.model.instResponse;
 import ru.lanit.ld.wc.model.instructionType;
 import ru.lanit.ld.wc.model.UserInfo;
 
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class RestApiHelper {
@@ -67,105 +65,56 @@ public class RestApiHelper {
        return iTypes;
     }
 
-    public void instructionSavePrj(Instruction src){
+    public instResponse instructionSavePrj(Instruction src){
 
        /* GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapter(Instruction.class, new instructionSerializer()).serializeNulls();
+        builder.registerTypeAdapter(JsonElement.class, new instructionSerializer()).serializeNulls();
         Gson gson = builder.create();
+        gson.toJson(src);
 
-        //JSONObject jo2 = new JSONObject(gson.toJson(inst).toString());
-        //JsonObject s1=gson.toJson(inst).ge;
-        String s=gson.toJson(inst).toString();
-        //gson.toJson(inst);
-        JsonObject js=new JsonObject();
-        gson.toJson(js);
+        JsonElement jsonElement = gson.toJsonTree(gson );
+
 */
 
-        JsonObject mainInstruction = new JsonObject();
-        mainInstruction.addProperty("receiverID", src.receiverID[0]);
-        //mainInstruction.addProperty("text", src.text);
-
-        mainInstruction.addProperty("text", "9122137");
-       // mainInstruction.addProperty("subject", src.subject);
-        //mainInstruction.addProperty("subject", "zana");
-
-        mainInstruction.addProperty("comment", src.comment);
-
-        if (src.fileIds == null) {
-            mainInstruction.add("fileIds", null);
-        } else {
-            mainInstruction.addProperty("fileIds", src.fileIds[0]);
-        }
-
-        mainInstruction.addProperty("execAuditorID", src.execAuditorID);
-        mainInstruction.addProperty("initiatorID", src.initiatorID);
-        mainInstruction.addProperty("reportReceiverID", src.reportReceiverID);
-        if (src.startDate == null) {
-            mainInstruction.add("startDate", null);
-        } else {
-            mainInstruction.addProperty("startDate",String.format("%sZ",src.startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.000")))  );
-        }
-
-
-        //mainInstruction.addProperty("startDate", src.startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")));
-
-        if (src.executionDate == null) {
-            mainInstruction.add("executionDate", null);
-        } else {
-            mainInstruction.addProperty("executionDate", String.format("%sZ",src.executionDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.000"))));
-        }
-
-        if (src.execInterval == 0) {
-            mainInstruction.add("execInterval", null);
-        } else {
-            mainInstruction.addProperty("execInterval", src.execInterval);
-        }
-        if (src.execAuditorID == 0) {
-            mainInstruction.add("execAuditorID", null);
-        } else {
-            mainInstruction.addProperty("execAuditorID", src.execAuditorID);
-        }
-        if (src.reportReceiverID == 0) {
-            mainInstruction.add("reportReceiverID", null);
-        } else {
-            mainInstruction.addProperty("reportReceiverID", src.reportReceiverID);
-        }
-
-
-        JsonObject jsonInstruction = new JsonObject();
-        jsonInstruction.addProperty("instructionTypeId", src.instructionTypeId);
-
-        if (src.documentId == 0) {
-            jsonInstruction.add("documentId", null);
-        } else {
-            jsonInstruction.addProperty("documentId", src.documentId);
-        }
-
-
-        jsonInstruction.addProperty("sendType", src.sendType);
-        jsonInstruction.addProperty("reportToExecutive", src.reportToExecutive);
-        jsonInstruction.addProperty("withExecutive", src.withExecutive);
-        jsonInstruction.addProperty("control", src.control);
-
-        jsonInstruction.add("mainInstruction", mainInstruction);
-
-        JsonObject request = new JsonObject();
-        request.add("request", jsonInstruction);
-
-        Response response = RestAssured
+      /*  Response response = RestAssured
                 .given().header("Cookie", cookies)
                 .contentType( "application/json")
                 //.cookie(cookies)
-                .body(request.toString())// body(js)
+                .body(src.toJson().toString())// body(js)
                 .when()
                 .post(String.format("%sinstruction", apiPath));
                 //.put()  ((String.format("%sinstruction", apiPath)),s )
-                //.asString();
-int i=response.getStatusCode();
+                //.asString();*/
+
+        String res = RestAssured
+                .given().header("Cookie", cookies)
+                .contentType( "application/json")
+                //.cookie(cookies)
+                .body(src.toJson().toString())// body(js)
+                .when()
+                .post(String.format("%sinstruction", apiPath))
+        //.put()  ((String.format("%sinstruction", apiPath)),s )
+        .asString();
+
+//int i=response.getStatusCode();
 //String s=json.toString();
-//Headers v=json.getHeaders();
-       // JsonElement parsed=new JsonParser().parse(json.); //.parse(json);
+//Headers v=response.getHeaders();
+    // response.jsonPath().get("success");
+        //response.jsonPath().get("failMessage");
+        /*JsonElement parsed=new JsonParser().parse(res);// JsonElement parsed=new JsonParser().parse(json.); //.parse(json);
+        JsonObject asJsonObject = parsed.getAsJsonObject();
+        JsonObject asJsonObject1 = asJsonObject.getAsJsonObject(("success"));
+        instResponse o = new Gson().fromJson(asJsonObject1, new TypeToken<instResponse>() {
+        }.getType());
 
-    };
+        return o;*/
 
-}
+        JsonElement parsed=new JsonParser().parse(res);// JsonElement parsed=new JsonParser().parse(json.); //.parse(json);
+        JsonObject asJsonObject = parsed.getAsJsonObject().getAsJsonObject("success");
+
+        return new Gson().fromJson(asJsonObject, new TypeToken<instResponse>() {}.getType());
+
+        //Gson g=new Gson();
+        //instResponse person = g.fromJson(parsed, instResponse.class);    };
+
+}}

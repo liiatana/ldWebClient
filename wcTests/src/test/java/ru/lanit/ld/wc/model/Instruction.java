@@ -1,8 +1,10 @@
 package ru.lanit.ld.wc.model;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 public class Instruction {
 
@@ -53,7 +55,7 @@ public class Instruction {
         // "reportReceiverID": 1000,
 
         //"startDate": "2018-12-02T18:50:39.000Z",
-        //this.startDate = LocalDateTime.now();//.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
+        this.startDate = LocalDateTime.now();//.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
 
         //"executionDate": null,
         //"execInterval": null
@@ -161,5 +163,76 @@ public class Instruction {
         return this;
     }
 
+    public JsonObject toJson() {
+        JsonObject mainInstruction = new JsonObject();
+
+        mainInstruction.addProperty("receiverID", this.receiverID[0]);
+
+        mainInstruction.addProperty("text", this.text+String.format("_%sZ", this.startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.000"))));
+        // mainInstruction.addProperty("subject", src.subject);
+        //mainInstruction.addProperty("subject", "zana");
+
+        mainInstruction.addProperty("comment", this.comment);
+
+        if (this.fileIds == null) {
+            mainInstruction.add("fileIds", null);
+        } else {
+            mainInstruction.addProperty("fileIds", this.fileIds[0]);
+        }
+
+        mainInstruction.addProperty("execAuditorID", this.execAuditorID);
+        mainInstruction.addProperty("initiatorID", this.initiatorID);
+        mainInstruction.addProperty("reportReceiverID", this.reportReceiverID);
+        if (this.startDate == null) {
+            mainInstruction.add("startDate", null);
+        } else {
+            mainInstruction.addProperty("startDate", String.format("%sZ", this.startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.000"))));
+        }
+
+
+        if (this.executionDate == null) {
+            mainInstruction.add("executionDate", null);
+        } else {
+            mainInstruction.addProperty("executionDate", String.format("%sZ", this.executionDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.000"))));
+        }
+
+        if (this.execInterval == 0) {
+            mainInstruction.add("execInterval", null);
+        } else {
+            mainInstruction.addProperty("execInterval", this.execInterval);
+        }
+        if (this.execAuditorID == 0) {
+            mainInstruction.add("execAuditorID", null);
+        } else {
+            mainInstruction.addProperty("execAuditorID", this.execAuditorID);
+        }
+        if (this.reportReceiverID == 0) {
+            mainInstruction.add("reportReceiverID", null);
+        } else {
+            mainInstruction.addProperty("reportReceiverID", this.reportReceiverID);
+        }
+
+
+        JsonObject jsonInstruction = new JsonObject();
+        jsonInstruction.addProperty("instructionTypeId", this.instructionTypeId);
+
+        if (this.documentId == 0) {
+            jsonInstruction.add("documentId", null);
+        } else {
+            jsonInstruction.addProperty("documentId", this.documentId);
+        }
+
+
+        jsonInstruction.addProperty("sendType", this.sendType);
+        jsonInstruction.addProperty("reportToExecutive", this.reportToExecutive);
+        jsonInstruction.addProperty("withExecutive", this.withExecutive);
+        jsonInstruction.addProperty("control", this.control);
+
+        jsonInstruction.add("mainInstruction", mainInstruction);
+
+        JsonObject request = new JsonObject();
+        request.add("request", jsonInstruction);
+        return request;
+    }
 
 }
