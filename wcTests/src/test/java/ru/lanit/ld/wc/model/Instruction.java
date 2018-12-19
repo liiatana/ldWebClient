@@ -169,8 +169,6 @@ public class Instruction {
         mainInstruction.addProperty("receiverID", this.receiverID[0]);
 
         mainInstruction.addProperty("text", this.text+String.format("_%sZ", this.startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.000"))));
-        // mainInstruction.addProperty("subject", src.subject);
-        //mainInstruction.addProperty("subject", "zana");
 
         mainInstruction.addProperty("comment", this.comment);
 
@@ -229,6 +227,13 @@ public class Instruction {
         jsonInstruction.addProperty("control", this.control);
 
         jsonInstruction.add("mainInstruction", mainInstruction);
+
+        if(this.receiverID.length>1){
+            JsonObject coExecutorInstruction = new JsonObject();
+            coExecutorInstruction=mainInstruction;
+            coExecutorInstruction.addProperty("receiverID", this.receiverID[1]);
+            jsonInstruction.add("coExecutorInstruction", coExecutorInstruction);
+        }
 
         JsonObject request = new JsonObject();
         request.add("request", jsonInstruction);

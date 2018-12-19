@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -52,13 +53,48 @@ public class Users {
             JsonElement parsed = user.getUserApi().me();
             user.withId(parsed.getAsJsonObject().get("effectiveUserId").getAsInt())
                     .withUserName(parsed.getAsJsonObject().get("name").getAsString())
-                     .withisAdmin(parsed.getAsJsonObject().get("isAdmin").getAsBoolean());
-
+                    .withisAdmin(parsed.getAsJsonObject().get("isAdmin").getAsBoolean());
 
 
         }
 
     }
 
+
+    public Users anyUser() {
+
+        List<UserInfo> usersCollection = new ArrayList<UserInfo>();
+        for (UserInfo user : this.users) {
+            usersCollection.add(user);
+        }
+        Collections.shuffle(usersCollection);
+        Users newlist = new Users();
+        newlist.users = usersCollection.subList(0, 1);
+        return newlist;
+
+    }
+
+    public Users anyUser(int numberOfReceivers) {
+
+        List<UserInfo> usersCollection = new ArrayList<UserInfo>();
+        for (UserInfo user : this.users) {
+            usersCollection.add(user);
+        }
+        Collections.shuffle(usersCollection);
+        Users newlist = new Users();
+        newlist.users = usersCollection.subList(0, numberOfReceivers);
+        return newlist;
+
+    }
+
+    public int[] Ids() {
+
+        int[] ids= new int[this.users.size()] ;
+        for (int i = 0; i < this.users.size() ; i++) {
+            ids[i] = this.users.get(i).getId();
+        }
+        return ids;
+
+    }
 
 }

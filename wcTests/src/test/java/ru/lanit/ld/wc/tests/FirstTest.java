@@ -5,6 +5,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.lanit.ld.wc.appmanager.RestApiHelper;
 import ru.lanit.ld.wc.model.Instruction;
+import ru.lanit.ld.wc.model.Users;
 import ru.lanit.ld.wc.model.instResponse;
 
 import static org.hamcrest.CoreMatchers.equalToObject;
@@ -20,7 +21,7 @@ public class FirstTest extends TestBase {
     }
 
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void firstTest() {
         //System.out.println(app.properties.getProperty("web.baseUrl"));
         //System.out.println(app.UserList.users.get(1).getLogin());
@@ -30,7 +31,7 @@ public class FirstTest extends TestBase {
 
     }
 
-    @Test(enabled = true)
+    @Test(enabled = true) // он падает
     public void secondTest() {
         //System.out.println(app.properties.getProperty("web.baseUrl"));
         //System.out.println(app.UserList.users.get(1).getLogin());
@@ -39,14 +40,38 @@ public class FirstTest extends TestBase {
         Instruction instr = new Instruction(app.InstructionList.getType(2));
 
 
-        int[] receivers={app.UserList.users.get(1).getId()};
+        int[] receivers = {app.UserList.users.get(1).getId()};
         instr.withInitiatorID(app.UserList.users.get(0).getId())
                 .withReceiverID(receivers);
 
-        instResponse response=app.UserList.users.get(0).getUserApi().instructionSavePrj(instr);
-        Assert.assertEquals(response.message,""); // .assertTrue(Boolean.parseBoolean(response.message));
+        instResponse response = app.UserList.users.get(0).getUserApi().instructionSavePrj(instr);
+        Assert.assertEquals(response.message, ""); // .assertTrue(Boolean.parseBoolean(response.message));
         Assert.assertNotNull(response.instructionId);
     }
 
+    @Test(enabled = true)
+    public void createOutcomingNoticeProjectOneReceiver() {
 
+        Instruction instr = new Instruction(app.InstructionList.getAnyTaskType());
+        instr.withInitiatorID(app.focusedUser.getId())
+             .withReceiverID(app.UserList.anyUser().Ids());
+
+        instResponse response = app.focusedUser.getUserApi().instructionSavePrj(instr);
+
+        Assert.assertEquals(response.message, "");
+        Assert.assertNotNull(response.instructionId);
+    }
+
+    @Test(enabled = true)
+    public void createOutcomingNoticeProjectSeveralReceivers() {
+
+        Instruction instr = new Instruction(app.InstructionList.getAnyNoticeType());
+        instr.withInitiatorID(app.focusedUser.getId())
+                .withReceiverID(app.UserList.anyUser(2).Ids());
+
+        instResponse response = app.focusedUser.getUserApi().instructionSavePrj(instr);
+
+        Assert.assertEquals(response.message, "");
+        Assert.assertNotNull(response.instructionId);
+    }
 }
