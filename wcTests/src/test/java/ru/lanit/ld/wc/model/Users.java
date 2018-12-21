@@ -61,7 +61,7 @@ public class Users {
     }
 
 
-    public Users anyUser() {
+    public UserInfo anyUser() {
 
         List<UserInfo> usersCollection = new ArrayList<UserInfo>();
         for (UserInfo user : this.users) {
@@ -70,7 +70,7 @@ public class Users {
         Collections.shuffle(usersCollection);
         Users newlist = new Users();
         newlist.users = usersCollection.subList(0, 1);
-        return newlist;
+        return newlist.users.get(0);
 
     }
 
@@ -96,5 +96,7 @@ public class Users {
         return ids;
 
     }
+
+
 
 }

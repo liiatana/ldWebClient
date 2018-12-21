@@ -1,6 +1,6 @@
 package ru.lanit.ld.wc.model;
 
-import com.google.gson.JsonElement;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import java.time.LocalDateTime;
@@ -8,28 +8,30 @@ import java.time.format.DateTimeFormatter;
 
 public class Instruction {
 
-    public int[] receiverID;//": 40808836,
-    public String text;//"text": "Прошу согласовать документ.",
-    public String subject;       // "subject": "На согласование",
-    public String comment;      //  "comment": null,
-    public int documentId;      // "fileIds": null,
-    public int execAuditorID;//    "execAuditorID": null,
-    public int initiatorID;//      "initiatorID": 1000,
-    public int reportReceiverID;  //     "reportReceiverID":1000,
-    public LocalDateTime startDate;//       "startDate": "2018-11-22T18:50:39.000Z",
-    public LocalDateTime executionDate;//      "executionDate": null,
-    public int execInterval;//      "execInterval": null
-    public int sendType;//
-    public String reportflag;
-    public boolean control;
-    public boolean withExecutive;
-    public boolean reportToExecutive;
-    public int[] fileIds;      // "fileIds": null,
+    private int[] receiverID;//": 40808836,
+    private String text;//"text": "Прошу согласовать документ.",
+    private String subject;       // "subject": "На согласование",
+    private String comment;      //  "comment": null,
+    private int documentId;      // "fileIds": null,
+    private int execAuditorID;//    "execAuditorID": null,
+    private int initiatorID;//      "initiatorID": 1000,
+    private int reportReceiverID;  //     "reportReceiverID":1000,
+    private LocalDateTime startDate;//       "startDate": "2018-11-22T18:50:39.000Z",
+    private LocalDateTime executionDate;//      "executionDate": null,
+    private int execInterval;//      "execInterval": null
+    private int sendType;// 1/0 = последовательная/параллельная
+    private String reportflag;
+    private boolean control;
+    private boolean withExecutive;
+    private boolean reportToExecutive;
+    private int[] fileIds;      // "fileIds": null,
 
-    public int instructionTypeId;
+    private int instructionTypeId;
 
     //private boolean hasPlugin; //
     //public String signServiceUrl;
+
+
 
     public Instruction(instructionType type) {
 
@@ -41,6 +43,7 @@ public class Instruction {
         this.sendType = 0;
         this.control = type.getUseControl();
         this.withExecutive = false;
+
         this.reportToExecutive = false;
         //"receiverID": 40808836,
         this.text = type.getName();
@@ -53,12 +56,14 @@ public class Instruction {
         // "initiatorID": 1000,
 
         // "reportReceiverID": 1000,
+        //this.reportReceiverID=
 
         //"startDate": "2018-12-02T18:50:39.000Z",
         this.startDate = LocalDateTime.now();//.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
 
         //"executionDate": null,
         //"execInterval": null
+
 
 
     }
@@ -163,6 +168,33 @@ public class Instruction {
         return this;
     }
 
+    public boolean isWithExecutive() {
+        return withExecutive;
+    }
+
+    public Instruction setWithExecutive(boolean withExecutive) {
+        this.withExecutive = withExecutive;
+        return this;
+    }
+
+    public boolean isReportToExecutive() {
+        return reportToExecutive;
+    }
+
+    public Instruction setReportToExecutive(boolean reportToExecutive) {
+        this.reportToExecutive = reportToExecutive;
+        return this;
+    }
+
+    public int getSendType() {
+        return sendType;
+    }
+
+    public Instruction withSendType(int sendType) {
+        this.sendType = sendType;
+        return this;
+    }
+
     public JsonObject toJson() {
         JsonObject mainInstruction = new JsonObject();
 
@@ -180,7 +212,17 @@ public class Instruction {
 
         mainInstruction.addProperty("execAuditorID", this.execAuditorID);
         mainInstruction.addProperty("initiatorID", this.initiatorID);
-        mainInstruction.addProperty("reportReceiverID", this.reportReceiverID);
+
+        if (this.control == false) {
+            mainInstruction.addProperty("reportReceiverID", 0);
+        }else if (this.control == true && this.reportReceiverID != 0) {
+            mainInstruction.addProperty("reportReceiverID", this.reportReceiverID);
+        } else {
+            mainInstruction.addProperty("reportReceiverID", this.initiatorID);
+        }
+
+
+
         if (this.startDate == null) {
             mainInstruction.add("startDate", null);
         } else {
@@ -204,12 +246,6 @@ public class Instruction {
         } else {
             mainInstruction.addProperty("execAuditorID", this.execAuditorID);
         }
-        if (this.reportReceiverID == 0) {
-            mainInstruction.add("reportReceiverID", null);
-        } else {
-            mainInstruction.addProperty("reportReceiverID", this.reportReceiverID);
-        }
-
 
         JsonObject jsonInstruction = new JsonObject();
         jsonInstruction.addProperty("instructionTypeId", this.instructionTypeId);
@@ -229,9 +265,29 @@ public class Instruction {
         jsonInstruction.add("mainInstruction", mainInstruction);
 
         if(this.receiverID.length>1){
-            JsonObject coExecutorInstruction = new JsonObject();
-            coExecutorInstruction=mainInstruction;
-            coExecutorInstruction.addProperty("receiverID", this.receiverID[1]);
+
+            JsonArray coExecutorInstruction=new JsonArray();
+
+            JsonObject coExecFirst= mainInstruction.deepCopy();// .deepCopy()=mainInstruction;
+            coExecFirst.remove("receiverID"); //.getJSONObject("parentkey2").put("childkey","data1");
+            coExecFirst.addProperty("receiverID", this.receiverID[1]);
+            coExecutorInstruction.add(coExecFirst);
+
+
+            JsonObject coExecOthers= mainInstruction.deepCopy();// .deepCopy()=mainInstruction;
+            //coExecFirst.remove("receiverID"); //.getJSONObject("parentkey2").put("childkey","data1");
+
+            if(this.withExecutive=true && this.reportToExecutive==true){
+                coExecOthers.remove("reportReceiverID"); //.getJSONObject("parentkey2").put("childkey","data1");
+                coExecOthers.addProperty("reportReceiverID", this.receiverID[1]);
+            }
+
+            for (int i = 2; i < receiverID.length; i++) {
+                coExecOthers.remove("receiverID"); //.getJSONObject("parentkey2").put("childkey","data1");
+                coExecOthers.addProperty("receiverID", this.receiverID[i]);
+                coExecutorInstruction.add(coExecOthers);
+            }
+
             jsonInstruction.add("coExecutorInstruction", coExecutorInstruction);
         }
 

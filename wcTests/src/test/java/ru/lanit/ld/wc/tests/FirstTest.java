@@ -54,7 +54,7 @@ public class FirstTest extends TestBase {
 
         Instruction instr = new Instruction(app.InstructionList.getAnyTaskType());
         instr.withInitiatorID(app.focusedUser.getId())
-             .withReceiverID(app.UserList.anyUser().Ids());
+             .withReceiverID(app.UserList.anyUser(3).Ids());
 
         instResponse response = app.focusedUser.getUserApi().instructionSavePrj(instr);
 
@@ -63,11 +63,55 @@ public class FirstTest extends TestBase {
     }
 
     @Test(enabled = true)
-    public void createOutcomingNoticeProjectSeveralReceivers() {
+    public void createOutcomingNoticePrjSeveralReceivers() {
 
         Instruction instr = new Instruction(app.InstructionList.getAnyNoticeType());
         instr.withInitiatorID(app.focusedUser.getId())
-                .withReceiverID(app.UserList.anyUser(2).Ids());
+                .withReceiverID(app.UserList.anyUser(3).Ids());
+
+        instResponse response = app.focusedUser.getUserApi().instructionSavePrj(instr);
+
+        Assert.assertEquals(response.message, "");
+        Assert.assertNotNull(response.instructionId);
+    }
+
+    @Test(enabled = true)
+    public void createOutcomingTaskPrjSeveralReceivers() {
+
+        Instruction instr = new Instruction(app.InstructionList.getAnyTaskType());
+        instr.withInitiatorID(app.focusedUser.getId())
+                .withReceiverID(app.UserList.anyUser(3).Ids());
+
+        instResponse response = app.focusedUser.getUserApi().instructionSavePrj(instr);
+
+        Assert.assertEquals(response.message, "");
+        Assert.assertNotNull(response.instructionId);
+    }
+
+    @Test(enabled = true)
+    public void outTaskPrjWithExecutive() {//проект сообщения с ответствееным исполнителем, отчеты ответственному=да
+
+        Instruction instr = new Instruction(app.InstructionList.getAnyTaskType());
+        instr.withInitiatorID(app.focusedUser.getId())
+                .withReceiverID(app.UserList.anyUser(3).Ids())
+                .setWithExecutive(true)
+                .setReportToExecutive(true);
+
+        instResponse response = app.focusedUser.getUserApi().instructionSavePrj(instr);
+
+        Assert.assertEquals(response.message, "");
+        Assert.assertNotNull(response.instructionId);
+    }
+
+    @Test(enabled = true)
+    public void outTaskPrjWithExecutiveWithReportReceiver() {
+
+        Instruction instr = new Instruction(app.InstructionList.getAnyTaskType());
+        instr.withInitiatorID(app.focusedUser.getId())
+                .withSendType(1) //последовательная
+                .withReceiverID(app.UserList.anyUser(2).Ids()) //2 random получателя
+                .setWithExecutive(true) //ответственный исполнитель=да
+                .withReportReceiverID(app.UserList.anyUser().getId()); //получатель отчета=random
 
         instResponse response = app.focusedUser.getUserApi().instructionSavePrj(instr);
 
