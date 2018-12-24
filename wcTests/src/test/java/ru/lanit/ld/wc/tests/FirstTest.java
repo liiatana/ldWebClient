@@ -5,7 +5,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.lanit.ld.wc.appmanager.RestApiHelper;
 import ru.lanit.ld.wc.model.Instruction;
-import ru.lanit.ld.wc.model.Users;
 import ru.lanit.ld.wc.model.instResponse;
 
 import static org.hamcrest.CoreMatchers.equalToObject;
@@ -31,7 +30,7 @@ public class FirstTest extends TestBase {
 
     }
 
-    @Test(enabled = true) // он падает
+    @Test() // он падает
     public void secondTest() {
         //System.out.println(app.properties.getProperty("web.baseUrl"));
         //System.out.println(app.UserList.users.get(1).getLogin());
@@ -45,11 +44,11 @@ public class FirstTest extends TestBase {
                 .withReceiverID(receivers);
 
         instResponse response = app.UserList.users.get(0).getUserApi().instructionSavePrj(instr);
-        Assert.assertEquals(response.message, ""); // .assertTrue(Boolean.parseBoolean(response.message));
-        Assert.assertNotNull(response.instructionId);
+        Assert.assertEquals(response.message, "");
+        Assert.assertTrue(response.instructionId>0);
     }
 
-    @Test(enabled = true)
+    @Test()
     public void createOutcomingNoticeProjectOneReceiver() {
 
         Instruction instr = new Instruction(app.InstructionList.getAnyTaskType());
@@ -59,10 +58,10 @@ public class FirstTest extends TestBase {
         instResponse response = app.focusedUser.getUserApi().instructionSavePrj(instr);
 
         Assert.assertEquals(response.message, "");
-        Assert.assertNotNull(response.instructionId);
+        Assert.assertTrue(response.instructionId>0);
     }
 
-    @Test(enabled = true)
+    @Test()
     public void createOutcomingNoticePrjSeveralReceivers() {
 
         Instruction instr = new Instruction(app.InstructionList.getAnyNoticeType());
@@ -72,10 +71,10 @@ public class FirstTest extends TestBase {
         instResponse response = app.focusedUser.getUserApi().instructionSavePrj(instr);
 
         Assert.assertEquals(response.message, "");
-        Assert.assertNotNull(response.instructionId);
+        Assert.assertTrue(response.instructionId>0);
     }
 
-    @Test(enabled = true)
+    @Test()
     public void createOutcomingTaskPrjSeveralReceivers() {
 
         Instruction instr = new Instruction(app.InstructionList.getAnyTaskType());
@@ -85,10 +84,10 @@ public class FirstTest extends TestBase {
         instResponse response = app.focusedUser.getUserApi().instructionSavePrj(instr);
 
         Assert.assertEquals(response.message, "");
-        Assert.assertNotNull(response.instructionId);
+        Assert.assertTrue(response.instructionId>0);
     }
 
-    @Test(enabled = true)
+    @Test()
     public void outTaskPrjWithExecutive() {//проект сообщения с ответствееным исполнителем, отчеты ответственному=да
 
         Instruction instr = new Instruction(app.InstructionList.getAnyTaskType());
@@ -100,10 +99,10 @@ public class FirstTest extends TestBase {
         instResponse response = app.focusedUser.getUserApi().instructionSavePrj(instr);
 
         Assert.assertEquals(response.message, "");
-        Assert.assertNotNull(response.instructionId);
+        Assert.assertTrue(response.instructionId>0);
     }
 
-    @Test(enabled = true)
+    @Test()
     public void outTaskPrjWithExecutiveWithReportReceiver() {
 
         Instruction instr = new Instruction(app.InstructionList.getAnyTaskType());
@@ -116,6 +115,6 @@ public class FirstTest extends TestBase {
         instResponse response = app.focusedUser.getUserApi().instructionSavePrj(instr);
 
         Assert.assertEquals(response.message, "");
-        Assert.assertNotNull(response.instructionId);
+        Assert.assertTrue(response.instructionId>0);
     }
 }

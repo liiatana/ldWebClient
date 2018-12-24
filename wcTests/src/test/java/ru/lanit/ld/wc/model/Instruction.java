@@ -2,7 +2,6 @@ package ru.lanit.ld.wc.model;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -20,7 +19,7 @@ public class Instruction {
     private LocalDateTime executionDate;//      "executionDate": null,
     private int execInterval;//      "execInterval": null
     private int sendType;// 1/0 = последовательная/параллельная
-    private String reportflag;
+    //private String reportflag;
     private boolean control;
     private boolean withExecutive;
     private boolean reportToExecutive;
@@ -52,7 +51,7 @@ public class Instruction {
         // "fileIds": null,
         //"execAuditorID": null,
 
-        this.reportflag = type.getReportFlag();
+        //this.reportflag = type.getReportFlag();
         // "initiatorID": 1000,
 
         // "reportReceiverID": 1000,
@@ -213,9 +212,9 @@ public class Instruction {
         mainInstruction.addProperty("execAuditorID", this.execAuditorID);
         mainInstruction.addProperty("initiatorID", this.initiatorID);
 
-        if (this.control == false) {
+        if (!this.control) {
             mainInstruction.addProperty("reportReceiverID", 0);
-        }else if (this.control == true && this.reportReceiverID != 0) {
+        }else if (this.reportReceiverID != 0) {
             mainInstruction.addProperty("reportReceiverID", this.reportReceiverID);
         } else {
             mainInstruction.addProperty("reportReceiverID", this.initiatorID);
@@ -268,22 +267,22 @@ public class Instruction {
 
             JsonArray coExecutorInstruction=new JsonArray();
 
-            JsonObject coExecFirst= mainInstruction.deepCopy();// .deepCopy()=mainInstruction;
-            coExecFirst.remove("receiverID"); //.getJSONObject("parentkey2").put("childkey","data1");
+            JsonObject coExecFirst= mainInstruction.deepCopy();
+            coExecFirst.remove("receiverID");
             coExecFirst.addProperty("receiverID", this.receiverID[1]);
             coExecutorInstruction.add(coExecFirst);
 
 
-            JsonObject coExecOthers= mainInstruction.deepCopy();// .deepCopy()=mainInstruction;
-            //coExecFirst.remove("receiverID"); //.getJSONObject("parentkey2").put("childkey","data1");
+            JsonObject coExecOthers= mainInstruction.deepCopy();
+            //coExecFirst.remove("receiverID");
 
-            if(this.withExecutive=true && this.reportToExecutive==true){
-                coExecOthers.remove("reportReceiverID"); //.getJSONObject("parentkey2").put("childkey","data1");
+            if(this.withExecutive && this.reportToExecutive){
+                coExecOthers.remove("reportReceiverID");
                 coExecOthers.addProperty("reportReceiverID", this.receiverID[1]);
             }
 
             for (int i = 2; i < receiverID.length; i++) {
-                coExecOthers.remove("receiverID"); //.getJSONObject("parentkey2").put("childkey","data1");
+                coExecOthers.remove("receiverID");
                 coExecOthers.addProperty("receiverID", this.receiverID[i]);
                 coExecutorInstruction.add(coExecOthers);
             }
