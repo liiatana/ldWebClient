@@ -26,6 +26,7 @@ public class Instruction {
     private int[] fileIds;      // "fileIds": null,
 
     private int instructionTypeId;
+    private int operationTypeId;
 
     //private boolean hasPlugin; //
     //public String signServiceUrl;
@@ -40,7 +41,7 @@ public class Instruction {
         this.instructionTypeId = type.getId();
         //this.documentId = 0;
         this.sendType = 0;
-        this.control = type.getUseControl();
+        this.control = false; //type.getUseControl();
         this.withExecutive = false;
 
         this.reportToExecutive = false;
@@ -62,6 +63,7 @@ public class Instruction {
 
         //"executionDate": null,
         //"execInterval": null
+        this.operationTypeId=type.getOperationID();
 
 
 
@@ -118,6 +120,7 @@ public class Instruction {
     }
 
     public Instruction withExecAuditorID(int execAuditorID) {
+        this.control=true;
         this.execAuditorID = execAuditorID;
         return this;
     }
@@ -260,6 +263,116 @@ public class Instruction {
         jsonInstruction.addProperty("reportToExecutive", this.reportToExecutive);
         jsonInstruction.addProperty("withExecutive", this.withExecutive);
         jsonInstruction.addProperty("control", this.control);
+
+        jsonInstruction.add("mainInstruction", mainInstruction);
+
+        if(this.receiverID.length>1){
+
+            JsonArray coExecutorInstruction=new JsonArray();
+
+            JsonObject coExecFirst= mainInstruction.deepCopy();
+            coExecFirst.remove("receiverID");
+            coExecFirst.addProperty("receiverID", this.receiverID[1]);
+            coExecutorInstruction.add(coExecFirst);
+
+
+            JsonObject coExecOthers= mainInstruction.deepCopy();
+            //coExecFirst.remove("receiverID");
+
+            if(this.withExecutive && this.reportToExecutive){
+                coExecOthers.remove("reportReceiverID");
+                coExecOthers.addProperty("reportReceiverID", this.receiverID[1]);
+            }
+
+            for (int i = 2; i < receiverID.length; i++) {
+                coExecOthers.remove("receiverID");
+                coExecOthers.addProperty("receiverID", this.receiverID[i]);
+                coExecutorInstruction.add(coExecOthers);
+            }
+
+            jsonInstruction.add("coExecutorInstruction", coExecutorInstruction);
+        }
+
+        JsonObject request = new JsonObject();
+        request.add("request", jsonInstruction);
+        return request;
+    }
+
+    public JsonObject toJson(boolean send) {
+        JsonObject mainInstruction = new JsonObject();
+        JsonObject jsonInstruction = new JsonObject();
+
+        mainInstruction.addProperty("receiverID", this.receiverID[0]);
+
+        mainInstruction.addProperty("text", this.text+String.format("_%sZ", this.startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.000"))));
+
+        mainInstruction.addProperty("comment", this.comment);
+
+        if (this.fileIds == null) {
+            mainInstruction.add("fileIds", null);
+        } else {
+            mainInstruction.addProperty("fileIds", this.fileIds[0]);
+        }
+
+        mainInstruction.addProperty("execAuditorID", this.execAuditorID);
+        mainInstruction.addProperty("initiatorID", this.initiatorID);
+
+        if (!this.control) {
+            mainInstruction.addProperty("reportReceiverID", 0);
+        }else if (this.reportReceiverID != 0) {
+            mainInstruction.addProperty("reportReceiverID", this.reportReceiverID);
+        } else {
+            mainInstruction.addProperty("reportReceiverID", this.initiatorID);
+        }
+
+
+
+        if (this.startDate == null) {
+            mainInstruction.add("startDate", null);
+        } else {
+            mainInstruction.addProperty("startDate", String.format("%sZ", this.startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.000"))));
+        }
+
+
+        if (this.executionDate == null) {
+            mainInstruction.add("executionDate", null);
+        } else {
+            mainInstruction.addProperty("executionDate", String.format("%sZ", this.executionDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.000"))));
+        }
+
+        if (this.execInterval == 0) {
+            mainInstruction.add("execInterval", null);
+        } else {
+            mainInstruction.addProperty("execInterval", this.execInterval);
+        }
+        if (this.execAuditorID == 0) {
+            mainInstruction.add("execAuditorID", null);
+        } else {
+            mainInstruction.addProperty("execAuditorID", this.execAuditorID);
+        }
+
+
+        jsonInstruction.addProperty("instructionTypeId", this.instructionTypeId);
+
+        if (this.documentId == 0) {
+            jsonInstruction.add("documentId", null);
+        } else {
+            jsonInstruction.addProperty("documentId", this.documentId);
+        }
+
+
+        jsonInstruction.addProperty("sendType", this.sendType);
+        jsonInstruction.addProperty("reportToExecutive", this.reportToExecutive);
+        jsonInstruction.addProperty("withExecutive", this.withExecutive);
+        jsonInstruction.addProperty("control", this.control);
+
+        if (send){
+            jsonInstruction.addProperty("doEdit", false);
+            jsonInstruction.add("instructionId", null);
+            jsonInstruction.addProperty("operationTypeId", this.operationTypeId);
+            jsonInstruction.add("scrInstructionId", null);
+            jsonInstruction.add("reportId", null);
+        }
 
         jsonInstruction.add("mainInstruction", mainInstruction);
 

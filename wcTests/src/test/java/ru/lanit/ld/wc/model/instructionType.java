@@ -4,7 +4,7 @@ public class instructionType {
 
     private int id;
     private String name;
-    private int operationId;
+    private int operationID;
     private String operation;
     private int interval;
     private String reportFlag;
@@ -19,10 +19,10 @@ public class instructionType {
     public instructionType() {
     }
 
-    public instructionType(int id, String name, int operationId, String operation, int interval, String reportFlag, boolean redirectAsControl, boolean useControl, boolean active, int checkReportTypeNegative, int checkReportTypePositive, int[] receiverTypes) {
+    public instructionType(int id, String name, int operationID, String operation, int interval, String reportFlag, boolean redirectAsControl, boolean useControl, boolean active, int checkReportTypeNegative, int checkReportTypePositive, int[] receiverTypes) {
         this.id = id;
         this.name = name;
-        this.operationId = operationId;
+        this.operationID = operationID;
         this.operation = operation;
         this.interval = interval;
         this.reportFlag = reportFlag;
@@ -51,12 +51,12 @@ public class instructionType {
         this.name = name;
     }
 
-    public int getOperationId() {
-        return operationId;
+    public int getOperationID() {
+        return operationID;
     }
 
-    public void setOperationId(int operationId) {
-        this.operationId = operationId;
+    public void setOperationID(int operationID) {
+        this.operationID = operationID;
     }
 
     public String getOperation() {

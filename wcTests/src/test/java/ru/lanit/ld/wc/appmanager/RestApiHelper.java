@@ -75,9 +75,29 @@ public class RestApiHelper {
                 .given().header("Cookie", cookies)
                 .contentType("application/json")
                 //.cookie(cookies)
-                .body(src.toJson().toString())
+                .body(src.toJson(false).toString())
                 .when()
-                .post(String.format("%sinstruction", apiPath))
+                .post(String.format("%sinstruction/", apiPath))
+                .asString();
+
+        JsonElement parsed = new JsonParser().parse(res);
+        JsonObject asJsonObject = parsed.getAsJsonObject().getAsJsonObject("success");
+
+        return new Gson().fromJson(asJsonObject, new TypeToken<instResponse>() {
+        }.getType());
+
+    }
+
+    public instResponse send(Instruction src) {
+
+
+        String res = RestAssured
+                .given().header("Cookie", cookies)
+                .contentType("application/json")
+                //.cookie(cookies)
+                .body(src.toJson(true).toString())
+                .when()
+                .post(String.format("%sinstruction/send", apiPath))
                 .asString();
 
         JsonElement parsed = new JsonParser().parse(res);

@@ -34,33 +34,28 @@ public class InstructionTypes {
     }
 
     public instructionType getAnyNoticeType() {
-        /*int i=0;
-        do {
-            if(typeList.get(i).getUseControl()==true){
-                i++;
-            }else return typeList.get(i);
-
-        } while(i <typeList.size()-1 );
-
-        return null;*/
-        //instructionType type = getInstructionType(false);
-
-        return getInstructionType(false);
-
-
+        return getInstructionType(false,false);
     }
 
     public instructionType getAnyTaskType() {
-        //instructionType type = getInstructionType(true);
-
-        return getInstructionType(true);
+         return getInstructionType(true,false);
     }
 
-    private instructionType getInstructionType(boolean withUseControl) {
+    public instructionType getAnyClericalTaskType() {
+        return getInstructionType(true,true);
+    }
+
+
+    private instructionType getInstructionType(boolean withUseControl,boolean clerical) {
         List<instructionType> types = new ArrayList<instructionType>();
         for (int i = 0; i < this.typeList.size(); i++) {
             if (this.typeList.get(i).getUseControl() == withUseControl) {
-                types.add(this.typeList.get(i));
+                if(!clerical){
+                    types.add(this.typeList.get(i));
+                }else if(this.typeList.get(i).getOperationID()>0) {
+                    types.add(this.typeList.get(i));
+                }
+
             }
         }
         Collections.shuffle(types);
@@ -69,5 +64,18 @@ public class InstructionTypes {
         return type;
     }
 
+    /*public instructionType getAnyClericalTaskType() {
+        List<instructionType> types = new ArrayList<instructionType>();
+        for (int i = 0; i < this.typeList.size(); i++) {
+            if (this.typeList.get(i).getUseControl() == true && this.typeList.get(i).getOperationID()>0) {
+                types.add(this.typeList.get(i));
+            }
+        }
+        Collections.shuffle(types);
+        instructionType type = new instructionType();
+        type = types.subList(0, 1).get(0);
+        return type;
+
+    }*/
 
 }

@@ -10,7 +10,7 @@ import ru.lanit.ld.wc.model.instResponse;
 import static org.hamcrest.CoreMatchers.equalToObject;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class FirstTest extends TestBase {
+public class CreateInstructionProject extends TestBase {
 
     private RestApiHelper api;
 
