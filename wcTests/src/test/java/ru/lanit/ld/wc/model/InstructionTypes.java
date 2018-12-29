@@ -37,13 +37,14 @@ public class InstructionTypes {
         return getInstructionType(false,false);
     }
 
-    public instructionType getAnyTaskType() {
-         return getInstructionType(true,false);
+    public instructionType getAnyTaskType(boolean withClericalOperation) {
+
+         return getInstructionType(true,withClericalOperation);
     }
 
-    public instructionType getAnyClericalTaskType() {
+   /* public instructionType getAnyClericalTaskType() {
         return getInstructionType(true,true);
-    }
+    }*/
 
 
     private instructionType getInstructionType(boolean withUseControl,boolean clerical) {

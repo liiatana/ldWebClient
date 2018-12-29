@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 public class Instruction {
 
@@ -18,6 +19,7 @@ public class Instruction {
     private LocalDateTime startDate;//       "startDate": "2018-11-22T18:50:39.000Z",
     private LocalDateTime executionDate;//      "executionDate": null,
     private int execInterval;//      "execInterval": null
+    private int execIntervalType;//      "execInterval": null
     private int sendType;// 1/0 = последовательная/параллельная
     //private String reportflag;
     private boolean control;
@@ -41,14 +43,14 @@ public class Instruction {
         this.instructionTypeId = type.getId();
         //this.documentId = 0;
         this.sendType = 0;
-        this.control = false; //type.getUseControl();
+        this.control = type.getUseControl();
         this.withExecutive = false;
 
         this.reportToExecutive = false;
         //"receiverID": 40808836,
         this.text = type.getName();
-        this.subject = String.format("Тема: %s", type.getName());
-        this.comment = String.format("Комментарий: %s", type.getName());
+        this.subject = String.format("%s", type.getName());
+        this.comment = String.format("%s", type.getName());
         // "fileIds": null,
         //"execAuditorID": null,
 
@@ -119,9 +121,9 @@ public class Instruction {
         return execAuditorID;
     }
 
-    public Instruction withExecAuditorID(int execAuditorID) {
+    public Instruction withExecAuditorID(int[] execAuditorID) {
         this.control=true;
-        this.execAuditorID = execAuditorID;
+        this.execAuditorID = execAuditorID[0];
         return this;
     }
 
@@ -129,8 +131,8 @@ public class Instruction {
         return initiatorID;
     }
 
-    public Instruction withInitiatorID(int initiatorID) {
-        this.initiatorID = initiatorID;
+    public Instruction withInitiatorID(int[] initiatorID) {
+        this.initiatorID = initiatorID[0];
         return this;
     }
 
@@ -138,8 +140,8 @@ public class Instruction {
         return reportReceiverID;
     }
 
-    public Instruction withReportReceiverID(int reportReceiverID) {
-        this.reportReceiverID = reportReceiverID;
+    public Instruction withReportReceiverID(int[] reportReceiverID) {
+        this.reportReceiverID = reportReceiverID[0];
         return this;
     }
 
@@ -156,17 +158,9 @@ public class Instruction {
         return executionDate;
     }
 
-    public Instruction withExecutionDate(LocalDateTime executionDate) {
+    public Instruction withExecutionDate(LocalDateTime executionDate, int execIntervalType) {
         this.executionDate = executionDate;
-        return this;
-    }
-
-    public int getExecInterval() {
-        return execInterval;
-    }
-
-    public Instruction withExecInterval(int execInterval) {
-        this.execInterval = execInterval;
+        //this.execIntervalType = execIntervalType;
         return this;
     }
 
@@ -197,113 +191,12 @@ public class Instruction {
         return this;
     }
 
-    public JsonObject toJson() {
-        JsonObject mainInstruction = new JsonObject();
-
-        mainInstruction.addProperty("receiverID", this.receiverID[0]);
-
-        mainInstruction.addProperty("text", this.text+String.format("_%sZ", this.startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.000"))));
-
-        mainInstruction.addProperty("comment", this.comment);
-
-        if (this.fileIds == null) {
-            mainInstruction.add("fileIds", null);
-        } else {
-            mainInstruction.addProperty("fileIds", this.fileIds[0]);
-        }
-
-        mainInstruction.addProperty("execAuditorID", this.execAuditorID);
-        mainInstruction.addProperty("initiatorID", this.initiatorID);
-
-        if (!this.control) {
-            mainInstruction.addProperty("reportReceiverID", 0);
-        }else if (this.reportReceiverID != 0) {
-            mainInstruction.addProperty("reportReceiverID", this.reportReceiverID);
-        } else {
-            mainInstruction.addProperty("reportReceiverID", this.initiatorID);
-        }
-
-
-
-        if (this.startDate == null) {
-            mainInstruction.add("startDate", null);
-        } else {
-            mainInstruction.addProperty("startDate", String.format("%sZ", this.startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.000"))));
-        }
-
-
-        if (this.executionDate == null) {
-            mainInstruction.add("executionDate", null);
-        } else {
-            mainInstruction.addProperty("executionDate", String.format("%sZ", this.executionDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.000"))));
-        }
-
-        if (this.execInterval == 0) {
-            mainInstruction.add("execInterval", null);
-        } else {
-            mainInstruction.addProperty("execInterval", this.execInterval);
-        }
-        if (this.execAuditorID == 0) {
-            mainInstruction.add("execAuditorID", null);
-        } else {
-            mainInstruction.addProperty("execAuditorID", this.execAuditorID);
-        }
-
-        JsonObject jsonInstruction = new JsonObject();
-        jsonInstruction.addProperty("instructionTypeId", this.instructionTypeId);
-
-        if (this.documentId == 0) {
-            jsonInstruction.add("documentId", null);
-        } else {
-            jsonInstruction.addProperty("documentId", this.documentId);
-        }
-
-
-        jsonInstruction.addProperty("sendType", this.sendType);
-        jsonInstruction.addProperty("reportToExecutive", this.reportToExecutive);
-        jsonInstruction.addProperty("withExecutive", this.withExecutive);
-        jsonInstruction.addProperty("control", this.control);
-
-        jsonInstruction.add("mainInstruction", mainInstruction);
-
-        if(this.receiverID.length>1){
-
-            JsonArray coExecutorInstruction=new JsonArray();
-
-            JsonObject coExecFirst= mainInstruction.deepCopy();
-            coExecFirst.remove("receiverID");
-            coExecFirst.addProperty("receiverID", this.receiverID[1]);
-            coExecutorInstruction.add(coExecFirst);
-
-
-            JsonObject coExecOthers= mainInstruction.deepCopy();
-            //coExecFirst.remove("receiverID");
-
-            if(this.withExecutive && this.reportToExecutive){
-                coExecOthers.remove("reportReceiverID");
-                coExecOthers.addProperty("reportReceiverID", this.receiverID[1]);
-            }
-
-            for (int i = 2; i < receiverID.length; i++) {
-                coExecOthers.remove("receiverID");
-                coExecOthers.addProperty("receiverID", this.receiverID[i]);
-                coExecutorInstruction.add(coExecOthers);
-            }
-
-            jsonInstruction.add("coExecutorInstruction", coExecutorInstruction);
-        }
-
-        JsonObject request = new JsonObject();
-        request.add("request", jsonInstruction);
-        return request;
-    }
-
     public JsonObject toJson(boolean send) {
         JsonObject mainInstruction = new JsonObject();
         JsonObject jsonInstruction = new JsonObject();
 
         mainInstruction.addProperty("receiverID", this.receiverID[0]);
-
+        mainInstruction.addProperty("subject", this.subject);
         mainInstruction.addProperty("text", this.text+String.format("_%sZ", this.startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.000"))));
 
         mainInstruction.addProperty("comment", this.comment);
@@ -338,13 +231,12 @@ public class Instruction {
             mainInstruction.add("executionDate", null);
         } else {
             mainInstruction.addProperty("executionDate", String.format("%sZ", this.executionDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.000"))));
+            mainInstruction.addProperty("execIntervalType", this.execIntervalType);
         }
 
-        if (this.execInterval == 0) {
-            mainInstruction.add("execInterval", null);
-        } else {
-            mainInstruction.addProperty("execInterval", this.execInterval);
-        }
+
+        mainInstruction.add("execInterval", null);
+
         if (this.execAuditorID == 0) {
             mainInstruction.add("execAuditorID", null);
         } else {
@@ -408,4 +300,27 @@ public class Instruction {
         return request;
     }
 
+    @Override
+    public String toString() {
+        return "Instruction: {" +
+                "receiverID=" + Arrays.toString(receiverID) +
+                ", text='" + text + '\'' +
+                ", subject='" + subject + '\'' +
+                ", comment='" + comment + '\'' +
+                ", documentId=" + documentId +
+                ", execAuditorID=" + execAuditorID +
+                ", initiatorID=" + initiatorID +
+                ", reportReceiverID=" + reportReceiverID +
+                ", startDate=" + startDate +
+                ", executionDate=" + executionDate +
+                ", execInterval=" + execInterval +
+                ", sendType=" + sendType +
+                ", control=" + control +
+                ", withExecutive=" + withExecutive +
+                ", reportToExecutive=" + reportToExecutive +
+                ", fileIds=" + Arrays.toString(fileIds) +
+                ", instructionTypeId=" + instructionTypeId +
+                ", operationTypeId=" + operationTypeId +
+                '}';
+    }
 }

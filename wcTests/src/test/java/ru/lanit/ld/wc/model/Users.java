@@ -61,7 +61,7 @@ public class Users {
     }
 
 
-    public UserInfo anyUser() {
+    /*public UserInfo anyUser() {
 
         List<UserInfo> usersCollection = new ArrayList<UserInfo>();
         for (UserInfo user : this.users) {
@@ -72,7 +72,7 @@ public class Users {
         newlist.users = usersCollection.subList(0, 1);
         return newlist.users.get(0);
 
-    }
+    }*/
 
     public Users anyUser(int numberOfReceivers) {
 

@@ -2,119 +2,70 @@ package ru.lanit.ld.wc.tests;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.lanit.ld.wc.appmanager.RestApiHelper;
 import ru.lanit.ld.wc.model.Instruction;
 import ru.lanit.ld.wc.model.instResponse;
+import ru.lanit.ld.wc.model.instructionType;
+
+import java.time.LocalDateTime;
 
 import static org.hamcrest.CoreMatchers.equalToObject;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class CreateInstructionProject extends TestBase {
 
-    private RestApiHelper api;
-
-    @BeforeMethod
-    public void init() {
-        api = new RestApiHelper(app.UserList.users.get(1), app);
-    }
-
-
-    @Test(enabled = false)
-    public void firstTest() {
-        //System.out.println(app.properties.getProperty("web.baseUrl"));
-        //System.out.println(app.UserList.users.get(1).getLogin());
-        //RestApiHelper api= new RestApiHelper(app.UserList.users.get(1),app);
-        System.out.println(String.format("Id = %d", api.me()));
-        assertThat(api.me(), equalToObject(app.UserList.users.get(1).getId()));
-
-    }
-
-    @Test() // он падает
-    public void secondTest() {
-        //System.out.println(app.properties.getProperty("web.baseUrl"));
-        //System.out.println(app.UserList.users.get(1).getLogin());
-        //RestApiHelper api= new RestApiHelper(app.UserList.users.get(1),app);
-        // System.out.println(String.format("Id = %d", api.instructionTypesInfo()));
-        Instruction instr = new Instruction(app.InstructionList.getType(2));
-
-
-        int[] receivers = {app.UserList.users.get(1).getId()};
-        instr.withInitiatorID(app.UserList.users.get(0).getId())
-                .withReceiverID(receivers);
-
-        instResponse response = app.UserList.users.get(0).getUserApi().instructionSavePrj(instr);
-        Assert.assertEquals(response.message, "");
-        Assert.assertTrue(response.instructionId>0);
-    }
-
-    @Test()
-    public void createOutcomingNoticeProjectOneReceiver() {
-
-        Instruction instr = new Instruction(app.InstructionList.getAnyTaskType());
-        instr.withInitiatorID(app.focusedUser.getId())
-             .withReceiverID(app.UserList.anyUser(3).Ids());
-
-        instResponse response = app.focusedUser.getUserApi().instructionSavePrj(instr);
-
-        Assert.assertEquals(response.message, "");
-        Assert.assertTrue(response.instructionId>0);
-    }
-
-    @Test()
-    public void createOutcomingNoticePrjSeveralReceivers() {
+    @DataProvider
+    public Object[][] Notice() {
 
         Instruction instr = new Instruction(app.InstructionList.getAnyNoticeType());
-        instr.withInitiatorID(app.focusedUser.getId())
-                .withReceiverID(app.UserList.anyUser(3).Ids());
+        instr
+                .withInitiatorID(new int[] {app.focusedUser.getId()}) //отправитель=focusedUser (обязательный)
+                //.withText("Тест текст") // текст сообщения. Если не задано по умолчанию = текст из типа сообщения. Всегда к тексту добавляется + timestamp
+                //.withComment("Ваш комментарий") // комментарий. Если не задано по умолчанию = не заполнено
+                //.withSubject("Ваша тема") // тема сообщения. Если не задано по умолчанию = тема из типа сообщения
+                .withReceiverID(app.UserList.anyUser(2).Ids());// получатель = любые пользователи (число = кол-во получателей)(обязательный)
 
-        instResponse response = app.focusedUser.getUserApi().instructionSavePrj(instr);
+        return new Object[][] {new Object[]{instr}};
+    }
+
+    @DataProvider
+    public Object[][] Task() {
+
+
+        instructionType type = app.InstructionList.getAnyTaskType(true); // если withClericalType=true, то тип с ДПО; если false= любой контрольный тип
+
+        Instruction instr = new Instruction(type);
+        instr
+                .withInitiatorID(new int[] {app.focusedUser.getId()}) //отправитель=focusedUser (обязательный)
+                //.withText("Контрольное сообщение, текст") // текст сообщения. Если не задано по умолчанию = текст из типа сообщения. Всегда к тексту добавляется + timestamp
+                //.withComment("Ваш комментарий ...") // комментарий. Если не задано по умолчанию = не заполнено
+                //.withSubject("Ваша тема...") // тема сообщения. Если не задано по умолчанию = тема из типа сообщения
+                //.withExecAuditorID(app.UserList.anyUser(1).Ids()) // контролер=любой один пользователь. Если не задано , то по умолчанию контроль выключен
+                //.setWithExecutive(true) // ответственный исполнитель=Да(true). По умолчанию = false.
+                //.setReportToExecutive(true) // отчеты ответственному исполнителю=Да. По умолчанию = false.
+                //.withSendType(1) // 0= паралелльная (веер)( по умолчанию), 1=последовательная (цепочка)
+                //.withReportReceiverID(app.UserList.anyUser(1).Ids()) // получаетль отчета=любой пользователь. Если не задано получатель отчета= инициатору.
+                .withExecutionDate( LocalDateTime.of(2019,1,06,17,00),1)
+                .withReceiverID(app.UserList.anyUser(2).Ids());// получатель = любые пользователи (число = кол-во получателей)(обязательный)
+
+        return new Object[][] {new Object[]{instr}};
+    }
+
+
+    @Test(dataProvider = "Notice", invocationCount = 1)
+    public void createInstructionProject(Instruction newInstruction) {
+
+        /*Instruction instr = new Instruction(app.InstructionList.getAnyTaskType(false));
+        instr.withInitiatorID(new int[] {app.focusedUser.getId()})
+             .withReceiverID(app.UserList.anyUser(3).Ids());*/
+
+        instResponse response = app.focusedUser.getUserApi().instructionSavePrj(newInstruction);
 
         Assert.assertEquals(response.message, "");
         Assert.assertTrue(response.instructionId>0);
     }
 
-    @Test()
-    public void createOutcomingTaskPrjSeveralReceivers() {
 
-        Instruction instr = new Instruction(app.InstructionList.getAnyTaskType());
-        instr.withInitiatorID(app.focusedUser.getId())
-                .withReceiverID(app.UserList.anyUser(3).Ids());
-
-        instResponse response = app.focusedUser.getUserApi().instructionSavePrj(instr);
-
-        Assert.assertEquals(response.message, "");
-        Assert.assertTrue(response.instructionId>0);
-    }
-
-    @Test()
-    public void outTaskPrjWithExecutive() {//проект сообщения с ответствееным исполнителем, отчеты ответственному=да
-
-        Instruction instr = new Instruction(app.InstructionList.getAnyTaskType());
-        instr.withInitiatorID(app.focusedUser.getId())
-                .withReceiverID(app.UserList.anyUser(3).Ids())
-                .setWithExecutive(true)
-                .setReportToExecutive(true);
-
-        instResponse response = app.focusedUser.getUserApi().instructionSavePrj(instr);
-
-        Assert.assertEquals(response.message, "");
-        Assert.assertTrue(response.instructionId>0);
-    }
-
-    @Test()
-    public void outTaskPrjWithExecutiveWithReportReceiver() {
-
-        Instruction instr = new Instruction(app.InstructionList.getAnyTaskType());
-        instr.withInitiatorID(app.focusedUser.getId())
-                .withSendType(1) //последовательная
-                .withReceiverID(app.UserList.anyUser(2).Ids()) //2 random получателя
-                .setWithExecutive(true) //ответственный исполнитель=да
-                .withReportReceiverID(app.UserList.anyUser().getId()); //получатель отчета=random
-
-        instResponse response = app.focusedUser.getUserApi().instructionSavePrj(instr);
-
-        Assert.assertEquals(response.message, "");
-        Assert.assertTrue(response.instructionId>0);
-    }
 }

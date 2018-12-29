@@ -21,4 +21,11 @@ public class instResponse {
         return message;
     }
 
+    @Override
+    public String toString() {
+        return "Response: {" +
+                "instructionId=" + instructionId +
+                ", message='" + message + '\'' +
+                '}';
+    }
 }
