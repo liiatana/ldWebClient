@@ -81,6 +81,10 @@ public class Instruction {
         return this;
     }
 
+    public int getOperationTypeId() {
+        return operationTypeId;
+    }
+
     public String getText() {
         return text;
     }
