@@ -89,14 +89,23 @@ public class Users {
 
     public int[] Ids() {
 
-        int[] ids= new int[this.users.size()] ;
-        for (int i = 0; i < this.users.size() ; i++) {
+        int[] ids = new int[this.users.size()];
+        for (int i = 0; i < this.users.size(); i++) {
             ids[i] = this.users.get(i).getId();
         }
         return ids;
 
     }
 
+    public UserInfo getUserById(int Id) {
+        int i=0;
 
+        do {
+            if( this.users.get(i).getId()==Id) {return this.users.get(i);}
+            i++;
+        }while( i< this.users.size());
+
+        return null;
+    }
 
 }

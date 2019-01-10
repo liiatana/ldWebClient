@@ -22,19 +22,45 @@ public class Report {
     private String subject;
     private String text;
 
-    public Report( Instruction instruction, UserInfo initiator, UserInfo receiver) {
+    public Report( Instruction instruction) {//UserInfo initiator, UserInfo receiver
         this.comment=instruction.getComment();
         this.completionTypeId=1500;
         this.documentId = 0;
         this.executionDate = LocalDateTime.now();
         //this.fileIds
-        this.initiatorID=initiator.getId();
+        //this.initiatorID=initiator.getId();
         //this.operationDocumentID
         this.operationTypeId=instruction.getOperationTypeId();
-        this.receiverId=receiver.getId();
+        //this.receiverId=receiver.getId();
         //this.reportId
         this.subject=instruction.getSubject();
         this.text=instruction.getText();
+    }
+
+    public Report( Report report) { //копирование объекта
+        this.comment=report.getComment();
+        this.completionTypeId=report.getCompletionTypeId();
+        this.documentId = report.getDocumentId();
+        this.executionDate = report.getExecutionDate();
+        this.fileIds=report.getFileIds();
+        //this.initiatorID=initiator.getId();
+        this.operationDocumentID=report.getDocumentId();
+        this.operationTypeId=report.getOperationTypeId();
+        //this.receiverId=receiver.getId();
+        this.reportId=report.getReportId();
+        this.subject=report.getSubject();
+        this.text=report.getText();
+
+    }
+
+    public Report withInitiatorID(int initiatorID) {
+        this.initiatorID = initiatorID;
+        return this;
+    }
+
+    public Report withReceiverId(int receiverId) {
+        this.receiverId = receiverId;
+        return this;
     }
 
     @Override
@@ -95,5 +121,52 @@ public class Report {
         return request;
     }
 
-    
+
+    public String getComment() {
+        return comment;
+    }
+
+    public int getCompletionTypeId() {
+        return completionTypeId;
+    }
+
+    public int getDocumentId() {
+        return documentId;
+    }
+
+    public LocalDateTime getExecutionDate() {
+        return executionDate;
+    }
+
+    public int[] getFileIds() {
+        return fileIds;
+    }
+
+    public int getInitiatorID() {
+        return initiatorID;
+    }
+
+    public int getOperationDocumentID() {
+        return operationDocumentID;
+    }
+
+    public int getOperationTypeId() {
+        return operationTypeId;
+    }
+
+    public int getReceiverId() {
+        return receiverId;
+    }
+
+    public int getReportId() {
+        return reportId;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public String getText() {
+        return text;
+    }
 }

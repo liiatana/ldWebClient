@@ -7,10 +7,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.response.Response;
-import ru.lanit.ld.wc.model.Instruction;
-import ru.lanit.ld.wc.model.UserInfo;
-import ru.lanit.ld.wc.model.instResponse;
-import ru.lanit.ld.wc.model.instructionType;
+import ru.lanit.ld.wc.model.*;
 
 import java.util.ArrayList;
 
@@ -107,4 +104,26 @@ public class RestApiHelper {
         }.getType());
 
     }
+
+    public reportResponse createReportProject( Report src){
+
+       // src.withInitiatorID();
+
+        String res = RestAssured
+                .given().header("Cookie", cookies)
+                .contentType("application/json")
+                //.cookie(cookies)
+                .body(src.toJson().toString())
+                .when()
+                .post(String.format("%sinstruction/send", apiPath))
+                .asString();
+
+        JsonElement parsed = new JsonParser().parse(res);
+        JsonObject asJsonObject = parsed.getAsJsonObject().getAsJsonObject("success");
+
+        return new Gson().fromJson(asJsonObject, new TypeToken<reportResponse>() {
+        }.getType());
+    }
+
+
 }

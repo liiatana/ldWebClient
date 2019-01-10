@@ -14,6 +14,10 @@ public class UserInfo {
     private boolean isAdmin;
     private RestApiHelper UserApi;
 
+
+    public UserInfo() {
+    }
+
     public String getAuth() {
         return Auth;
     }

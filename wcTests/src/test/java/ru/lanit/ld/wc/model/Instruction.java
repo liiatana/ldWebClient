@@ -137,6 +137,7 @@ public class Instruction {
 
     public Instruction withInitiatorID(int[] initiatorID) {
         this.initiatorID = initiatorID[0];
+        if (this.reportReceiverID  == 0 ) {this.reportReceiverID=this.initiatorID;}
         return this;
     }
 
@@ -327,4 +328,6 @@ public class Instruction {
                 ", operationTypeId=" + operationTypeId +
                 '}';
     }
+
+
 }
