@@ -34,6 +34,9 @@ public class Instruction {
     //public String signServiceUrl;
 
 
+    private int InstructionId;
+
+
 
     public Instruction(instructionType type) {
 
@@ -193,6 +196,16 @@ public class Instruction {
 
     public Instruction withSendType(int sendType) {
         this.sendType = sendType;
+        return this;
+    }
+
+
+    public int getInstructionId() {
+        return InstructionId;
+    }
+
+    public Instruction withInstructionId(int instructionId) {
+        InstructionId = instructionId;
         return this;
     }
 

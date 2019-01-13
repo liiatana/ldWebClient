@@ -31,12 +31,13 @@ public class MakeReport extends TestBase {
                 //.withExecAuditorID(app.UserList.anyUser(1).Ids()) // контролер=любой один пользователь. Если не задано , то по умолчанию контроль выключен
                 .setWithExecutive(true) // ответственный исполнитель=Да(true). По умолчанию = false.
                 .setReportToExecutive(true) // отчеты ответственному исполнителю=Да. По умолчанию = false.
-                .withSendType(1) // 0= паралелльная (веер)( по умолчанию), 1=последовательная (цепочка)
+                //.withSendType(1) // 0= паралелльная (веер)( по умолчанию), 1=последовательная (цепочка)
                 //.withReportReceiverID(app.UserList.anyUser(1).Ids()) // получаетль отчета=любой пользователь. Если не задано получатель отчета= инициатору.
-                .withExecutionDate(LocalDateTime.of(2019, 1, 06, 17, 00), 1)
+                .withExecutionDate(LocalDateTime.of(2019, 1, 26, 17, 00), 1)
                 .withReceiverID(app.UserList.anyUser(3).Ids());// получатель = любые пользователи (число = кол-во получателей)(обязательный)
 
         instResponse = app.focusedUser.getUserApi().send(instr);
+        instr.withInstructionId(instResponse.getInstructionId());
 
         return new Object[][]{new Object[]{instr}};
     }

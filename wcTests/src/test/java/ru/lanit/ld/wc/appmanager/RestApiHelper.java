@@ -22,7 +22,7 @@ public class RestApiHelper {
 
         Response response = RestAssured
                 .given().header("Authorization", user.getAuth())
-                .get(String.format("%s/auth/basic", apiPath));
+                .get(String.format("%sauth/basic", apiPath));
         cookies = String.format("landocs.claims=%s; landocs_sessionid=%s", response.getCookie("landocs.claims"), response.getCookie("landocs_sessionid"));
 
     }

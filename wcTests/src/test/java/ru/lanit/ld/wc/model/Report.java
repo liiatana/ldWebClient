@@ -22,6 +22,8 @@ public class Report {
     private String subject;
     private String text;
 
+    private int InstructionId;
+
     public Report( Instruction instruction) {//UserInfo initiator, UserInfo receiver
         this.comment=instruction.getComment();
         this.completionTypeId=1500;
@@ -35,6 +37,7 @@ public class Report {
         //this.reportId
         this.subject=instruction.getSubject();
         this.text=instruction.getText();
+        this.InstructionId=instruction.getInstructionId();
     }
 
     public Report( Report report) { //копирование объекта
@@ -50,6 +53,7 @@ public class Report {
         this.reportId=report.getReportId();
         this.subject=report.getSubject();
         this.text=report.getText();
+        this.InstructionId=0;
 
     }
 
@@ -60,6 +64,15 @@ public class Report {
 
     public Report withReceiverId(int receiverId) {
         this.receiverId = receiverId;
+        return this;
+    }
+
+    public int getInstructionId() {
+        return InstructionId;
+    }
+
+    public Report withInstructionId(int instructionId) {
+        InstructionId = instructionId;
         return this;
     }
 
