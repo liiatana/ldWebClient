@@ -1,12 +1,12 @@
 package ru.lanit.ld.wc.tests;
 
 import org.testng.Assert;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.lanit.ld.wc.model.*;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 public class MakeReport extends TestBase {
 
@@ -18,7 +18,7 @@ public class MakeReport extends TestBase {
     private instResponse instResponse = new instResponse();
 
     @DataProvider
-    public Object[][] newTask() {
+    public Object[][] Reports() {
 
         instructionType type = app.InstructionList.getAnyTaskType(true); // если withClericalType=true, то тип с ДПО; если false= любой контрольный тип
 
@@ -34,23 +34,41 @@ public class MakeReport extends TestBase {
                 //.withSendType(1) // 0= паралелльная (веер)( по умолчанию), 1=последовательная (цепочка)
                 //.withReportReceiverID(app.UserList.anyUser(1).Ids()) // получаетль отчета=любой пользователь. Если не задано получатель отчета= инициатору.
                 .withExecutionDate(LocalDateTime.of(2019, 1, 26, 17, 00), 1)
-                .withReceiverID(app.UserList.anyUser(3).Ids());// получатель = любые пользователи (число = кол-во получателей)(обязательный)
+                .withReceiverID(app.UserList.anyUser(1).Ids());// получатель = любые пользователи (число = кол-во получателей)(обязательный)
 
         instResponse = app.focusedUser.getUserApi().send(instr);
         instr.withInstructionId(instResponse.getInstructionId());
 
-        return new Object[][]{new Object[]{instr}};
+        logger.info("instruction : " + instr.toString());
+
+        Reports newReports = new Reports(instr);
+
+        return new Object[][]{new Object[]{newReports}};
     }
 
-    @Test(dataProvider = "newTask")
-    public void createReportProject(Instruction instr) {
+    @Test(dataProvider = "Reports")
+    public void createReportProject(Reports newReports) {
 
-        Reports reports = new Reports(instr);
+        //Reports newReports = new Reports(instr);
 
-        /*reportResponse responseReport = reportInitiator.getUserApi().createReportProject(report) ;
+        int reportNumber=0;
+
+        newReports.reports.get(reportNumber)
+                .withText("Текст моего отчета будет вот такой")
+                .withComment("Мой коммент к отчету, отличный от коммента по умолчанию")
+                .withSubject("И вот тема, отличная от темы по умолчанию");
+
+        //logger.info("report : " +  newReports.reports.get(reportNumber).toString());
+
+        UserInfo reportIitiator= app.UserList.getUserById(newReports.reports.get(reportNumber).getInitiatorID());
+
+        reportResponse responseReport = reportIitiator.getUserApi().createReportProject(newReports.reports.get(reportNumber)) ;
+        logger.info("response : " +  responseReport.toString());
 
         Assert.assertEquals(responseReport.message, "");
-        Assert.assertTrue(responseReport.reportId>0);*/
+        Assert.assertTrue(responseReport.reportId>0);
+
+
 
     }
 }

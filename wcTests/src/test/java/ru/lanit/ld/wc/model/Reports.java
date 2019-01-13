@@ -7,6 +7,13 @@ public class Reports {
 
     public List<Report> reports;
 
+    @Override
+    public String toString() {
+        return "Reports{" +
+                "reports=" + reports +
+                '}';
+    }
+
     public Reports(Instruction instruction) {
 
 
@@ -47,6 +54,8 @@ public class Reports {
                 reports.add(i, report1);
             }
         }
+
+
 
 
     }

@@ -65,7 +65,7 @@ public class RestApiHelper {
         return iTypes;
     }
 
-    public instResponse instructionSavePrj(Instruction src) {
+    public instResponse instructionSavePrj(Instruction src) {//сохранить проект сообщения
 
 
         String res = RestAssured
@@ -85,7 +85,7 @@ public class RestApiHelper {
 
     }
 
-    public instResponse send(Instruction src) {
+    public instResponse send(Instruction src) { //отправить сообщение
 
 
         String res = RestAssured
@@ -105,7 +105,7 @@ public class RestApiHelper {
 
     }
 
-    public reportResponse createReportProject( Report src){
+    public reportResponse createReportProject( Report src){// создать проект отчета
 
        // src.withInitiatorID();
 
@@ -115,7 +115,7 @@ public class RestApiHelper {
                 //.cookie(cookies)
                 .body(src.toJson().toString())
                 .when()
-                .post(String.format("%sinstruction/send", apiPath))
+                .post(String.format("%sinstruction/%s/report/project", apiPath,src.getInstructionId()))
                 .asString();
 
         JsonElement parsed = new JsonParser().parse(res);

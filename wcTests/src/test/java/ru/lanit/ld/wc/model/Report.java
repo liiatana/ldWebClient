@@ -76,6 +76,21 @@ public class Report {
         return this;
     }
 
+    public Report withComment(String comment) {
+        this.comment = comment;
+        return this;
+    }
+
+    public Report withSubject(String subject) {
+        this.subject = subject;
+        return this;
+    }
+
+    public Report withText(String text) {
+        this.text = text;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "Report{" +
@@ -131,7 +146,10 @@ public class Report {
         request.addProperty("subject", this.subject);
         request.addProperty("text", this.text);
 
-        return request;
+        JsonObject request1 = new JsonObject();
+        request1.add("request", request);
+
+        return request1;
     }
 
 
