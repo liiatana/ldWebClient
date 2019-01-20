@@ -35,7 +35,7 @@ public class ApplicationManager {
         //UserList.load(properties.getProperty("data.usersFilePath"));
         UserList.load(this);
         focusedUser=UserList.users.get(0);
-        InstructionList.load(this);
+        //InstructionList.load(this);
 
         //wd.get(properties.getProperty("web.baseUrl"));
 
@@ -46,8 +46,8 @@ public class ApplicationManager {
         //wd.quit();
     }
 
-    public RestApiHelper apiHelper() {
+    /*public RestApiHelper apiHelper() {
         return apiHelper();
-    }
+    }*/
 
 }

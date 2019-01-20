@@ -51,12 +51,14 @@ public class Users {
             //RestApiHelper uapi = new RestApiHelper(user, app);
             user.withUserApi(new RestApiHelper(user, app));
             JsonElement parsed = user.getUserApi().me();
-            user.withId(parsed.getAsJsonObject().get("effectiveUserId").getAsInt())
-                    .withUserName(parsed.getAsJsonObject().get("name").getAsString())
-                    .withisAdmin(parsed.getAsJsonObject().get("isAdmin").getAsBoolean());
-
+            user.withId(parsed.getAsJsonObject().get("effectiveUserId").getAsInt()) // id пользователя
+                    .withUserName(parsed.getAsJsonObject().get("name").getAsString()) //ФИО
+                    .withisAdmin(parsed.getAsJsonObject().get("isAdmin").getAsBoolean()); //если он админ
+            user.withUserTypes(user.getUserApi().instructionTypesInfo());
 
         }
+
+
 
     }
 

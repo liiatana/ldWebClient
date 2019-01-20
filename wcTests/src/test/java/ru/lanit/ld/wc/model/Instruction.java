@@ -2,6 +2,8 @@ package ru.lanit.ld.wc.model;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import ru.lanit.ld.wc.appmanager.ApplicationManager;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -318,7 +320,7 @@ public class Instruction {
         return request;
     }
 
-    @Override
+
     public String toString() {
         return "Instruction: {" +
                 "receiverID=" + Arrays.toString(receiverID) +

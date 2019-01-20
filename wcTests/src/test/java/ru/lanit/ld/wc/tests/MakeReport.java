@@ -20,11 +20,13 @@ public class MakeReport extends TestBase {
     @DataProvider
     public Object[][] Reports() {
 
-        instructionType type = app.InstructionList.getAnyTaskType(true); // если withClericalType=true, то тип с ДПО; если false= любой контрольный тип
+        UserInfo instructionInitiator= app.focusedUser; // app.UserList.anyUser(1);
+
+        instructionType type = instructionInitiator.getUserTypes().getAnyTaskType (true); // если withClericalType=true, то тип с ДПО; если false= любой контрольный тип
 
         Instruction instr = new Instruction(type);
         instr
-                .withInitiatorID(new int[]{app.focusedUser.getId()}) //отправитель=focusedUser (обязательный)
+                .withInitiatorID(new int[]{instructionInitiator.getId()}) //отправитель=focusedUser (обязательный)
                 //.withText("Контрольное сообщение, текст") // текст сообщения. Если не задано по умолчанию = текст из типа сообщения. Всегда к тексту добавляется + timestamp
                 .withComment("Ваш комментарий ...") // комментарий. Если не задано по умолчанию = не заполнено
                 //.withSubject("Ваша тема...") // тема сообщения. Если не задано по умолчанию = тема из типа сообщения
@@ -36,7 +38,7 @@ public class MakeReport extends TestBase {
                 .withExecutionDate(LocalDateTime.of(2019, 1, 26, 17, 00), 1)
                 .withReceiverID(app.UserList.anyUser(1).Ids());// получатель = любые пользователи (число = кол-во получателей)(обязательный)
 
-        instResponse = app.focusedUser.getUserApi().send(instr);
+        instResponse = instructionInitiator.getUserApi().send(instr);
         instr.withInstructionId(instResponse.getInstructionId());
 
         logger.info("instruction : " + instr.toString());
@@ -67,9 +69,10 @@ public class MakeReport extends TestBase {
 
         Assert.assertEquals(responseReport.message, "");
         Assert.assertTrue(responseReport.reportId>0);
-
-
-
     }
+
+
+
+
 }
 

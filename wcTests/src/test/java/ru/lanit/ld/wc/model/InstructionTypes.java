@@ -25,9 +25,9 @@ public class InstructionTypes {
         this.typeList = typeList;
     }
 
-    public void load (ApplicationManager app){
+    /*public void load (ApplicationManager app){
         this.typeList=app.focusedUser.getUserApi().instructionTypesInfo();
-    }
+    }*/
 
     public instructionType getType(int n) {
         return typeList.get(n);

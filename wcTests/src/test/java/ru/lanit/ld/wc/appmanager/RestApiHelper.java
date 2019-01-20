@@ -39,7 +39,7 @@ public class RestApiHelper {
 
     }
 
-    public ArrayList<instructionType> instructionTypesInfo() {
+    public InstructionTypes instructionTypesInfo() { //public ArrayList<instructionType> instructionTypesInfo() {
         String json = RestAssured
                 .given().header("Cookie", cookies)
                 .get(String.format("%sinstruction/typesinfo", apiPath))
@@ -62,7 +62,9 @@ public class RestApiHelper {
             iTypes.add(itype);
         }
 
-        return iTypes;
+        InstructionTypes types=new InstructionTypes(iTypes);
+
+        return types; //       return iTypes;
     }
 
     public instResponse instructionSavePrj(Instruction src) {//сохранить проект сообщения

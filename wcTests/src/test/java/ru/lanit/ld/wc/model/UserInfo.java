@@ -14,6 +14,8 @@ public class UserInfo {
     private boolean isAdmin;
     private RestApiHelper UserApi;
 
+    private InstructionTypes userTypes;
+
 
     public UserInfo() {
     }
@@ -77,6 +79,15 @@ public class UserInfo {
 
     public UserInfo withUserApi(RestApiHelper userApi) {
         this.UserApi = userApi;
+        return this;
+    }
+
+    public InstructionTypes getUserTypes() {
+        return userTypes;
+    }
+
+    public UserInfo withUserTypes(InstructionTypes userTypes) {
+        this.userTypes = userTypes;
         return this;
     }
 
