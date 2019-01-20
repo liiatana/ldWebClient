@@ -128,4 +128,7 @@ public class RestApiHelper {
     }
 
 
+    public reportResponse sendReport(Report report) {
+        return new reportResponse();
+    }
 }

@@ -72,7 +72,28 @@ public class MakeReport extends TestBase {
     }
 
 
+    @Test(dataProvider = "Reports")
+    public void sendReport(Reports newReports) {
 
+        //Reports newReports = new Reports(instr);
+
+        int reportNumber=0;
+
+        newReports.reports.get(reportNumber)
+                .withText("Текст моего отчета будет вот такой")
+                .withComment("Мой коммент к отчету, отличный от коммента по умолчанию")
+                .withSubject("И вот тема, отличная от темы по умолчанию");
+
+        //logger.info("report : " +  newReports.reports.get(reportNumber).toString());
+
+        UserInfo reportIitiator= app.UserList.getUserById(newReports.reports.get(reportNumber).getInitiatorID());
+
+        reportResponse responseReport = reportIitiator.getUserApi().sendReport(newReports.reports.get(reportNumber)) ;
+        logger.info("response : " +  responseReport.toString());
+
+        Assert.assertEquals(responseReport.message, "");
+        Assert.assertTrue(responseReport.reportId>0);
+    }
 
 }
 
