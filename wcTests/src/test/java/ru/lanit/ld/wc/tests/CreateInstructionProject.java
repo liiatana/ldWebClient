@@ -35,7 +35,8 @@ public class CreateInstructionProject extends TestBase {
     public Object[][] Task() {
 
         UserInfo instructionInitiator= app.focusedUser; // app.UserList.anyUser(1); //или любой
-        instructionType type = instructionInitiator.getUserTypes().getAnyTaskType (true); // если withClericalType=true, то тип с ДПО; если false= любой контрольный тип
+        instructionType type = instructionInitiator.getUserTypes().getAnyTaskType ();
+        // если withClericalType=true, то тип с ДПО; если false= без ДПО; если без прараметра - то все контрольные типы
 
         Instruction instr = new Instruction(type);
         instr
@@ -47,9 +48,9 @@ public class CreateInstructionProject extends TestBase {
                 //.setWithExecutive(true) // ответственный исполнитель=Да(true). По умолчанию = false.
                 //.setReportToExecutive(true) // отчеты ответственному исполнителю=Да. По умолчанию = false.
                 //.withSendType(1) // 0= паралелльная (веер)( по умолчанию), 1=последовательная (цепочка)
-                //.withReportReceiverID(app.UserList.anyUser(1).Ids()) // получаетль отчета=любой пользователь. Если не задано получатель отчета= инициатору.
-                .withExecutionDate( LocalDateTime.of(2019,1,06,17,00),1)
-                .withReceiverID(app.UserList.anyUser(2).Ids());// получатель = любые пользователи (число = кол-во получателей)(обязательный)
+                //.withReportReceiverID(app.UserList.anyUser(1).Ids()) // получаетль отчета=любой пользователь. Если не задано,то получатель отчета= инициатору.
+                .withExecutionDate( LocalDateTime.of(2019,5,06,17,00),1)// execIntervalType=1- в календарных, 0- в рабочих
+                .withReceiverID(app.UserList.anyUser(1).Ids());// получатель = любые пользователи (число = кол-во получателей)(обязательный)
 
         return new Object[][] {new Object[]{instr}};
     }

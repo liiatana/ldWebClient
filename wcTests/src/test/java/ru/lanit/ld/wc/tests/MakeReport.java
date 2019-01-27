@@ -22,7 +22,8 @@ public class MakeReport extends TestBase {
 
         UserInfo instructionInitiator= app.focusedUser; // app.UserList.anyUser(1);
 
-        instructionType type = instructionInitiator.getUserTypes().getAnyTaskType (true); // если withClericalType=true, то тип с ДПО; если false= любой контрольный тип
+        instructionType type = instructionInitiator.getUserTypes().getAnyTaskType (true);
+        // если withClericalType=true, то тип с ДПО; если false= без ДПО; если без прараметра - то все контрольные типы
 
         Instruction instr = new Instruction(type);
         instr
@@ -35,7 +36,7 @@ public class MakeReport extends TestBase {
                 .setReportToExecutive(true) // отчеты ответственному исполнителю=Да. По умолчанию = false.
                 //.withSendType(1) // 0= паралелльная (веер)( по умолчанию), 1=последовательная (цепочка)
                 //.withReportReceiverID(app.UserList.anyUser(1).Ids()) // получаетль отчета=любой пользователь. Если не задано получатель отчета= инициатору.
-                .withExecutionDate(LocalDateTime.of(2019, 1, 26, 17, 00), 1)
+                .withExecutionDate(LocalDateTime.of(2019, 1, 26, 17, 00), 1)// execIntervalType=1- в календарных, 0- в рабочих
                 .withReceiverID(app.UserList.anyUser(1).Ids());// получатель = любые пользователи (число = кол-во получателей)(обязательный)
 
         instResponse = instructionInitiator.getUserApi().send(instr);

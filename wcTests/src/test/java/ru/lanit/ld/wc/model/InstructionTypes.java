@@ -34,49 +34,45 @@ public class InstructionTypes {
     }
 
     public instructionType getAnyNoticeType() {
-        return getInstructionType(false,false);
+        return getInstructionType(false, -1);
     }
 
     public instructionType getAnyTaskType(boolean withClericalOperation) {
-
-         return getInstructionType(true,withClericalOperation);
+        int withClerical = withClericalOperation ? 1 : 0; // assigns 1 to i.
+        return getInstructionType(true, withClerical);
     }
 
-   /* public instructionType getAnyClericalTaskType() {
-        return getInstructionType(true,true);
-    }*/
+
+    public instructionType getAnyTaskType() {
+        return getInstructionType(true, -1);
+    }
 
 
-    private instructionType getInstructionType(boolean withUseControl,boolean clerical) {
+    private instructionType getInstructionType(boolean withUseControl, int withClerical) {
         List<instructionType> types = new ArrayList<instructionType>();
         for (int i = 0; i < this.typeList.size(); i++) {
-            if (this.typeList.get(i).getUseControl() == withUseControl) {
-                if(!clerical){
-                    types.add(this.typeList.get(i));
-                }else if(this.typeList.get(i).getOperationID()>0) {
-                    types.add(this.typeList.get(i));
+               switch (withClerical) {
+                    case 1:
+                        if (this.typeList.get(i).getOperationID() > 0 && this.typeList.get(i).getUseControl() == withUseControl) {
+                            //types.remove(types.size() - 1);
+                            types.add(this.typeList.get(i));
+                        }
+                        break;
+                    case 0:
+                        if (this.typeList.get(i).getOperationID() == 0 && this.typeList.get(i).getUseControl() == withUseControl) {
+                            types.add(this.typeList.get(i));
+                        }
+                        break;
+                    case -1:
+                        if (this.typeList.get(i).getUseControl() == withUseControl) {
+                            types.add(this.typeList.get(i));
+                        }
+                        break;
+
                 }
-
             }
+            Collections.shuffle(types);
+            return  new instructionType(types.subList(0, 1).get(0)) ;
         }
-        Collections.shuffle(types);
-        instructionType type = new instructionType();
-        type = types.subList(0, 1).get(0);
-        return type;
+
     }
-
-    /*public instructionType getAnyClericalTaskType() {
-        List<instructionType> types = new ArrayList<instructionType>();
-        for (int i = 0; i < this.typeList.size(); i++) {
-            if (this.typeList.get(i).getUseControl() == true && this.typeList.get(i).getOperationID()>0) {
-                types.add(this.typeList.get(i));
-            }
-        }
-        Collections.shuffle(types);
-        instructionType type = new instructionType();
-        type = types.subList(0, 1).get(0);
-        return type;
-
-    }*/
-
-}

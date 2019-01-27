@@ -34,6 +34,22 @@ public class instructionType {
         this.receiverTypes = receiverTypes;
     }
 
+    public instructionType(instructionType type) {
+        this.id = type.id;
+        this.name = type.name;
+        this.operationID = type.operationID;
+        this.operation = type.operation;
+        this.interval = type.interval;
+        this.reportFlag = type.reportFlag;
+        this.redirectAsControl = type.redirectAsControl;
+        this.useControl = type.useControl;
+        this.active = type.active;
+        this.checkReportTypeNegative = type.checkReportTypeNegative;
+        this.checkReportTypePositive = type.checkReportTypePositive;
+        this.receiverTypes = type.receiverTypes;
+    }
+
+
     public int getId() {
         return id;
 
