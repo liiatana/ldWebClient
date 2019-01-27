@@ -51,10 +51,7 @@ public class MakeReport extends TestBase {
     @Test(dataProvider = "Reports")
     public void createReport(Reports newReports) {
 
-        //Reports newReports = new Reports(instr);
-
         int reportNumber = 0;
-
         newReports.reports.get(reportNumber)
 
                 //.withComment("Мой коммент к отчету, отличный от коммента по умолчанию") // если не задать, то комментарий отчета=комментарию исходного сообщения
