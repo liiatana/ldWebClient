@@ -49,47 +49,24 @@ public class MakeReport extends TestBase {
     }
 
     @Test(dataProvider = "Reports")
-    public void createReportProject(Reports newReports) {
+    public void createReport(Reports newReports) {
 
         //Reports newReports = new Reports(instr);
 
         int reportNumber = 0;
 
         newReports.reports.get(reportNumber)
-                .withText("Текст ПРОЕКТА отчета")
-                .withComment("Коммент к проекту")
-                .withSubject("А тему я пока не придумал");
+
+                //.withComment("Мой коммент к отчету, отличный от коммента по умолчанию") // если не задать, то комментарий отчета=комментарию исходного сообщения
+                //.withSubject("И вот тема, отличная от темы по умолчанию")// если не задать, то тема отчета="Отчет:"+ тема исходного
+                //.withCompletionTypeId(false),// если true- позитивный( это значение по умолчанию), false = отчет с отказом
+                .withText("Текст моего отчета будет вот такой"); //Если текст отчета не задать, то по умолчанию текст отчета ,будет пустой
 
         //logger.info("report : " +  newReports.reports.get(reportNumber).toString());
 
         UserInfo reportIitiator = app.UserList.getUserById(newReports.reports.get(reportNumber).getInitiatorID());
 
-        reportResponse responseReport = reportIitiator.getUserApi().createReport(newReports.reports.get(reportNumber), "project");
-        logger.info("response : " + responseReport.toString());
-
-        Assert.assertEquals(responseReport.message, "");
-        Assert.assertTrue(responseReport.reportId > 0);
-    }
-
-
-    @Test(dataProvider = "Reports")
-    public void sendReport(Reports newReports) {
-
-        //Reports newReports = new Reports(instr);
-
-        int reportNumber = 0;
-
-        newReports.reports.get(reportNumber)
-                .withText("Текст моего отчета будет вот такой")
-                .withComment("Мой коммент к отчету, отличный от коммента по умолчанию")
-                .withSubject("И вот тема, отличная от темы по умолчанию")
-                .withCompletionTypeId(false);// если true- позитивный( это значение по умолчанию), false=отчет с отказом
-
-        //logger.info("report : " +  newReports.reports.get(reportNumber).toString());
-
-        UserInfo reportIitiator = app.UserList.getUserById(newReports.reports.get(reportNumber).getInitiatorID());
-
-        reportResponse responseReport = reportIitiator.getUserApi().createReport(newReports.reports.get(reportNumber), "send");
+        reportResponse responseReport = reportIitiator.getUserApi().createReport(newReports.reports.get(reportNumber), true);
         logger.info("response : " + responseReport.toString());
 
         Assert.assertEquals(responseReport.message, "");

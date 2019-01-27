@@ -107,9 +107,10 @@ public class RestApiHelper {
 
     }
 
-    public reportResponse createReportProject( Report src){// создать проект отчета
+    public reportResponse createReport(Report src, boolean send) {// создать проект отчета
 
        // src.withInitiatorID();
+        String operation = send ? "send" : "project";
 
         String res = RestAssured
                 .given().header("Cookie", cookies)
@@ -117,7 +118,7 @@ public class RestApiHelper {
                 //.cookie(cookies)
                 .body(src.toJson().toString())
                 .when()
-                .post(String.format("%sinstruction/%s/report/project", apiPath,src.getInstructionId()))
+                .post(String.format("%sinstruction/%s/report/%s", apiPath, src.getInstructionId(), operation))
                 .asString();
 
         JsonElement parsed = new JsonParser().parse(res);
@@ -128,8 +129,8 @@ public class RestApiHelper {
     }
 
 
-    public reportResponse sendReport(Report report) {
+    /*public reportResponse createReport(Report report) {
         //
         return new reportResponse();
-    }
+    }*/
 }

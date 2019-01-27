@@ -1,6 +1,5 @@
 package ru.lanit.ld.wc.model;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import java.time.LocalDateTime;
@@ -26,7 +25,7 @@ public class Report {
 
     public Report( Instruction instruction) {//UserInfo initiator, UserInfo receiver
         this.comment=instruction.getComment();
-        this.completionTypeId=1500;
+        this.completionTypeId = 1500; //1500= положительный отчет, 1501- отказ
         this.documentId = 0;
         this.executionDate = LocalDateTime.now();
         //this.fileIds
@@ -35,8 +34,8 @@ public class Report {
         this.operationTypeId=instruction.getOperationTypeId();
         //this.receiverId=receiver.getId();
         //this.reportId
-        this.subject=instruction.getSubject();
-        this.text=instruction.getText();
+        this.subject = "Отчет:" + instruction.getSubject();
+        this.text = "";//instruction.getText();
         this.InstructionId=instruction.getInstructionId();
     }
 
@@ -88,6 +87,12 @@ public class Report {
 
     public Report withText(String text) {
         this.text = text;
+        return this;
+    }
+
+    public Report withCompletionTypeId(boolean positive) {
+        int CompletionTypeId = positive ? 1500 : 1501;
+        this.completionTypeId = CompletionTypeId;
         return this;
     }
 
