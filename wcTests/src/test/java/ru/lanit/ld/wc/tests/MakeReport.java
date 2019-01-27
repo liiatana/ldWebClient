@@ -6,7 +6,6 @@ import org.testng.annotations.Test;
 import ru.lanit.ld.wc.model.*;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 
 public class MakeReport extends TestBase {
 
@@ -20,9 +19,9 @@ public class MakeReport extends TestBase {
     @DataProvider
     public Object[][] Reports() {
 
-        UserInfo instructionInitiator= app.focusedUser; // app.UserList.anyUser(1);
+        UserInfo instructionInitiator = app.focusedUser; // app.UserList.anyUser(1);
 
-        instructionType type = instructionInitiator.getUserTypes().getAnyTaskType (true);
+        instructionType type = instructionInitiator.getUserTypes().getAnyTaskType(true);
         // если withClericalType=true, то тип с ДПО; если false= без ДПО; если без прараметра - то все контрольные типы
 
         Instruction instr = new Instruction(type);
@@ -36,7 +35,7 @@ public class MakeReport extends TestBase {
                 .setReportToExecutive(true) // отчеты ответственному исполнителю=Да. По умолчанию = false.
                 //.withSendType(1) // 0= паралелльная (веер)( по умолчанию), 1=последовательная (цепочка)
                 //.withReportReceiverID(app.UserList.anyUser(1).Ids()) // получаетль отчета=любой пользователь. Если не задано получатель отчета= инициатору.
-                .withExecutionDate(LocalDateTime.of(2019, 1, 26, 17, 00), 1)// execIntervalType=1- в календарных, 0- в рабочих
+                .withExecutionDate(LocalDateTime.of(2019, 10, 26, 17, 00), 1)// execIntervalType=1- в календарных, 0- в рабочих
                 .withReceiverID(app.UserList.anyUser(1).Ids());// получатель = любые пользователи (число = кол-во получателей)(обязательный)
 
         instResponse = instructionInitiator.getUserApi().send(instr);
@@ -54,22 +53,22 @@ public class MakeReport extends TestBase {
 
         //Reports newReports = new Reports(instr);
 
-        int reportNumber=0;
+        int reportNumber = 0;
 
         newReports.reports.get(reportNumber)
-                .withText("Текст моего отчета будет вот такой")
-                .withComment("Мой коммент к отчету, отличный от коммента по умолчанию")
-                .withSubject("И вот тема, отличная от темы по умолчанию");
+                .withText("Текст ПРОЕКТА отчета")
+                .withComment("Коммент к проекту")
+                .withSubject("А тему я пока не придумал");
 
         //logger.info("report : " +  newReports.reports.get(reportNumber).toString());
 
-        UserInfo reportIitiator= app.UserList.getUserById(newReports.reports.get(reportNumber).getInitiatorID());
+        UserInfo reportIitiator = app.UserList.getUserById(newReports.reports.get(reportNumber).getInitiatorID());
 
-        reportResponse responseReport = reportIitiator.getUserApi().createReportProject(newReports.reports.get(reportNumber)) ;
-        logger.info("response : " +  responseReport.toString());
+        reportResponse responseReport = reportIitiator.getUserApi().createReport(newReports.reports.get(reportNumber), "project");
+        logger.info("response : " + responseReport.toString());
 
         Assert.assertEquals(responseReport.message, "");
-        Assert.assertTrue(responseReport.reportId>0);
+        Assert.assertTrue(responseReport.reportId > 0);
     }
 
 
@@ -78,22 +77,23 @@ public class MakeReport extends TestBase {
 
         //Reports newReports = new Reports(instr);
 
-        int reportNumber=0;
+        int reportNumber = 0;
 
         newReports.reports.get(reportNumber)
                 .withText("Текст моего отчета будет вот такой")
                 .withComment("Мой коммент к отчету, отличный от коммента по умолчанию")
-                .withSubject("И вот тема, отличная от темы по умолчанию");
+                .withSubject("И вот тема, отличная от темы по умолчанию")
+                .withCompletionTypeId(false);// если true- позитивный( это значение по умолчанию), false=отчет с отказом
 
         //logger.info("report : " +  newReports.reports.get(reportNumber).toString());
 
-        UserInfo reportIitiator= app.UserList.getUserById(newReports.reports.get(reportNumber).getInitiatorID());
+        UserInfo reportIitiator = app.UserList.getUserById(newReports.reports.get(reportNumber).getInitiatorID());
 
-        reportResponse responseReport = reportIitiator.getUserApi().sendReport(newReports.reports.get(reportNumber)) ;
-        logger.info("response : " +  responseReport.toString());
+        reportResponse responseReport = reportIitiator.getUserApi().createReport(newReports.reports.get(reportNumber), "send");
+        logger.info("response : " + responseReport.toString());
 
         Assert.assertEquals(responseReport.message, "");
-        Assert.assertTrue(responseReport.reportId>0);
+        Assert.assertTrue(responseReport.reportId > 0);
     }
 
 }
