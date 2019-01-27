@@ -38,7 +38,7 @@ public class MakeReport extends TestBase {
                 .withExecutionDate(LocalDateTime.of(2019, 10, 26, 17, 00), 1)// execIntervalType=1- в календарных, 0- в рабочих
                 .withReceiverID(app.UserList.anyUser(1).Ids());// получатель = любые пользователи (число = кол-во получателей)(обязательный)
 
-        instResponse = instructionInitiator.getUserApi().send(instr);
+        instResponse = instructionInitiator.getUserApi().createInstruction(instr, true);
         instr.withInstructionId(instResponse.getInstructionId());
 
         logger.info("instruction : " + instr.toString());
@@ -49,7 +49,7 @@ public class MakeReport extends TestBase {
     }
 
     @Test(dataProvider = "Reports")
-    public void createReport(Reports newReports) {
+    public void makeReport(Reports newReports) {
 
         int reportNumber = 0;
         newReports.reports.get(reportNumber)

@@ -67,36 +67,17 @@ public class RestApiHelper {
         return types; //       return iTypes;
     }
 
-    public instResponse instructionSavePrj(Instruction src) {//сохранить проект сообщения
 
+    public instResponse createInstruction(Instruction src, boolean send) { //сообщение
 
-        String res = RestAssured
-                .given().header("Cookie", cookies)
-                .contentType("application/json")
-                //.cookie(cookies)
-                .body(src.toJson(false).toString())
-                .when()
-                .post(String.format("%sinstruction/", apiPath))
-                .asString();
-
-        JsonElement parsed = new JsonParser().parse(res);
-        JsonObject asJsonObject = parsed.getAsJsonObject().getAsJsonObject("success");
-
-        return new Gson().fromJson(asJsonObject, new TypeToken<instResponse>() {
-        }.getType());
-
-    }
-
-    public instResponse send(Instruction src) { //отправить сообщение
-
-
+        String operation = send ? "send" : "";
         String res = RestAssured
                 .given().header("Cookie", cookies)
                 .contentType("application/json")
                 //.cookie(cookies)
                 .body(src.toJson(true).toString())
                 .when()
-                .post(String.format("%sinstruction/send", apiPath))
+                .post(String.format("%sinstruction/%s", apiPath, operation))
                 .asString();
 
         JsonElement parsed = new JsonParser().parse(res);
@@ -107,10 +88,9 @@ public class RestApiHelper {
 
     }
 
-    public reportResponse createReport(Report src, boolean send) {// создать проект отчета
+    public reportResponse createReport(Report src, boolean send) {// проект отчета
 
-       // src.withInitiatorID();
-        String operation = send ? "send" : "project";
+        String operation = send ? "createInstruction" : "project";
 
         String res = RestAssured
                 .given().header("Cookie", cookies)
@@ -128,9 +108,4 @@ public class RestApiHelper {
         }.getType());
     }
 
-
-    /*public reportResponse createReport(Report report) {
-        //
-        return new reportResponse();
-    }*/
 }

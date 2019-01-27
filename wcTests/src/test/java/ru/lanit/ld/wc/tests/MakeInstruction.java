@@ -1,10 +1,8 @@
 package ru.lanit.ld.wc.tests;
 
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import ru.lanit.ld.wc.appmanager.RestApiHelper;
 import ru.lanit.ld.wc.model.Instruction;
 import ru.lanit.ld.wc.model.UserInfo;
 import ru.lanit.ld.wc.model.instResponse;
@@ -12,10 +10,7 @@ import ru.lanit.ld.wc.model.instructionType;
 
 import java.time.LocalDateTime;
 
-import static org.hamcrest.CoreMatchers.equalToObject;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-public class CreateInstructionProject extends TestBase {
+public class MakeInstruction extends TestBase {
 
     @DataProvider
     public Object[][] Notice() {
@@ -36,7 +31,7 @@ public class CreateInstructionProject extends TestBase {
 
         UserInfo instructionInitiator= app.focusedUser; // app.UserList.anyUser(1); //или любой
         instructionType type = instructionInitiator.getUserTypes().getAnyTaskType ();
-        // если withClericalType=true, то тип с ДПО; если false= без ДПО; если без прараметра - то все контрольные типы
+                                       // если withClericalType=true, то тип с ДПО; если false= без ДПО; если без прараметра - то все контрольные типы
 
         Instruction instr = new Instruction(type);
         instr
@@ -50,25 +45,20 @@ public class CreateInstructionProject extends TestBase {
                 //.withSendType(1) // 0= паралелльная (веер)( по умолчанию), 1=последовательная (цепочка)
                 //.withReportReceiverID(app.UserList.anyUser(1).Ids()) // получаетль отчета=любой пользователь. Если не задано,то получатель отчета= инициатору.
                 .withExecutionDate( LocalDateTime.of(2019,5,06,17,00),1)// execIntervalType=1- в календарных, 0- в рабочих
-                .withReceiverID(app.UserList.anyUser(1).Ids());// получатель = любые пользователи (число = кол-во получателей)(обязательный)
+                .withReceiverID(app.UserList.anyUser(2).Ids());// получатель = любые пользователи (число = кол-во получателей)(обязательный)
 
         return new Object[][] {new Object[]{instr}};
     }
 
 
-    @Test(dataProvider = "Task", invocationCount = 1)
-    public void createInstructionProject(Instruction newInstruction) {
+    @Test(dataProvider = "Notice", invocationCount = 1)
+    public void makeInstruction(Instruction newInstruction) {
 
-        /*Instruction instr = new Instruction(app.InstructionList.getAnyTaskType(false));
-        instr.withInitiatorID(new int[] {app.focusedUser.getId()})
-             .withReceiverID(app.UserList.anyUser(3).Ids());*/
-
-        //instResponse response =    app.focusedUser.getUserApi().instructionSavePrj(newInstruction);
-
-        instResponse response=app.UserList.getUserById(newInstruction.getInitiatorID()).getUserApi().instructionSavePrj(newInstruction);
+        instResponse response = app.UserList.getUserById(newInstruction.getInitiatorID()).getUserApi().createInstruction(newInstruction, false);
 
         Assert.assertEquals(response.message, "");
-        Assert.assertTrue(response.instructionId>0);
+        Assert.assertTrue(response.instructionId > 0);
+        logger.info(response.toString());
     }
 
 
