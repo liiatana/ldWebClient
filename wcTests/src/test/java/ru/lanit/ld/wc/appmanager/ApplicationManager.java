@@ -49,7 +49,7 @@ public class ApplicationManager {
         //UserList.load(properties.getProperty("data.usersFilePath"));
         UserList.load(this);
         focusedUser = UserList.users.get(0);
-        //InstructionList.load(this);
+
         baseUrl=properties.getProperty("web.baseUrl");
 
 

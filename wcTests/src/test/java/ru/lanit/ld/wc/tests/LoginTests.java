@@ -13,9 +13,6 @@ public class LoginTests extends TestBase {
 
         LoginPage loginPage = new LoginPage();
         loginPage = open(app.baseUrl+"#/login", LoginPage.class);
-        //PageFactory.initElements(app.wd,loginPage);
-
-        // loginPage.init(app.wd);
         loginPage.LoginAs(app.focusedUser);
     }
 

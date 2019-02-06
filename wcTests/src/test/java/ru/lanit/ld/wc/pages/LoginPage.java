@@ -17,19 +17,14 @@ public class LoginPage {
       //private WebDriver driver;
 
     //логин
-    //@FindBy(how = How.XPATH, using = "(.//*[normalize-space(text()) and normalize-space(.)='v 2.0.24'])[1]/following::input[1]")
-   // private SelenideElement userLogin;
+    private SelenideElement userLogin=$(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='v 2.0.24'])[1]/following::input[1]"));
 
-    //       /html/body/div/div/div[12]/main/div/div/div/div/div/div/div[2]/form/div/div/div[1]/div/div/div[1]/div/input
 
     //пароль
-    //@FindBy(how = How.NAME, using = "input-10-1")
-    //private SelenideElement userPassword ;//= Selenide.$ ("input-10-1");
-    //private SelenideElement userPassword = $ ("div.flex:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > input:nth-child(2)");
+    private SelenideElement userPassword = $ (By.name("input-10-1"));
 
     //кнопка Войти
-    //@FindBy(how = How.XPATH, using = "(.//*[normalize-space(text()) and normalize-space(.)='v 2.0.24'])[1]/following::button[5]")
-    //private SelenideElement loginButton;
+    private SelenideElement loginButton=$(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='v 2.0.24'])[1]/following::button[5]"));
 
 
     //надпись Не удалось авторизоваться. Попробуйте еще раз!
@@ -49,18 +44,16 @@ public class LoginPage {
         //PageFactory.initElements(driver, this);
     }*/
 
-    public LoginPage() {
-
-    }
+    public LoginPage() { }
 
     public void LoginAs(UserInfo user) {
 
-        $(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='v 2.0.24'])[1]/following::input[1]")).sendKeys(user.getLogin());
-
-        $(By.name("input-10-1")).sendKeys(user.getPassword());
-
-        $(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='v 2.0.24'])[1]/following::button[5]")).click();
+        userLogin.sendKeys(user.getLogin());
+        userPassword.sendKeys(user.getPassword());
+        loginButton.click();
 
         //return page(LoginPage.class);
     }
+
+
 }
