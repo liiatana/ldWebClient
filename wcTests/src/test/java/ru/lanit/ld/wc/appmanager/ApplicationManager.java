@@ -1,17 +1,10 @@
 package ru.lanit.ld.wc.appmanager;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
+import com.codeborne.selenide.Configuration;
 import org.openqa.selenium.remote.BrowserType;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import ru.lanit.ld.wc.model.InstructionTypes;
 import ru.lanit.ld.wc.model.UserInfo;
 import ru.lanit.ld.wc.model.Users;
-import ru.lanit.ld.wc.pages.LoginPage;
 
 import java.io.File;
 import java.io.FileReader;
@@ -21,16 +14,17 @@ import java.util.Properties;
 
 public class ApplicationManager {
 
-    public WebDriver wd;
+    //public WebDriver wd;
     private String browser;
     public String baseUrl;
+    public String version;
 
 
     public final Properties properties;
     public Users UserList;
     public InstructionTypes InstructionList;
     public UserInfo focusedUser;
-    //public RestApiHelper focusedUserApi;
+
 
 
     public ApplicationManager(String browser) {
@@ -49,19 +43,17 @@ public class ApplicationManager {
         //UserList.load(properties.getProperty("data.usersFilePath"));
         UserList.load(this);
         focusedUser = UserList.users.get(0);
+        version = properties.getProperty("version");
+        baseUrl = properties.getProperty("web.baseUrl");
 
-        baseUrl=properties.getProperty("web.baseUrl");
-
-
-
-        /*if (Objects.equals(browser, BrowserType.FIREFOX)) {
-            wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true));
+        if (Objects.equals(browser, BrowserType.FIREFOX)) {
+            Configuration.browser = "firefox";
         } else if (Objects.equals(browser, BrowserType.CHROME)) {
-            wd = new ChromeDriver() ;
+            Configuration.browser = "chrome";
+        }
+        Configuration.baseUrl = baseUrl;
 
-        } else if ((Objects.equals(browser, BrowserType.IE))) {
-            wd = new InternetExplorerDriver();
-        }*/
+        //Configuration.browserSize ("");
 
     }
 
@@ -70,8 +62,5 @@ public class ApplicationManager {
         //wd.quit();
     }
 
-    /*public RestApiHelper apiHelper() {
-        return apiHelper();
-    }*/
 
 }

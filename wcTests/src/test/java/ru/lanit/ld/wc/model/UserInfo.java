@@ -20,6 +20,11 @@ public class UserInfo {
     public UserInfo() {
     }
 
+    public UserInfo(String login, String password) {
+        Login = login;
+        Password = password;
+    }
+
     public String getAuth() {
         return Auth;
     }
@@ -77,6 +82,12 @@ public class UserInfo {
         return UserApi;
     }
 
+
+    public String getLastName() {
+
+        return this.getUserName().split(" ")[0].toUpperCase();
+    }
+
     public UserInfo withUserApi(RestApiHelper userApi) {
         this.UserApi = userApi;
         return this;
@@ -90,6 +101,10 @@ public class UserInfo {
         this.userTypes = userTypes;
         return this;
     }
+
+
+
+
 
     @Override
     public boolean equals(Object o) {
@@ -105,5 +120,13 @@ public class UserInfo {
     public int hashCode() {
 
         return Objects.hash(id, UserName, Password);
+    }
+
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "Login='" + Login + '\'' +
+                ", Password='" + Password + '\'' +
+                '}';
     }
 }

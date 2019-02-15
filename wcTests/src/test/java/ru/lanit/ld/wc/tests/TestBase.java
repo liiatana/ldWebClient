@@ -1,5 +1,7 @@
 package ru.lanit.ld.wc.tests;
 
+import com.codeborne.selenide.Configuration;
+import org.aspectj.lang.annotation.Before;
 import org.openqa.selenium.remote.BrowserType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +13,8 @@ import ru.lanit.ld.wc.appmanager.ApplicationManager;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
+
+import static com.codeborne.selenide.Selenide.sleep;
 
 //import org.testng.annotations.AfterMethod;
 //import org.testng.annotations.BeforeMethod;
@@ -27,12 +31,15 @@ public class TestBase {
     //@BeforeMethod // если beforemethod-то запускается перед каждым тестовым методом lecture 5.1
     @BeforeSuite
     public void setUp() throws Exception {
+
         app.init();
+        //Configuration.browser = "firefox";
     }
 
 
     @AfterSuite(alwaysRun = true)
     public void tearDown() {
+
         app.stop();
     }
 
@@ -47,8 +54,9 @@ public class TestBase {
     @AfterMethod(alwaysRun = true) //@AfterMethod //после каждого меnода
     public void logTestStop(Method m) {
         logger.info("end " + m.getName());
-
+        sleep(2000);
     }
+
 
 }
 

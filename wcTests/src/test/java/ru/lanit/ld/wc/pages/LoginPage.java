@@ -3,56 +3,60 @@ package ru.lanit.ld.wc.pages;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.How;
-import org.openqa.selenium.support.PageFactory;
 import ru.lanit.ld.wc.appmanager.ApplicationManager;
 import ru.lanit.ld.wc.model.UserInfo;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.page;
 
 public class LoginPage {
 
-      //private WebDriver driver;
+    //private WebDriver driver;
 
     //логин
-    private SelenideElement userLogin=$(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='v 2.0.24'])[1]/following::input[1]"));
-
+    private SelenideElement userLogin;
 
     //пароль
-    private SelenideElement userPassword = $ (By.name("input-10-1"));
+    private SelenideElement userPassword = $(By.name("input-10-1"));
 
     //кнопка Войти
-    private SelenideElement loginButton=$(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='v 2.0.24'])[1]/following::button[5]"));
-
+    private SelenideElement loginButton;
 
     //надпись Не удалось авторизоваться. Попробуйте еще раз!
-    //@FindBy(how = How.CLASS_NAME, using = "error-message")
-    //private SelenideElement errorText;
+    public SelenideElement errorText;
 
-    /*public LoginPage LoginAs(UserInfo user) {
+    public LoginPage(ApplicationManager app) {
 
-        //userPassword.sendKeys(user.getPassword());
+        userLogin = $(By.xpath(String.format("(.//*[normalize-space(text()) and normalize-space(.)='v %s'])[1]/following::input[1]", app.version)));
+        loginButton = $(By.xpath(String.format("(.//*[normalize-space(text()) and normalize-space(.)='v %s'])[1]/following::button[5]", app.version)));
+        errorText = $(By.xpath(String.format("(.//*[normalize-space(text()) and normalize-space(.)='v %s'])[1]/following::span[2]", app.version)));
+    }
+
+    public Instructions LoginAs(UserInfo user) {
+
+        fillLoginInfomation(user);
+        return page(Instructions.class);
+    }
+
+    public LoginPage failedLoginAs(UserInfo user) {
+
+        fillLoginInfomation(user);
+        return this;
+    }
+
+    private void fillLoginInfomation(UserInfo user) {
+
         //userLogin.sendKeys(user.getLogin());
-        //loginButton.click();
-        return page(LoginPage.class);
-    }*/
-
-    /*public void init(final WebDriver driver) {
-        //this.driver = driver;
-        //PageFactory.initElements(driver, this);
-    }*/
-
-    public LoginPage() { }
-
-    public void LoginAs(UserInfo user) {
-
-        userLogin.sendKeys(user.getLogin());
+        userLogin.setValue(user.getLogin());
         userPassword.sendKeys(user.getPassword());
         loginButton.click();
+    }
 
-        //return page(LoginPage.class);
+
+    public LoginPage open(String url) {
+        Selenide.open(url);
+        return this;
+
     }
 
 
