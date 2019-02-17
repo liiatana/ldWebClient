@@ -1,6 +1,7 @@
 package ru.lanit.ld.wc.tests;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import org.aspectj.lang.annotation.Before;
 import org.openqa.selenium.remote.BrowserType;
 import org.slf4j.Logger;
@@ -54,7 +55,8 @@ public class TestBase {
     @AfterMethod(alwaysRun = true) //@AfterMethod //после каждого меnода
     public void logTestStop(Method m) {
         logger.info("end " + m.getName());
-        sleep(2000);
+        sleep(3000);
+        Selenide.refresh();
     }
 
 

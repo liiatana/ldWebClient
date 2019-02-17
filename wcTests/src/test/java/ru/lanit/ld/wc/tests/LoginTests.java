@@ -34,6 +34,7 @@ public class LoginTests extends TestBase {
 
         LoginPage lp=new LoginPage(app);
         LoginPage loginPage=lp.open("#/login").failedLoginAs(badUser);
+        sleep(1000);
         Assert.assertTrue(loginPage.errorText.isDisplayed());
         Assert.assertEquals("Не удалось авторизоваться. Попробуйте еще раз!",loginPage.errorText.getText());
 

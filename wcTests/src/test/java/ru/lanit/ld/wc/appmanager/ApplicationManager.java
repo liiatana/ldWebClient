@@ -26,7 +26,6 @@ public class ApplicationManager {
     public UserInfo focusedUser;
 
 
-
     public ApplicationManager(String browser) {
 
         properties = new Properties();
@@ -52,7 +51,7 @@ public class ApplicationManager {
             Configuration.browser = "chrome";
         }
         Configuration.baseUrl = baseUrl;
-
+        Configuration.timeout = 6000;
         //Configuration.browserSize ("");
 
     }
