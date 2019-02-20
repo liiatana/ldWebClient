@@ -108,4 +108,20 @@ public class RestApiHelper {
         }.getType());
     }
 
+    public void makeHomeAsLastUrl() {
+
+        JsonObject lastVisitedUrl = new JsonObject();
+        lastVisitedUrl.addProperty("lastVisitedUrl", "/instructions/2101");
+
+        /*Response response = */
+        RestAssured
+                .given().header("Cookie", cookies)
+                .contentType("application/json")
+                .body(lastVisitedUrl.toString())
+                .when()
+                .put(String.format("%sme/lasturl", apiPath));
+
+    }
+
+
 }

@@ -26,7 +26,7 @@ public class TestBase {
 
 
     protected static final ApplicationManager app
-            = new ApplicationManager(System.getProperty("browser", BrowserType.FIREFOX)); // в настроках запуска теста нужно дописать  -Dbrowser=firefox( в поле VM)
+            = new ApplicationManager(System.getProperty("browser", BrowserType.CHROME)); // в настроках запуска теста нужно дописать  -Dbrowser=firefox( в поле VM)
 
     /*protected static final ApplicationManager app = new ApplicationManager (BrowserType.CHROME);*/
     //@BeforeMethod // если beforemethod-то запускается перед каждым тестовым методом lecture 5.1
@@ -51,13 +51,13 @@ public class TestBase {
 
     }
 
-
     @AfterMethod(alwaysRun = true) //@AfterMethod //после каждого меnода
     public void logTestStop(Method m) {
         logger.info("end " + m.getName());
         sleep(3000);
-        Selenide.refresh();
+       // Selenide.refresh();
     }
+
 
 
 }

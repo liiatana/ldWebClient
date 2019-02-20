@@ -1,15 +1,20 @@
 package ru.lanit.ld.wc.pages;
 
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 
 public class SideBar {
 
-    private SelenideElement HomeButton = $(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Главная'])[1]/following::i[1]"));
-    private SelenideElement InstructionSection = $(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Главная'])[1]/following::i[2]"));
-    private SelenideElement DocsSection = $(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Главная'])[1]/following::i[3]"));
+
+
+    private SelenideElement HomeButton = $(By.xpath("(//div[@class=\"my-3\"])[1]"));
+    private SelenideElement InstructionSection = $(By.xpath("//div[@class=\"my-3 menu-item-active primary\"]"));
+    private SelenideElement DocsSection = $(By.xpath("(//div[@class=\"my-3\"])[2]"));
+
     private SelenideElement ReportsSection = $(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Главная'])[1]/following::i[4]"));
     private SelenideElement HistorySection = $(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Главная'])[1]/following::i[5]"));
     private SelenideElement FavoritesSection = $(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Главная'])[1]/following::i[6]"));
@@ -21,8 +26,9 @@ public class SideBar {
         HomeButton.click();
     }
 
-    public void goToInstructions() {
+    public Instructions goToInstructions() {
         InstructionSection.click();
+        return new Instructions();
     }
 
     public void goToDocs() {

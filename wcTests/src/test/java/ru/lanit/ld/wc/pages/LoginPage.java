@@ -27,8 +27,10 @@ public class LoginPage {
 
     public LoginPage(ApplicationManager app) {
 
-        userLogin = $(By.xpath(String.format("(.//*[normalize-space(text()) and normalize-space(.)='v %s'])[1]/following::input[1]", app.version)));
+        //userLogin = $(By.xpath(String.format("(.//*[normalize-space(text()) and normalize-space(.)='v %s'])[1]/following::input[1]", app.version)));
+        userLogin=$(By.xpath("//input[@aria-label=\"Логин\"]"));
         loginButton = $(By.xpath(String.format("(.//*[normalize-space(text()) and normalize-space(.)='v %s'])[1]/following::button[5]", app.version)));
+        //loginButton=$(By.xpath("//*[@id=\"main-content\"]/div/div/div[1]/div/div/div/div[2]/form/div/div/div[3]/button[1]"));
         errorText = $(By.xpath(String.format("(.//*[normalize-space(text()) and normalize-space(.)='v %s'])[1]/following::span[2]", app.version)));
     }
 

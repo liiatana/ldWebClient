@@ -38,6 +38,8 @@ public class LoginTests extends TestBase {
         Assert.assertTrue(loginPage.errorText.isDisplayed());
         Assert.assertEquals("Не удалось авторизоваться. Попробуйте еще раз!",loginPage.errorText.getText());
 
+        Selenide.refresh();
+
     }
 
 

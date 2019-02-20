@@ -42,6 +42,9 @@ public class ApplicationManager {
         //UserList.load(properties.getProperty("data.usersFilePath"));
         UserList.load(this);
         focusedUser = UserList.users.get(0);
+
+        focusedUser.getUserApi().makeHomeAsLastUrl();
+
         version = properties.getProperty("version");
         baseUrl = properties.getProperty("web.baseUrl");
 
@@ -53,12 +56,14 @@ public class ApplicationManager {
         Configuration.baseUrl = baseUrl;
         Configuration.timeout = 6000;
         //Configuration.browserSize ("");
+        //Configuration.browserVersion=""
 
     }
 
 
     public void stop() {
         //wd.quit();
+        focusedUser.getUserApi().makeHomeAsLastUrl();
     }
 
 
