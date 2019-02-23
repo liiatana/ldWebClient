@@ -112,7 +112,7 @@ public class RestApiHelper {
     public void makeHomeAsLastUrl() {
 
         JsonObject lastVisitedUrl = new JsonObject();
-        lastVisitedUrl.addProperty("lastVisitedUrl", "/instructions/2101");
+        lastVisitedUrl.addProperty("lastVisitedUrl", "/instructions/1999");
 
         /*Response response = */
         RestAssured
@@ -124,7 +124,7 @@ public class RestApiHelper {
 
     }
 
-    public List<Instruction> getFolderList (int Folder_ID){
+    public folderList getFolderList (int Folder_ID){
 
         String data = "{\"top\": \"10\",\"skip\":0,\"searchText\":null,\"members\":null,\"filterId\":null,\"filterValues\":null } ";
 
@@ -137,13 +137,7 @@ public class RestApiHelper {
                 .asString();
 
         JsonElement parsed = new JsonParser().parse(res);
-
-        List<Instruction> folderList= new ArrayList<>();
-        for (int i=0;i<= parsed.getAsJsonObject().size()-1;i++){
-            Instruction inst = new Instruction(parsed);
-            folderList.add(i,inst);
-        }
-        return folderList;
+        return new folderList(parsed);
 
     }
 

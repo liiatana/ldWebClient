@@ -4,6 +4,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.lanit.ld.wc.model.Instruction;
+import ru.lanit.ld.wc.model.folderList;
 import ru.lanit.ld.wc.pages.Instructions;
 import ru.lanit.ld.wc.pages.LoginPage;
 import ru.lanit.ld.wc.pages.ViewInstruction;
@@ -15,12 +16,12 @@ import static com.codeborne.selenide.Selenide.sleep;
 
 public class ViewInstructionsTests extends TestBase {
     Instructions inst;
-    List<Instruction> folderList= new ArrayList<>();
+    folderList list;
 
     @BeforeTest
     public void before() {
 
-        folderList=app.focusedUser.getUserApi().getFolderList(1999);
+        list=app.focusedUser.getUserApi().getFolderList(1999);
         LoginPage lp = new LoginPage(app);
         inst = lp.open("#/login").LoginAs(app.focusedUser);
         sleep(10000);
@@ -30,7 +31,7 @@ public class ViewInstructionsTests extends TestBase {
     @Test()
     public void ListViewTest() {
 
-        inst.SideBar.goHome();
+        //inst.SideBar.goHome();
         inst.ActionPanel.PreviewIs("Off");
 
 
@@ -46,8 +47,12 @@ public class ViewInstructionsTests extends TestBase {
     @Test(dataProvider = "InstructionIds")
     public void ListViewWithPreviewTest(int InstructionID) {
 
-        inst.SideBar.goHome();
+        //inst.SideBar.goHome();
         inst.ActionPanel.PreviewIs("On");
+
+        int nnum=list.getInstructionNumInFolder(InstructionID);
+        inst.InstructionList.get(nnum).click();
+        sleep(3000);
 
     }
 
