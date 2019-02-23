@@ -8,13 +8,13 @@ public class Instructions {
     public SideBar SideBar;
     public Header Header;
     public ActionPanel ActionPanel;
-    public InstructionBlocks Blocks;
+
 
     public Instructions() {
         SideBar= new SideBar();
         Header= new Header();
         ActionPanel=new ActionPanel();
-        Blocks=new InstructionBlocks();
+
     }
     public ViewInstruction openInstructionView(int ID) {
         Selenide.open(String.format("#/instruction/%s",ID));

@@ -7,7 +7,8 @@ repositories{
 
 dependencies{
     compile 'org.testng:testng:7.0.0-beta1'
-    compile 'com.codeborne:selenide:5.0.1'
+    
+    implementation 'com.codeborne:selenide:5.2.0'
     compile 'io.qameta.allure:allure-testng:2.8.1'
     compile 'io.qameta.allure:allure-selenide:2.8.1'
     compile 'com.jayway.restassured:rest-assured:2.9.0'//библиотека для работы c rest, см https://github.com/rest-assured/rest-assured

@@ -10,6 +10,7 @@ import com.jayway.restassured.response.Response;
 import ru.lanit.ld.wc.model.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RestApiHelper {
 
@@ -120,6 +121,29 @@ public class RestApiHelper {
                 .body(lastVisitedUrl.toString())
                 .when()
                 .put(String.format("%sme/lasturl", apiPath));
+
+    }
+
+    public List<Instruction> getFolderList (int Folder_ID){
+
+        String data = "{\"top\": \"10\",\"skip\":0,\"searchText\":null,\"members\":null,\"filterId\":null,\"filterValues\":null } ";
+
+        String res = RestAssured
+                .given().header("Cookie", cookies)
+                .contentType("application/json")
+                .body(data)
+                .when()
+                .post(String.format("%sinstructions/folder/%s/instructions", apiPath, Folder_ID))
+                .asString();
+
+        JsonElement parsed = new JsonParser().parse(res);
+
+        List<Instruction> folderList= new ArrayList<>();
+        for (int i=0;i<= parsed.getAsJsonObject().size()-1;i++){
+            Instruction inst = new Instruction(parsed);
+            folderList.add(i,inst);
+        }
+        return folderList;
 
     }
 

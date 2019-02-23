@@ -1,6 +1,7 @@
 package ru.lanit.ld.wc.model;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import ru.lanit.ld.wc.appmanager.ApplicationManager;
 
@@ -35,10 +36,17 @@ public class Instruction {
     //private boolean hasPlugin; //
     //public String signServiceUrl;
 
-
     private int InstructionId;
 
+    public Instruction(JsonElement parsed) {
+            //тип сообщения
+       // this.instructionTypeId=
+        //        parsed.getAsJsonObject().getAsJsonArray("items").get(0).getAsJsonObject().get("instructionType").getAsJsonObject().get("id").getAsInt();
+            //Id сообщения
+        this.InstructionId=
+                parsed.getAsJsonObject().getAsJsonArray("items").get(0).getAsJsonObject().get("instruction").getAsJsonObject().get("id").getAsInt();
 
+    }
 
     public Instruction(instructionType type) {
 
