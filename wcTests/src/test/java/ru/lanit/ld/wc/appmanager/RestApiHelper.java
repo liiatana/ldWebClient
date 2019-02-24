@@ -10,7 +10,6 @@ import com.jayway.restassured.response.Response;
 import ru.lanit.ld.wc.model.*;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class RestApiHelper {
 
@@ -124,9 +123,9 @@ public class RestApiHelper {
 
     }
 
-    public folderList getFolderList (int Folder_ID){
+    public FolderList getFolderList (int Folder_ID){
 
-        String data = "{\"top\": \"10\",\"skip\":0,\"searchText\":null,\"members\":null,\"filterId\":null,\"filterValues\":null } ";
+        String data = "{\"top\": \"50\",\"skip\":0,\"searchText\":null,\"members\":null,\"filterId\":null,\"filterValues\":null } ";
 
         String res = RestAssured
                 .given().header("Cookie", cookies)
@@ -134,10 +133,13 @@ public class RestApiHelper {
                 .body(data)
                 .when()
                 .post(String.format("%sinstructions/folder/%s/instructions", apiPath, Folder_ID))
+                //instructions/folder/2107/instructions
                 .asString();
 
         JsonElement parsed = new JsonParser().parse(res);
-        return new folderList(parsed);
+        FolderList folderList= new FolderList(parsed);
+
+        return folderList;
 
     }
 

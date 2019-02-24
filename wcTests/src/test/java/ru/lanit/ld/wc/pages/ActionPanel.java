@@ -9,22 +9,26 @@ import static com.codeborne.selenide.Selenide.sleep;
 
 public class ActionPanel {
 
-    private SelenideElement PreviewOn =$(By.xpath("(//button[@value='1'])[2]"));
-    private SelenideElement PreviewOff =$(By.xpath("//button[@value='0']"));
+    private SelenideElement PreviewOn = $(By.xpath("(//button[@value='1'])[2]"));
+    private SelenideElement PreviewOff = $(By.xpath("//button[@value='0']"));
 
     public void PreviewIs(String state) {
 
         switch (state) {
             case "On":
-                //if (PreviewOff.isSelected()) {
-                    PreviewOn.click();
-                //}
+
+                PreviewOn.click();
+                sleep(1000);
+                break;
+
             case "Off":
-                //if (PreviewOff.isSelected()) {
-                    PreviewOff.click();
-                //}
-                ;
+
+                PreviewOff.click();
+                sleep(3000);
+                break;
+
+
         }
-        sleep(4000);
+
     }
 }

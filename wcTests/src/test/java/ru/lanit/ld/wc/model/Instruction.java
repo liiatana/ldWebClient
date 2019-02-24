@@ -38,13 +38,13 @@ public class Instruction {
 
     private int InstructionId;
 
-    public Instruction(JsonElement parsed) {
+    public Instruction(JsonElement parsed, int InstructionNum) {
             //тип сообщения
        // this.instructionTypeId=
         //        parsed.getAsJsonObject().getAsJsonArray("items").get(0).getAsJsonObject().get("instructionType").getAsJsonObject().get("id").getAsInt();
             //Id сообщения
         this.InstructionId=
-                parsed.getAsJsonObject().getAsJsonArray("items").get(0).getAsJsonObject().get("instruction").getAsJsonObject().get("id").getAsInt();
+                parsed.getAsJsonObject().getAsJsonArray("items").get(InstructionNum).getAsJsonObject().get("instruction").getAsJsonObject().get("id").getAsInt();
 
     }
 

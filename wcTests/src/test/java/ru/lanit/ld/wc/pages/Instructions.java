@@ -4,8 +4,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.By;
 
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.page;
+import static com.codeborne.selenide.Selenide.*;
 
 public class Instructions {
     public SideBar SideBar;
@@ -22,7 +21,14 @@ public class Instructions {
     }
     public ViewInstruction openInstructionView(int ID) {
         Selenide.open(String.format("#/instruction/%s",ID));
+        sleep(3000);
         return page(ViewInstruction.class);
+    }
+
+    public Instructions goToFolder(int Folder_ID){
+        Selenide.open(String.format("#/instructions/%s",Folder_ID));
+        sleep(3000);
+        return this;
     }
 
 
