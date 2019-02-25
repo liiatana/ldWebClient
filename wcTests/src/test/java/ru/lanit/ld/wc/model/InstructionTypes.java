@@ -51,28 +51,42 @@ public class InstructionTypes {
     private instructionType getInstructionType(boolean withUseControl, int withClerical) {
         List<instructionType> types = new ArrayList<instructionType>();
         for (int i = 0; i < this.typeList.size(); i++) {
-               switch (withClerical) {
-                    case 1:
-                        if (this.typeList.get(i).getOperationID() > 0 && this.typeList.get(i).getUseControl() == withUseControl) {
-                            //types.remove(types.size() - 1);
-                            types.add(this.typeList.get(i));
-                        }
-                        break;
-                    case 0:
-                        if (this.typeList.get(i).getOperationID() == 0 && this.typeList.get(i).getUseControl() == withUseControl) {
-                            types.add(this.typeList.get(i));
-                        }
-                        break;
-                    case -1:
-                        if (this.typeList.get(i).getUseControl() == withUseControl) {
-                            types.add(this.typeList.get(i));
-                        }
-                        break;
+            switch (withClerical) {
+                case 1:
+                    if (this.typeList.get(i).getOperationID() > 0 && this.typeList.get(i).getUseControl() == withUseControl) {
+                        //types.remove(types.size() - 1);
+                        types.add(this.typeList.get(i));
+                    }
+                    break;
+                case 0:
+                    if (this.typeList.get(i).getOperationID() == 0 && this.typeList.get(i).getUseControl() == withUseControl) {
+                        types.add(this.typeList.get(i));
+                    }
+                    break;
+                case -1:
+                    if (this.typeList.get(i).getUseControl() == withUseControl) {
+                        types.add(this.typeList.get(i));
+                    }
+                    break;
 
-                }
             }
-            Collections.shuffle(types);
-            return  new instructionType(types.subList(0, 1).get(0)) ;
         }
-
+        Collections.shuffle(types);
+        return new instructionType(types.subList(0, 1).get(0));
     }
+
+    public String getInstructionTypeNameById(int instructionTypeId) {
+
+        int i = 0;
+
+        do {
+            if (this.typeList.get(i).getId() == instructionTypeId) {
+                return this.typeList.get(i).getName();
+            }
+            i++;
+        } while (i < this.typeList.size());
+
+        return null;
+    }
+
+}

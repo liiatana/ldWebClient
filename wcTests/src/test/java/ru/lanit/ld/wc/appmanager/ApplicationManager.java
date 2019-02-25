@@ -54,7 +54,7 @@ public class ApplicationManager {
             Configuration.browser = "chrome";
         }
         Configuration.baseUrl = baseUrl;
-        Configuration.timeout = 6000;
+        Configuration.timeout = 10000;
         //Configuration.browserSize ("");
         //Configuration.browserVersion=""
 

@@ -11,6 +11,7 @@ import java.util.Arrays;
 
 public class Instruction {
 
+
     private int[] receiverID;//": 40808836,
     private String text;//"text": "Прошу согласовать документ.",
     private String subject;       // "subject": "На согласование",
@@ -33,6 +34,7 @@ public class Instruction {
     private int instructionTypeId;
     private int operationTypeId;
 
+
     //private boolean hasPlugin; //
     //public String signServiceUrl;
 
@@ -46,6 +48,10 @@ public class Instruction {
         this.InstructionId=
                 parsed.getAsJsonObject().getAsJsonArray("items").get(InstructionNum).getAsJsonObject().get("instruction").getAsJsonObject().get("id").getAsInt();
 
+    }
+
+    public int getInstructionTypeId() {
+        return instructionTypeId;
     }
 
     public Instruction(instructionType type) {
@@ -218,6 +224,9 @@ public class Instruction {
         InstructionId = instructionId;
         return this;
     }
+
+
+
 
     public JsonObject toJson(boolean send) {
         JsonObject mainInstruction = new JsonObject();

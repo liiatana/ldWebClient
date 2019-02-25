@@ -13,6 +13,8 @@ public class Instructions {
 
     public ElementsCollection InstructionList = $$(By.xpath("//div[@class=\"data-iteraror marginless-list\"]/*"));
 
+
+
     public Instructions() {
         SideBar= new SideBar();
         Header= new Header();
@@ -27,7 +29,7 @@ public class Instructions {
 
     public Instructions goToFolder(int Folder_ID){
         Selenide.open(String.format("#/instructions/%s",Folder_ID));
-        sleep(3000);
+        sleep(4000);
         return this;
     }
 

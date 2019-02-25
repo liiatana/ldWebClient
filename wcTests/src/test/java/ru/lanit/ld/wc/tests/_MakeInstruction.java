@@ -10,7 +10,7 @@ import ru.lanit.ld.wc.model.instructionType;
 
 import java.time.LocalDateTime;
 
-public class MakeInstruction extends TestBase {
+public class _MakeInstruction extends TestBase {
 
     @DataProvider
     public Object[][] Notice() {

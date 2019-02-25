@@ -7,7 +7,7 @@ import ru.lanit.ld.wc.model.*;
 
 import java.time.LocalDateTime;
 
-public class MakeReport extends TestBase {
+public class _MakeReport extends TestBase {
 
     /*private instructionType type=new instructionType();
     private Instruction instr;
