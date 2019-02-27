@@ -19,6 +19,8 @@ public class ActionPanel {
     private ElementsCollection InstructionTypes = //$$(By.xpath("//div[@class=\"v-menu__content theme--light menuable__content__active\"]/div[@role=\"list\"]"));
 $$(By.xpath("//div[@class=\"v-menu__content theme--light menuable__content__active\"]/div[@role=\"list\"]/*/a"));
 
+    public SelenideElement refreshButton=$(By.xpath("(//span[@class=\"v-tooltip v-tooltip--bottom\"])[3]"));
+
     public void PreviewIs(String state) {
 
         switch (state) {

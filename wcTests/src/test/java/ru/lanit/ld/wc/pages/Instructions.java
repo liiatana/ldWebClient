@@ -10,8 +10,11 @@ public class Instructions {
     public SideBar SideBar;
     public Header Header;
     public ActionPanel ActionPanel;
+    public  CancelOK_Dialog Dialog;
 
-    public ElementsCollection InstructionList = $$(By.xpath("//div[@class=\"data-iteraror marginless-list\"]/*"));
+    public ElementsCollection InstructionListWithPreview = $$(By.xpath("//div[@class=\"data-iteraror marginless-list\"]/*"));
+
+    public ElementsCollection InstructionListWithoutPreview=$$(By.xpath("//div[@class=\"layout list-item\"]"));
 
 
 
@@ -19,6 +22,7 @@ public class Instructions {
         SideBar= new SideBar();
         Header= new Header();
         ActionPanel=new ActionPanel();
+        Dialog=new CancelOK_Dialog();
 
     }
     public ViewInstruction openInstructionView(int ID) {

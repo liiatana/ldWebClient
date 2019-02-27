@@ -38,7 +38,7 @@ public class ViewInstructionsTests extends TestBase {
 
         int nnum = list.getInstructionNumInFolder(InstructionID);
 
-        inst.InstructionList.get(nnum).click();
+        inst.InstructionListWithPreview.get(nnum).click();
         sleep(2000);
 
         inst.ActionPanel.PreviewIs("Off");

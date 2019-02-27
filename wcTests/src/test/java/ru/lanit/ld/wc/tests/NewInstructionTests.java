@@ -1,7 +1,5 @@
 package ru.lanit.ld.wc.tests;
 
-import com.codeborne.selenide.Condition;
-import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -9,8 +7,6 @@ import ru.lanit.ld.wc.model.*;
 import ru.lanit.ld.wc.pages.Instructions;
 import ru.lanit.ld.wc.pages.LoginPage;
 import ru.lanit.ld.wc.pages.NewInstructionPage;
-
-import java.time.LocalDateTime;
 
 import static com.codeborne.selenide.Selenide.sleep;
 
@@ -55,7 +51,7 @@ public class NewInstructionTests extends  TestBase{
         inst.goToFolder(2102);
 
         inst.ActionPanel.PreviewIs("On");
-        inst.InstructionList.get(0).click();
+        inst.InstructionListWithPreview.get(0).click();
         sleep(2000);
     }
 
@@ -102,7 +98,7 @@ public class NewInstructionTests extends  TestBase{
         sleep(4000);
 
         inst.ActionPanel.PreviewIs("On");
-        inst.InstructionList.get(0).click();
+        inst.InstructionListWithPreview.get(0).click();
         sleep(10000);
     }
 
