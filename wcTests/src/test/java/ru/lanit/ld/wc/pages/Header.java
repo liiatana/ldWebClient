@@ -1,12 +1,12 @@
 package ru.lanit.ld.wc.pages;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 import ru.lanit.ld.wc.appmanager.ApplicationManager;
 import ru.lanit.ld.wc.model.Instruction;
 
-import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.*;
 
 public class Header {
@@ -14,11 +14,20 @@ public class Header {
     private SelenideElement FIO =
             $(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Настройки пользователя'])[1]/following::button[4]"));
 
-    private SelenideElement exit = $ (By.cssSelector("div.v-list:nth-child(3) > div:nth-child(1) > a:nth-child(1) > div:nth-child(1)"));
+    private SelenideElement exit = $(By.cssSelector("div.v-list:nth-child(3) > div:nth-child(1) > a:nth-child(1) > div:nth-child(1)"));
     //$(By.xpath("xpath=(.//*[normalize-space(text()) and normalize-space(.)='На резолюцию'])[2]/following::div[5]"));
 
-    private SelenideElement createButton = $(By.xpath("(//div[@class=\"v-menu__activator\"]/*/div)[1]"));
+    private SelenideElement createButton = $(By.xpath("(//div[@class=\"v-menu v-menu--inline\"])[1]"));
 
+    private ElementsCollection menu = $$(By.xpath("//div[@class=\"v-list create-global-menu theme--light\"]/div"));
+    //div[@class="v-list create-global-menu theme--light"] - это сама область с выпадающим списокм сообщение+Документ
+
+
+    private ObjectTypes_Dialog ObjectTypes_Dialog;
+
+    public Header() {
+        ObjectTypes_Dialog = new ObjectTypes_Dialog();
+    }
 
     public String getLastName() {
         //FIO.getText().split("\n")[1].split(" ")[0] - фамилия
@@ -36,7 +45,14 @@ public class Header {
         createButton.click();
         sleep(3000);
 
-        InstructionTypes.findBy(Condition.text(app.focusedUser.getUserTypes().getInstructionTypeNameById(NewInstruction.getInstructionTypeId()))).click();
+        menu.get(0).click();
+
+        sleep(3000);
+
+        ObjectTypes_Dialog.availableTypes.findBy(Condition.text(app.focusedUser.getUserTypes().getInstructionTypeNameById(newInstruction.getInstructionTypeId()))).click();
+
+        sleep(5000);
+        //InstructionTypes.findBy(Condition.text(app.focusedUser.getUserTypes().getInstructionTypeNameById(NewInstruction.getInstructionTypeId()))).click();
         return page(NewInstructionPage.class);
     }
 }

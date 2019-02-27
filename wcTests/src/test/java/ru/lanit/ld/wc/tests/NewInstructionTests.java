@@ -22,6 +22,8 @@ public class NewInstructionTests extends  TestBase{
 
         LoginPage lp = new LoginPage(app);
         inst = lp.open("#/login").LoginAs(app.focusedUser);
+        sleep(6000);
+
     }
 
     @DataProvider
@@ -72,12 +74,13 @@ public class NewInstructionTests extends  TestBase{
                 .withText("Контрольное сообщение, текст") // текст сообщения. Если не задано по умолчанию = текст из типа сообщения.
                 .withComment("Ваш комментарий к заданию...") // комментарий. Если не задано по умолчанию = не заполнено
                 .withSubject("Срочно выполните!") // тема сообщения. Если не задано по умолчанию = тема из типа сообщения
-                //.withExecAuditorID(app.UserList.anyUser(1).Ids()) // контролер=любой один пользователь. Если не задано , то по умолчанию контроль выключен
+                .withExecAuditorID(app.UserList.anyUser(1).Ids()) // контролер=любой один пользователь. Если не задано , то по умолчанию контроль выключен
+                              //.withExecAuditorID(new int[] {app.UserList.users.get(2).getId()})
                 .setWithExecutive(true) // ответственный исполнитель=Да(true). По умолчанию = false.
-                .setReportToExecutive(true) // отчеты ответственному исполнителю=Да. По умолчанию = false.
+                //.setReportToExecutive(true) // отчеты ответственному исполнителю=Да. По умолчанию = false.
                 .withSendType(0) // 0= паралелльная (веер)( по умолчанию), 1=последовательная (цепочка)
-                //.withReportReceiverID(app.UserList.anyUser(1).Ids()) // получаетль отчета=любой пользователь. Если не задано,то получатель отчета= инициатору.
-                .withExecutionDate( LocalDateTime.of(2019,5,06,17,00),1)// execIntervalType=1- в календарных, 0- в рабочих
+                .withReportReceiverID(app.UserList.anyUser(1).Ids()) // получаетль отчета=любой пользователь. Если не задано,то получатель отчета= инициатору.
+                //.withExecutionDate( LocalDateTime.of(2019,5,06,17,00),1)// execIntervalType=1- в календарных, 0- в рабочих
                 .withReceiverID(new int[] {app.UserList.users.get(1).getId()});// получатель = здесь всегда второй
                                                             // получатель = любые пользователи (число = кол-во получателей)(обязательный)
 
@@ -89,19 +92,18 @@ public class NewInstructionTests extends  TestBase{
     public void sendInstruction(Instruction newInstruction) {
 
         NewInstructionPage newP=inst.Header.CreateButtonClick(newInstruction,app);
-        sleep(5000);
-
-        newP.fillForm(newInstruction,app);
-        newP.saveProjectButton.click();
         sleep(4000);
 
-        newP.dialog.buttonOK.click();
+        newP.fillForm(newInstruction,app);
+        newP.sendButton.click();
+        sleep(4000);
 
-        inst.goToFolder(2102);
+        inst.goToFolder(2101);
+        sleep(4000);
 
         inst.ActionPanel.PreviewIs("On");
         inst.InstructionList.get(0).click();
-        sleep(2000);
+        sleep(10000);
     }
 
 

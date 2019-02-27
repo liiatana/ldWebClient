@@ -113,6 +113,10 @@ public class Instruction {
         return this;
     }
 
+    public boolean isControl() {
+        return control;
+    }
+
     public String getSubject() {
         return subject;
     }
