@@ -107,4 +107,23 @@ public class InstructionTypes {
         return types1.get(0);
 
     }
+
+    public instructionType getControlTypeWithTextCheck (boolean lookForPossitive){
+
+        List<instructionType> types1 = new ArrayList<instructionType>();
+        int operation;
+
+        for (int i=0;i<=this.getTypeList().size()-1;i++) {
+            operation = lookForPossitive ? this.getTypeList().get(i).getCheckReportTypePositive() : this.getTypeList().get(i).getCheckReportTypeNegative();
+            if(operation==3 || operation==5){
+                types1.add(this.getTypeList().get(i));
+            }
+        }
+        Collections.shuffle(types1);
+
+        return types1.get(0);
+
+    }
+
+
 }

@@ -11,6 +11,7 @@ public class Instructions {
     public Header Header;
     public ActionPanel ActionPanel;
     public  CancelOK_Dialog Dialog;
+    public SmallReportForm SmallReport;
 
     public ElementsCollection InstructionListWithPreview = $$(By.xpath("//div[@class=\"data-iteraror marginless-list\"]/*"));
 
@@ -23,6 +24,7 @@ public class Instructions {
         Header= new Header();
         ActionPanel=new ActionPanel();
         Dialog=new CancelOK_Dialog();
+        SmallReport=new SmallReportForm();
 
     }
     public ViewInstruction openInstructionView(int ID) {
