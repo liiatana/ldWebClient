@@ -1,8 +1,6 @@
 package ru.lanit.ld.wc.tests;
 
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import ru.lanit.ld.wc.model.FolderList;
 import ru.lanit.ld.wc.pages.Instructions;
 import ru.lanit.ld.wc.pages.LoginPage;
@@ -12,14 +10,16 @@ import static com.codeborne.selenide.Selenide.sleep;
 
 public class ViewInstructionsTests extends TestBase {
     Instructions inst;
-    FolderList list;
+    FolderList folderList;
 
-    @BeforeTest
+    @BeforeClass
     public void before() {
 
-        list = app.focusedUser.getUserApi().getFolderList(1999);
-        LoginPage lp = new LoginPage(app);
+        LoginPage lp = new LoginPage();
         inst = lp.open("#/login").LoginAs(app.focusedUser).goToFolder(1999);
+        folderList = app.focusedUser.getUserApi().getFolderList(1999);
+        inst.ActionPanel.PreviewIs("Off");
+        sleep(3000);
 
     }
 
@@ -33,15 +33,10 @@ public class ViewInstructionsTests extends TestBase {
     @Test(dataProvider = "InstructionIds")
     public void ListViewWithPreviewTest(int InstructionID) {
 
-
         inst.ActionPanel.PreviewIs("On");
 
-        int nnum = list.getInstructionNumInFolder(InstructionID);
-
-        inst.InstructionListWithPreview.get(nnum).click();
+        inst.InstructionListWithPreview.get(folderList.getInstructionNumInFolder(InstructionID)).click();
         sleep(2000);
-
-        inst.ActionPanel.PreviewIs("Off");
 
     }
 
@@ -64,6 +59,14 @@ public class ViewInstructionsTests extends TestBase {
             }
 
         }
+
+    }
+
+    @AfterClass
+    public void after() {
+
+        inst.goToFolder(1999);
+        //sleep(3000);
 
     }
 

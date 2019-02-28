@@ -38,6 +38,10 @@ $$(By.xpath("//div[@class=\"v-menu__content theme--light menuable__content__acti
         }
     }
 
+
+
+
+
     public NewInstructionPage createNewByPlusButton(Instruction NewInstruction, ApplicationManager app) {
         PlusButton.click();
         sleep(3000);

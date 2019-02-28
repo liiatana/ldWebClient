@@ -12,11 +12,6 @@ public class ObjectTypes_Dialog {
     private SelenideElement area  = $ (By.xpath("//div[@class=\"v-dialog modal v-dialog--active v-dialog--persistent\"]"));
 
     public SelenideElement caption = area.$(By.xpath("//*/div[@class=\"v-card__title title font-weight-bold pb-0\""));
-    //полное = //div[@class="v-dialog modal v-dialog--active v-dialog--persistent"]/*/div[@class="v-card__title title font-weight-bold pb-0"]
-
-    public ElementsCollection availableTypes1 = $$ (By.xpath("//ul[@class=\"pl-0\"]/li"));
-
-    //div[@class="v-dialog modal v-dialog--active v-dialog--persistent"]/*//ul[@class="pl-0"]/li
 
     public ElementsCollection availableTypes = area.$$ (By.xpath("/*//ul[@class=\"pl-0\"]/li"));
 

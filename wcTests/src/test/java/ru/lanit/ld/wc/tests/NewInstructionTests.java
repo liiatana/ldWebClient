@@ -1,8 +1,6 @@
 package ru.lanit.ld.wc.tests;
 
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import ru.lanit.ld.wc.model.*;
 import ru.lanit.ld.wc.pages.Instructions;
 import ru.lanit.ld.wc.pages.LoginPage;
@@ -13,11 +11,11 @@ import static com.codeborne.selenide.Selenide.sleep;
 public class NewInstructionTests extends  TestBase{
     Instructions inst;
 
-    @BeforeTest
+    @BeforeClass
     public void before() {
 
-        LoginPage lp = new LoginPage(app);
-        inst = lp.open("#/login").LoginAs(app.focusedUser);
+        LoginPage lp = new LoginPage();
+        inst = lp.open("#/login").LoginAs(app.focusedUser).goToFolder(1999);
         sleep(6000);
 
     }
@@ -102,5 +100,12 @@ public class NewInstructionTests extends  TestBase{
         sleep(10000);
     }
 
+    @AfterClass
+    public void after() {
+
+        inst.goToFolder(1999);
+        //sleep(3000);
+
+    }
 
 }

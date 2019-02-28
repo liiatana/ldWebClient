@@ -6,11 +6,9 @@ import org.aspectj.lang.annotation.Before;
 import org.openqa.selenium.remote.BrowserType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.*;
 import ru.lanit.ld.wc.appmanager.ApplicationManager;
+import ru.lanit.ld.wc.pages.Instructions;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -54,9 +52,17 @@ public class TestBase {
     @AfterMethod(alwaysRun = true) //@AfterMethod //после каждого меnода
     public void logTestStop(Method m) {
         logger.info("end " + m.getName());
-        sleep(3000);
-       // Selenide.refresh();
+            sleep(3000);
+
     }
+
+//    @AfterClass
+//    public void after(Instructions inst) {
+//
+//        inst.goToFolder(1999);
+//        //sleep(3000);
+//
+//    }
 
 
 

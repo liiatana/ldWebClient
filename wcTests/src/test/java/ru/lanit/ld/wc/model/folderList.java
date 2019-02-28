@@ -21,11 +21,11 @@ public class FolderList {
     public int getInstructionNumInFolder(int instructionID) {
         int i=0;
         do
-            if(this.items.get(i).getInstructionId() ==instructionID){
+            if(this.items.get(i).getInstructionId() == instructionID){
                 return i;
             }
             else i++;
-        while (i<=this.items.size())    ;
+        while (i<=this.items.size()-1)    ;
         return -1;
     }
 }
