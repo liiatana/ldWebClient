@@ -1,5 +1,6 @@
 package ru.lanit.ld.wc.tests;
 
+import io.qameta.allure.Step;
 import org.testng.annotations.*;
 import ru.lanit.ld.wc.model.*;
 import ru.lanit.ld.wc.pages.Instructions;
@@ -10,6 +11,7 @@ import static com.codeborne.selenide.Selenide.sleep;
 
 public class NewInstructionTests extends  TestBase{
     Instructions inst;
+
 
     @BeforeClass
     public void before() {
@@ -37,6 +39,7 @@ public class NewInstructionTests extends  TestBase{
     @Test(dataProvider = "Notice", invocationCount = 1)
     public void saveProject(Instruction newInstruction) {
 
+    //@Step("Открыть форму Новое сообщение через кнопку +")
         NewInstructionPage newP=inst.ActionPanel.createNewByPlusButton(newInstruction,app);
         sleep(5000);
 
@@ -86,18 +89,18 @@ public class NewInstructionTests extends  TestBase{
     public void sendInstruction(Instruction newInstruction) {
 
         NewInstructionPage newP=inst.Header.CreateButtonClick(newInstruction,app);
-        sleep(4000);
+        sleep(2000);
 
         newP.fillForm(newInstruction,app);
         newP.sendButton.click();
         sleep(4000);
 
         inst.goToFolder(2101);
-        sleep(4000);
+        //sleep(4000);
 
         inst.ActionPanel.PreviewIs("On");
         inst.InstructionListWithPreview.get(0).click();
-        sleep(10000);
+        sleep(3000);
     }
 
     @AfterClass
