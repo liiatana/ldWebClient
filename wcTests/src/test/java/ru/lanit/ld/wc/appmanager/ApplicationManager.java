@@ -58,7 +58,12 @@ public class ApplicationManager {
         Configuration.baseUrl = baseUrl;
         Configuration.timeout = 10000;
 
+        //Configuration.browserSize="1024x768";
+
+
         exportEnvirometInfornationToFile();
+
+
 
         //Configuration.browserSize ("");
         //Configuration.browserVersion=""
@@ -77,6 +82,8 @@ public class ApplicationManager {
             writer.write("Stand=" + baseUrl);
             writer.write(System.lineSeparator());
             writer.write("BrowserSize=" + Configuration.browserSize);
+            writer.write(System.lineSeparator());
+            writer.write("FrontVersion=" + version);
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
