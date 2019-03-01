@@ -1,7 +1,6 @@
 package ru.lanit.ld.wc.appmanager;
 
 import com.codeborne.selenide.Configuration;
-import org.openqa.selenium.remote.BrowserType;
 import ru.lanit.ld.wc.model.InstructionTypes;
 import ru.lanit.ld.wc.model.UserInfo;
 import ru.lanit.ld.wc.model.Users;
@@ -10,7 +9,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Objects;
 import java.util.Properties;
 
 public class ApplicationManager {
@@ -19,7 +17,7 @@ public class ApplicationManager {
     private String browser;
     public String baseUrl;
     public String version;
-
+    private String defaultBrowserSize;
 
     public final Properties properties;
     public Users UserList;
@@ -27,13 +25,14 @@ public class ApplicationManager {
     public UserInfo focusedUser;
 
 
-    public ApplicationManager(String browser) {
+    public ApplicationManager(String browser, String browserSize) {
 
         properties = new Properties();
         UserList = new Users();
         InstructionList = new InstructionTypes();
 
         this.browser = browser;
+        this.defaultBrowserSize = browserSize;
     }
 
     public void init() throws IOException {
@@ -58,14 +57,13 @@ public class ApplicationManager {
         Configuration.baseUrl = baseUrl;
         Configuration.timeout = 10000;
 
-        //Configuration.browserSize="1024x768";
-
+        //Configuration.defaultBrowserSize="1024x768";
+       // if (defaultBrowserSize.length() > 0) {
+            Configuration.browserSize = defaultBrowserSize;
+        //}
 
         exportEnvirometInfornationToFile();
 
-
-
-        //Configuration.browserSize ("");
         //Configuration.browserVersion=""
 
     }

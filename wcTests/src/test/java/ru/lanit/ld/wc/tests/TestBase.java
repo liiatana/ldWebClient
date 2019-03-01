@@ -23,8 +23,9 @@ public class TestBase {
 
 
     protected static final ApplicationManager app
-            = new ApplicationManager(System.getProperty("browser", BrowserType.CHROME)); //
+            = new ApplicationManager(System.getProperty("browser", BrowserType.CHROME),System.getProperty("browserSize","1366x768")); //
     // в настроках запуска теста нужно дописать  -Dbrowser=firefox( в поле VM)
+    // -DbrowserSize="1024х768"
 
     @BeforeSuite
     public void setUp() throws Exception {
