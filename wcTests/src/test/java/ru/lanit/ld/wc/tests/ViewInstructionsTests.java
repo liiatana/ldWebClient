@@ -9,16 +9,17 @@ import ru.lanit.ld.wc.pages.ViewInstruction;
 import static com.codeborne.selenide.Selenide.sleep;
 
 public class ViewInstructionsTests extends TestBase {
-    Instructions inst;
+    Instructions instSection;
     FolderList folderList;
 
     @BeforeClass
     public void before() {
 
         LoginPage lp = new LoginPage();
-        inst = lp.open("#/login").LoginAs(app.focusedUser).goToFolder(1999);
+        instSection = lp.open("#/login").LoginAs(app.focusedUser).goToFolder(1999);
         folderList = app.focusedUser.getUserApi().getFolderList(1999);
-        inst.ActionPanel.PreviewIs("Off");
+        instSection.ActionPanel.PreviewIs("Off");
+        instSection.ActionPanel.viewOnlyNew(false);
         sleep(1000);
 
     }
@@ -33,9 +34,9 @@ public class ViewInstructionsTests extends TestBase {
     @Test(dataProvider = "InstructionIds")
     public void ListViewWithPreviewTest(int InstructionID) {
 
-        inst.ActionPanel.PreviewIs("On");
+        instSection.ActionPanel.PreviewIs("On");
 
-        inst.InstructionListWithPreview.get(folderList.getInstructionNumInFolder(InstructionID)).click();
+        instSection.InstructionListWithPreview.get(folderList.getInstructionNumInFolder(InstructionID)).click();
         sleep(2000);
 
     }
@@ -43,7 +44,7 @@ public class ViewInstructionsTests extends TestBase {
     @Test(dataProvider = "InstructionIds")
     public void ViewInstructionTest(int InstructionID) {
 
-        ViewInstruction viewInstr = inst.openInstructionView(InstructionID);
+        ViewInstruction viewInstr = instSection.openInstructionView(InstructionID);
         sleep(2000);
 
         viewInstr.ThreePoints.click();
@@ -64,7 +65,7 @@ public class ViewInstructionsTests extends TestBase {
 
     @AfterClass
     public void after() {
-        inst.goToFolder(1999);
+        instSection.goToFolder(1999);
     }
 
 

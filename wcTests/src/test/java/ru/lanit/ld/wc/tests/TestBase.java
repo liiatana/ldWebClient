@@ -55,9 +55,9 @@ public class TestBase {
     }
 
 //    @AfterClass
-//    public void after(Instructions inst) {
+//    public void after(Instructions instSection) {
 //
-//        inst.goToFolder(1999);
+//        instSection.goToFolder(1999);
 //        //sleep(3000);
 //
 //    }

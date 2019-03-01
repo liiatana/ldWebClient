@@ -11,15 +11,16 @@ import static com.codeborne.selenide.Selenide.sleep;
 public class MakeReportTests extends TestBase {
 
 
-    Instructions inst;
+    Instructions instSection;
     FolderList folderList;
 
     @BeforeClass
     public void before() {
 
         LoginPage lp = new LoginPage();
-        inst = lp.open("#/login").LoginAs(app.focusedUser).goToFolder(1999);
-        inst.ActionPanel.PreviewIs("Off");
+        instSection = lp.open("#/login").LoginAs(app.focusedUser).goToFolder(1999);
+        instSection.ActionPanel.PreviewIs("Off");
+        instSection.ActionPanel.viewOnlyNew(false);
 
     }
 
@@ -28,7 +29,7 @@ public class MakeReportTests extends TestBase {
     @DataProvider
     public Object[][] TaskWithoutCheck() {
 
-        UserInfo instructionInitiator = app.UserList.anyUser(3).users.get(0); // инициатор=пользователь3
+        UserInfo instructionInitiator = app.UserList.anyUser(1).users.get(0); // инициатор
         instructionType type = instructionInitiator.getUserTypes().getControlTypeWithoutCheck(true);
 
         Instruction instr = new Instruction(type);
@@ -51,12 +52,12 @@ public class MakeReportTests extends TestBase {
     public void makeQuickPossitiveReport(Instruction instruction) {
 
 
-        inst.ActionPanel.refreshButton.click();
+        instSection.ActionPanel.refreshButton.click();
         sleep(3000);
         folderList = app.focusedUser.getUserApi().getFolderList(1999);
 
-        inst.cardView.possitiveReport(folderList.getInstructionNumInFolder(instruction.getInstructionId()));
-        inst.Dialog.buttonOK.click();
+        instSection.cardView.possitiveReport(folderList.getInstructionNumInFolder(instruction.getInstructionId()));
+        instSection.Dialog.buttonOK.click();
 
         sleep(3000);
 
@@ -66,7 +67,7 @@ public class MakeReportTests extends TestBase {
     @DataProvider
     public Object[][] TaskWithTextCheck() {
 
-        UserInfo instructionInitiator = app.UserList.anyUser(3).users.get(0); // инициатор=пользователь3
+        UserInfo instructionInitiator = app.UserList.anyUser(1).users.get(0); // инициатор=любой пользователь
         instructionType type = instructionInitiator.getUserTypes().getControlTypeWithTextCheck(false);
 
         Instruction instr = new Instruction(type);
@@ -80,8 +81,6 @@ public class MakeReportTests extends TestBase {
 
         logger.info("instruction : " + instr.toString());
 
-
-
         return new Object[][]{new Object[]{instr}};
     }
 
@@ -89,19 +88,19 @@ public class MakeReportTests extends TestBase {
     @Test(dataProvider = "TaskWithTextCheck", invocationCount = 1,description = "Создание отчета с отказом с краткой формы отчеты")
     public void makeNegativeReportBySmallForm(Instruction instruction) {
 
-        inst.ActionPanel.refreshButton.click();
+        instSection.ActionPanel.refreshButton.click();
         sleep(3000);
         folderList = app.focusedUser.getUserApi().getFolderList(1999);
 
-        inst.cardView.negativeReport(folderList.getInstructionNumInFolder(instruction.getInstructionId()));
+        instSection.cardView.negativeReport(folderList.getInstructionNumInFolder(instruction.getInstructionId()));
         sleep(3000);
 
-        inst.SmallReport.clickButton(1);//1= полож,2= отказ,3=сохранить проект
+        instSection.SmallReport.clickButton(1);//1= полож,2= отказ,3=сохранить проект
         sleep(2000);
 
-        inst.SmallReport.text.sendKeys("Вот текст отчета, чтоб не ругалось");
+        instSection.SmallReport.text.sendKeys("Вот текст отчета, чтоб не ругалось");
         sleep(3000);
-        inst.SmallReport.clickButton(1);//1= полож,2= отказ,3=сохранить проект
+        instSection.SmallReport.clickButton(1);//1= полож,2= отказ,3=сохранить проект
 
 
     }
@@ -111,7 +110,7 @@ public class MakeReportTests extends TestBase {
     @DataProvider
     public Object[][] AnyTask() {
 
-        UserInfo instructionInitiator = app.UserList.anyUser(3).users.get(0); // инициатор=пользователь3
+        UserInfo instructionInitiator = app.UserList.anyUser(1).users.get(0); // инициатор
         instructionType type = instructionInitiator.getUserTypes().getAnyTaskType();
 
         Instruction instr = new Instruction(type);
@@ -134,11 +133,11 @@ public class MakeReportTests extends TestBase {
     @Test(dataProvider = "AnyTask", invocationCount = 1,description = "Создание отчета с отказом с полной формы отчеты")
     public void makeReportByBigForm(Instruction instruction) {
 
-        inst.ActionPanel.refreshButton.click();
+        instSection.ActionPanel.refreshButton.click();
         folderList = app.focusedUser.getUserApi().getFolderList(1999);
         sleep(2000);
 
-        BigReportForm report=inst.cardView.menuCreateReport(folderList.getInstructionNumInFolder(instruction.getInstructionId()));
+        BigReportForm report=instSection.cardView.menuCreateReport(folderList.getInstructionNumInFolder(instruction.getInstructionId()));
         sleep(3000);
 
         report.text.sendKeys("отчет с большой формы");
@@ -148,10 +147,11 @@ public class MakeReportTests extends TestBase {
 
     @AfterClass
     public void after() {
-        inst.goToFolder(2101);
+        instSection.goToFolder(2101);
+        instSection.ActionPanel.PreviewIs("Off");
         sleep(3000);
 
-        inst.goToFolder(1999);
+        instSection.goToFolder(1999);
     }
 
 }
