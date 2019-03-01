@@ -42,6 +42,8 @@ public class ReadUnreadTests extends TestBase {
         sleep(3000);
 
         instSection.cardView.menuReaded(folderList.getInstructionNumInFolder(InstructionId));
+        instSection.ActionPanel.refreshButton.click();
+        sleep(2000);
 
         instSection.ActionPanel.viewOnlyNew(true);
         sleep(3000);

@@ -62,7 +62,7 @@ public class RestApiHelper {
             iTypes.add(itype);
         }
 
-        InstructionTypes types=new InstructionTypes(iTypes);
+        InstructionTypes types = new InstructionTypes(iTypes);
 
         return types; //       return iTypes;
     }
@@ -123,7 +123,7 @@ public class RestApiHelper {
 
     }
 
-    public FolderList getFolderList (int Folder_ID){
+    public FolderList getFolderList(int Folder_ID) {
 
         String data = "{\"top\": \"50\",\"skip\":0,\"searchText\":null,\"members\":null,\"filterId\":null,\"filterValues\":null } ";
 
@@ -137,23 +137,25 @@ public class RestApiHelper {
                 .asString();
 
         JsonElement parsed = new JsonParser().parse(res);
-        FolderList folderList= new FolderList(parsed);
+        FolderList folderList = new FolderList(parsed);
 
         return folderList;
 
     }
 
 
-    public void setReaded(boolean b,int id) {
+    public void setReaded(boolean b, int id) {
         JsonObject lastVisitedUrl = new JsonObject();
         lastVisitedUrl.addProperty("IsReaded", b);
 
-        /*Response response = */
+        //Response response =
         RestAssured
                 .given().header("Cookie", cookies)
                 .contentType("application/json")
                 .body(lastVisitedUrl.toString())
                 .when()
-                .put(String.format("%sinstruction/%s/operations/readed", apiPath,id));
+                .put(String.format("%sinstruction/%s/operations/readed", apiPath, id));
+
+        //response.getStatusCode();
     }
 }
