@@ -2,6 +2,7 @@ package ru.lanit.ld.wc.pages;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import ru.lanit.ld.wc.appmanager.ApplicationManager;
@@ -34,12 +35,14 @@ public class LoginPage {
 
     }
 
+
     public LoginPage failedLoginAs(UserInfo user) {
 
         fillLoginInfomation(user);
         return this;
     }
 
+    @Step("Ввести логин и пароль, нажать кнопку Войти")
     private void fillLoginInfomation(UserInfo user) {
 
 

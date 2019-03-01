@@ -2,7 +2,6 @@ package ru.lanit.ld.wc.tests;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
-import io.qameta.allure.Step;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -27,8 +26,9 @@ public class LoginTests extends TestBase {
         return new Object[][]{new Object[]{badUser1}, new Object[]{badUser2}, new Object[]{badUser3}};
     }
 
-    @Test(dataProvider = "badAuthUsers", enabled = true,description = "Авторизация пользователя с НЕкорректным паролем")
+    @Test(dataProvider = "badAuthUsers", enabled = true,description ="Авторизация пользователя с НЕкорректным паролем" )
     public void loginWithWrongAuthenticationData(UserInfo badUser) {
+
 
         LoginPage lp = new LoginPage();
         LoginPage loginPage = lp.open("#/login").failedLoginAs(badUser);
@@ -46,7 +46,7 @@ public class LoginTests extends TestBase {
     }
 
 
-    @Test(dataProvider = "CoodUsers",description = "Авторизация пользователя с правильным логином/паролем")
+    @Test(dataProvider = "CoodUsers",description ="Авторизация пользователя с верными данными" )
     public void loginWithGoodAuthenticationData(UserInfo user) {
 
 

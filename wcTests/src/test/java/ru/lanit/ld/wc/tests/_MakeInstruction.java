@@ -1,15 +1,5 @@
 package ru.lanit.ld.wc.tests;
 
-import org.testng.Assert;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
-import ru.lanit.ld.wc.model.Instruction;
-import ru.lanit.ld.wc.model.UserInfo;
-import ru.lanit.ld.wc.model.instResponse;
-import ru.lanit.ld.wc.model.instructionType;
-
-import java.time.LocalDateTime;
-
 public class _MakeInstruction extends TestBase {
 
 //    @DataProvider

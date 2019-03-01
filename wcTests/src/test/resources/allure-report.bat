@@ -1,1 +1,0 @@
-allure serve E:\Users\NLyubchenko\Documents\GitHub\ldWebClient\wcTests\allure-results --host localhost

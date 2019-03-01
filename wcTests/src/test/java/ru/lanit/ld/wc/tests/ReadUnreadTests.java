@@ -5,8 +5,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.lanit.ld.wc.model.FolderList;
-import ru.lanit.ld.wc.model.Instruction;
-import ru.lanit.ld.wc.model.UserInfo;
 import ru.lanit.ld.wc.pages.Instructions;
 import ru.lanit.ld.wc.pages.LoginPage;
 

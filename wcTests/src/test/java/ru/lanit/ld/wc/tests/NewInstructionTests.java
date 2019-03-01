@@ -1,8 +1,13 @@
 package ru.lanit.ld.wc.tests;
 
-import io.qameta.allure.Step;
-import org.testng.annotations.*;
-import ru.lanit.ld.wc.model.*;
+import io.qameta.allure.Flaky;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+import ru.lanit.ld.wc.model.Instruction;
+import ru.lanit.ld.wc.model.UserInfo;
+import ru.lanit.ld.wc.model.instructionType;
 import ru.lanit.ld.wc.pages.Instructions;
 import ru.lanit.ld.wc.pages.LoginPage;
 import ru.lanit.ld.wc.pages.NewInstructionPage;
@@ -36,7 +41,8 @@ public class NewInstructionTests extends  TestBase{
         return new Object[][] {new Object[]{instr}};
     }
 
-    @Test(dataProvider = "Notice", invocationCount = 1)
+    @Flaky
+    @Test(dataProvider = "Notice", invocationCount = 1,description = "Сохранить проект уведомления")
     public void saveProject(Instruction newInstruction) {
 
     //@Step("Открыть форму Новое сообщение через кнопку +")
@@ -84,8 +90,8 @@ public class NewInstructionTests extends  TestBase{
         return new Object[][] {new Object[]{instr}};
     }
 
-
-    @Test(dataProvider = "Task", invocationCount = 1)
+    @Flaky
+    @Test(dataProvider = "Task", invocationCount = 1,description = "Отправить задание")
     public void sendInstruction(Instruction newInstruction) {
 
         NewInstructionPage newP=inst.Header.CreateButtonClick(newInstruction,app);

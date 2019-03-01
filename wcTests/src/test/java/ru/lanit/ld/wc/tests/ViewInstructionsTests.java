@@ -1,6 +1,9 @@
 package ru.lanit.ld.wc.tests;
 
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 import ru.lanit.ld.wc.model.FolderList;
 import ru.lanit.ld.wc.pages.Instructions;
 import ru.lanit.ld.wc.pages.LoginPage;
@@ -31,7 +34,7 @@ public class ViewInstructionsTests extends TestBase {
 
     }
 
-    @Test(dataProvider = "InstructionIds")
+    @Test(dataProvider = "InstructionIds",description = "Открыть в Preview задание,отчет,сообщение")
     public void ListViewWithPreviewTest(int InstructionID) {
 
         //instSection.ActionPanel.PreviewIs("On");
@@ -41,7 +44,7 @@ public class ViewInstructionsTests extends TestBase {
 
     }
 
-    @Test(dataProvider = "InstructionIds")
+    @Test(dataProvider = "InstructionIds",description = "Открыть на просмотр задание,отчет,сообщение")
     public void ViewInstructionTest(int InstructionID) {
 
         ViewInstruction viewInstr = instSection.openInstructionView(InstructionID);

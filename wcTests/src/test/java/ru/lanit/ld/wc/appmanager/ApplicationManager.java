@@ -48,23 +48,16 @@ public class ApplicationManager {
         version = properties.getProperty("version");
         baseUrl = properties.getProperty("web.baseUrl");
 
-        /*if (Objects.equals(browser, BrowserType.FIREFOX)) {
-            Configuration.browser = "firefox";
-        } else if (Objects.equals(browser, BrowserType.CHROME)) {
-            Configuration.browser = "chrome";
-        }*/
+
         Configuration.browser = browser;
         Configuration.baseUrl = baseUrl;
         Configuration.timeout = 10000;
-
-        //Configuration.defaultBrowserSize="1024x768";
-       // if (defaultBrowserSize.length() > 0) {
-            Configuration.browserSize = defaultBrowserSize;
-        //}
+        Configuration.browserSize = defaultBrowserSize;
+        Configuration.screenshots=true;
+        Configuration.reopenBrowserOnFail=true;
 
         exportEnvirometInfornationToFile();
 
-        //Configuration.browserVersion=""
 
     }
 

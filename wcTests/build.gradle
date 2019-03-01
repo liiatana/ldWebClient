@@ -10,6 +10,7 @@ dependencies{
     
     implementation 'com.codeborne:selenide:5.2.0'
     implementation 'io.qameta.allure:allure-testng:2.10.0'
+    implementation 'io.qameta.allure:allure-selenide:2.10.0'
     
     compile 'com.jayway.restassured:rest-assured:2.9.0'//библиотека для работы c rest, см https://github.com/rest-assured/rest-assured
     compile 'org.hamcrest:java-hamcrest:2.0.0.0'//проверки fluent
