@@ -77,11 +77,14 @@ public class ApplicationManager {
         try (FileWriter writer = new FileWriter(allureEnvFile, false);) {
             writer.write("Browser=" + browser);
             writer.write(System.lineSeparator());
-            writer.write("Stand=" + baseUrl);
-            writer.write(System.lineSeparator());
             writer.write("BrowserSize=" + Configuration.browserSize);
             writer.write(System.lineSeparator());
+            writer.write("Stand=" + baseUrl);
+            writer.write(System.lineSeparator());
             writer.write("FrontVersion=" + version);
+            writer.write(System.lineSeparator());
+            writer.write("Back=" + properties.getProperty("web.apiUrl"));
+
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
