@@ -36,7 +36,7 @@ public class NewInstructionTests extends  TestBase{
                 .withText("Пример текста сообщения") // текст сообщения. Если не задано по умолчанию = текст из типа сообщения.
                 .withComment("Ваш комментарий") // комментарий. Если не задано по умолчанию = не заполнено
                 .withSubject("Ваша тема") // тема сообщения. Если не задано по умолчанию = тема из типа сообщения
-                .withReceiverID(app.UserList.anyUser(1).Ids());// получатель = любые пользователи (число = кол-во получателей)(обязательный)
+                .withReceiverID(app.UserList.anyUser(2).Ids());// получатель = любые пользователи (число = кол-во получателей)(обязательный)
 
         return new Object[][] {new Object[]{instr}};
     }
@@ -45,11 +45,11 @@ public class NewInstructionTests extends  TestBase{
     @Test(dataProvider = "Notice", invocationCount = 1,description = "Сохранить проект уведомления")
     public void saveProject(Instruction newInstruction) {
 
-    //@Step("Открыть форму Новое сообщение через кнопку +")
+
         NewInstructionPage newP=inst.ActionPanel.createNewByPlusButton(newInstruction,app);
         sleep(5000);
 
-        newP.fillForm(newInstruction,app);
+        newP.fillForm(newInstruction,app,true);
         newP.saveProjectButton.click();
         sleep(4000);
 
@@ -61,8 +61,6 @@ public class NewInstructionTests extends  TestBase{
         inst.InstructionListWithPreview.get(0).click();
         sleep(2000);
     }
-
-
 
     @DataProvider
     public Object[][] Task() {
@@ -97,12 +95,12 @@ public class NewInstructionTests extends  TestBase{
         NewInstructionPage newP=inst.Header.CreateButtonClick(newInstruction,app);
         sleep(2000);
 
-        newP.fillForm(newInstruction,app);
+        newP.fillForm(newInstruction,app,false);
         newP.sendButton.click();
         sleep(4000);
 
         inst.goToFolder(2101);
-        //sleep(4000);
+        sleep(4000);
 
         inst.ActionPanel.PreviewIs("On");
         inst.InstructionListWithPreview.get(0).click();
@@ -111,10 +109,7 @@ public class NewInstructionTests extends  TestBase{
 
     @AfterClass
     public void after() {
-
         inst.goToFolder(1999);
-        //sleep(3000);
-
     }
 
 }

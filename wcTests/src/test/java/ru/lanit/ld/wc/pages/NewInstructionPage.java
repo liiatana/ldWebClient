@@ -15,6 +15,7 @@ public class NewInstructionPage {
 
 
     public CancelOK_Dialog dialog;
+    public ChoosePersonForm choosePersonForm;
 
     private SelenideElement subject = $(By.xpath("//input[@placeholder=\"Тема сообщения\"]"));
     private SelenideElement text = $(By.xpath("//textarea[@name=\"input-10-1\"]"));
@@ -40,17 +41,20 @@ public class NewInstructionPage {
     private SelenideElement hasAuditor = $(By.xpath("(//input[@id=\"withExecutive\"])[2]"));
     private SelenideElement auditorArea = $(By.xpath("//div[@class=\"flex xl12 lg12 md12 sm12 xs12 pr-2 pl-1\"]"));
 
-    private SelenideElement initiatorArea =$(By.xpath("//div[@class=\"flex pr-2 pl-1 xl12 lg12 md12 sm12 xs12\"]"));
+    private SelenideElement initiatorArea = $(By.xpath("//div[@class=\"flex pr-2 pl-1 xl12 lg12 md12 sm12 xs12\"]"));
 
     private SelenideElement reportReceiverArea = $(By.xpath("//div[@id=\"use-control\"]/div"));
+
+    private SelenideElement choosePerson = $(By.xpath("//button[@id=\"addReceiver\"]"));
 
 
     public NewInstructionPage() {
 
         dialog = new CancelOK_Dialog();
+        //choosePersonForm=new ChoosePersonForm();
     }
 
-    public void fillForm(Instruction newInstruction, ApplicationManager app) {
+    public void fillForm(Instruction newInstruction, ApplicationManager app, boolean choosePersonInSeparateForm) {
 
         sleep(2000);
 
@@ -82,10 +86,17 @@ public class NewInstructionPage {
 
         //получатель
         //receiver.sendKeys(app.UserList.getUserById(newInstruction.getReceiverID()[0]).getLastName());
-        setValueToTextFeild(receiver, app.UserList.getUserById(newInstruction.getReceiverID()[0]).getLastName());
-        receiversList.findBy(Condition.text(app.UserList.getUserById(newInstruction.getReceiverID()[0]).getUserName())).click();
+        if (!choosePersonInSeparateForm) {
+            setValueToTextFeild(receiver, app.UserList.getUserById(newInstruction.getReceiverID()[0]).getLastName());
+            receiversList.findBy(Condition.text(app.UserList.getUserById(newInstruction.getReceiverID()[0]).getUserName())).click();
+        } else {
+            //openChoosePersonForm(newInstruction, app);
+            choosePersonForm = openChoosePerson();
+            choosePersonForm.insertPersons(newInstruction.getReceiverID(), app);
+        }
 
     }
+
 
     private void setExecutiveOptions(boolean isExecutive, boolean isReportToExecutive) {
 
@@ -151,6 +162,11 @@ public class NewInstructionPage {
         field.lastChild().sendKeys(user.getLastName());
         sleep(3000);
         receiversList.findBy(Condition.text(user.getUserName())).click();
+    }
+
+    public ChoosePersonForm openChoosePerson() {
+        choosePerson.click();
+        return page(ChoosePersonForm.class);
     }
 
 }
