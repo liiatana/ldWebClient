@@ -8,7 +8,7 @@ import java.util.List;
 public class FolderList {
 
 
-    List<Instruction> items ;
+    public List<Instruction> items ;
 
     public FolderList(JsonElement jsonList) {
         items = new ArrayList<>();
@@ -28,4 +28,5 @@ public class FolderList {
         while (i<=this.items.size()-1)    ;
         return -1;
     }
+
 }

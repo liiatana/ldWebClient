@@ -29,5 +29,11 @@ public class InstructionCardView {
         cards.get(instructionNumInFolder).$$x("/*//div[@class=\"quick-access\"]").get(1).click();
     }
 
+    public void menuReaded(int instructionNumInFolder) {
+        cards.get(instructionNumInFolder).lastChild().find("div.v-menu.menu-vert.v-menu--inline > div > button > div > i").click();
+        //activeCard.$$x("div//[@role=\"listitem\"]").filter(Condition.text(item)).get(0).click();
+        cards.get(instructionNumInFolder).$$x("//div[@role=\"listitem\"]").filter(Condition.matchText("Пометить как.*")).get(0).click();
+
+    }
 
 }

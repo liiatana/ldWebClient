@@ -144,4 +144,16 @@ public class RestApiHelper {
     }
 
 
+    public void setReaded(boolean b,int id) {
+        JsonObject lastVisitedUrl = new JsonObject();
+        lastVisitedUrl.addProperty("IsReaded", b);
+
+        /*Response response = */
+        RestAssured
+                .given().header("Cookie", cookies)
+                .contentType("application/json")
+                .body(lastVisitedUrl.toString())
+                .when()
+                .put(String.format("%sinstruction/%s/operations/readed", apiPath,id));
+    }
 }

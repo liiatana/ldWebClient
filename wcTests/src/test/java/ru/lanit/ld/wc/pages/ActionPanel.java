@@ -17,12 +17,12 @@ public class ActionPanel {
     private SelenideElement PlusButton = $(By.xpath("(//div[@class=\"v-menu__activator\"]/button)[5]"));
 
     private ElementsCollection InstructionTypes = //$$(By.xpath("//div[@class=\"v-menu__content theme--light menuable__content__active\"]/div[@role=\"list\"]"));
-$$(By.xpath("//div[@class=\"v-menu__content theme--light menuable__content__active\"]/div[@role=\"list\"]/*/a"));
+            $$(By.xpath("//div[@class=\"v-menu__content theme--light menuable__content__active\"]/div[@role=\"list\"]/*/a"));
 
-    public SelenideElement refreshButton=$(By.xpath("(//span[@class=\"v-tooltip v-tooltip--bottom\"])[3]"));
+    public SelenideElement refreshButton = $(By.xpath("(//span[@class=\"v-tooltip v-tooltip--bottom\"])[3]"));
 
+    private SelenideElement onlyNew = $(By.xpath("//input[@aria-label=\"Только непрочитанные\"]"));
 
-    
 
     public void PreviewIs(String state) {
 
@@ -42,9 +42,6 @@ $$(By.xpath("//div[@class=\"v-menu__content theme--light menuable__content__acti
     }
 
 
-
-
-
     public NewInstructionPage createNewByPlusButton(Instruction NewInstruction, ApplicationManager app) {
         PlusButton.click();
         sleep(3000);
@@ -52,5 +49,11 @@ $$(By.xpath("//div[@class=\"v-menu__content theme--light menuable__content__acti
         return page(NewInstructionPage.class);
     }
 
+    public void viewOnlyNew(boolean state) {
+        Boolean currentState= Boolean.valueOf(onlyNew.getAttribute("aria-checked"));
+        if(state!=currentState){
+            onlyNew.parent().click();
+        }
 
+    }
 }
