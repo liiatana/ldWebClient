@@ -59,9 +59,6 @@ public class NewInstructionPage {
         setValueToTextFeild(text, newInstruction.getText());
         setValueToTextFeild(comment, newInstruction.getComment());
 
-        //получатель
-        receiver.sendKeys(app.UserList.getUserById(newInstruction.getReceiverID()[0]).getLastName());
-        receiversList.findBy(Condition.text(app.UserList.getUserById(newInstruction.getReceiverID()[0]).getUserName())).click();
 
         if (newInstruction.isControl() == true) {
             //тип рассылки
@@ -82,6 +79,11 @@ public class NewInstructionPage {
             setEmployerToField(app.UserList.getUserById(newInstruction.getInitiatorID()), initiatorArea);
 
         }
+
+        //получатель
+        //receiver.sendKeys(app.UserList.getUserById(newInstruction.getReceiverID()[0]).getLastName());
+        setValueToTextFeild(receiver, app.UserList.getUserById(newInstruction.getReceiverID()[0]).getLastName());
+        receiversList.findBy(Condition.text(app.UserList.getUserById(newInstruction.getReceiverID()[0]).getUserName())).click();
 
     }
 
