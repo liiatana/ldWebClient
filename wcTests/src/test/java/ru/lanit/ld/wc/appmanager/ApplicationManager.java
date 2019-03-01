@@ -8,6 +8,7 @@ import ru.lanit.ld.wc.model.Users;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Properties;
@@ -39,7 +40,7 @@ public class ApplicationManager {
 
         String target = System.getProperty("target", "local");
         properties.load(new FileReader(new File(String.format("src\\test\\resources\\%s.properties", target))));
-        //UserList.load(properties.getProperty("data.usersFilePath"));
+
         UserList.load(this);
         focusedUser = UserList.users.get(0);
 
@@ -48,16 +49,37 @@ public class ApplicationManager {
         version = properties.getProperty("version");
         baseUrl = properties.getProperty("web.baseUrl");
 
-        if (Objects.equals(browser, BrowserType.FIREFOX)) {
+        /*if (Objects.equals(browser, BrowserType.FIREFOX)) {
             Configuration.browser = "firefox";
         } else if (Objects.equals(browser, BrowserType.CHROME)) {
             Configuration.browser = "chrome";
-        }
+        }*/
+        Configuration.browser = browser;
         Configuration.baseUrl = baseUrl;
         Configuration.timeout = 10000;
+
+        exportEnvirometInfornationToFile();
+
         //Configuration.browserSize ("");
         //Configuration.browserVersion=""
 
+    }
+
+    private void exportEnvirometInfornationToFile() throws IOException {
+        File allureEnvFile = new File("allure-results\\environment.properties");
+        if (allureEnvFile.exists()) {
+            allureEnvFile.delete();
+        }
+        allureEnvFile.createNewFile();
+        try (FileWriter writer = new FileWriter(allureEnvFile, false);) {
+            writer.write("Browser=" + browser);
+            writer.write(System.lineSeparator());
+            writer.write("Stand=" + baseUrl);
+            writer.write(System.lineSeparator());
+            writer.write("BrowserSize=" + Configuration.browserSize);
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
 

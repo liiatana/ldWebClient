@@ -19,7 +19,7 @@ public class ViewInstructionsTests extends TestBase {
         inst = lp.open("#/login").LoginAs(app.focusedUser).goToFolder(1999);
         folderList = app.focusedUser.getUserApi().getFolderList(1999);
         inst.ActionPanel.PreviewIs("Off");
-        sleep(3000);
+        sleep(1000);
 
     }
 
@@ -64,10 +64,7 @@ public class ViewInstructionsTests extends TestBase {
 
     @AfterClass
     public void after() {
-
         inst.goToFolder(1999);
-        //sleep(3000);
-
     }
 
 

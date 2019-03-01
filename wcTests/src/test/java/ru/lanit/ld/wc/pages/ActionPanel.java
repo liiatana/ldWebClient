@@ -21,6 +21,9 @@ $$(By.xpath("//div[@class=\"v-menu__content theme--light menuable__content__acti
 
     public SelenideElement refreshButton=$(By.xpath("(//span[@class=\"v-tooltip v-tooltip--bottom\"])[3]"));
 
+
+    
+
     public void PreviewIs(String state) {
 
         switch (state) {

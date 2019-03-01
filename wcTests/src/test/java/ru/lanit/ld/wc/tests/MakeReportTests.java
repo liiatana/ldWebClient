@@ -47,7 +47,7 @@ public class MakeReportTests extends TestBase {
         return new Object[][]{new Object[]{instr}};
     }
 
-    @Test(dataProvider = "TaskWithoutCheck", invocationCount = 1)
+    @Test(dataProvider = "TaskWithoutCheck", invocationCount = 1,description = "Создание полож. отчета без открытия формы отчеты")
     public void makeQuickPossitiveReport(Instruction instruction) {
 
 
@@ -86,7 +86,7 @@ public class MakeReportTests extends TestBase {
     }
 
 
-    @Test(dataProvider = "TaskWithTextCheck", invocationCount = 1)
+    @Test(dataProvider = "TaskWithTextCheck", invocationCount = 1,description = "Создание отчета с отказом с краткой формы отчеты")
     public void makeNegativeReportBySmallForm(Instruction instruction) {
 
         inst.ActionPanel.refreshButton.click();
@@ -131,7 +131,7 @@ public class MakeReportTests extends TestBase {
     }
 
 
-    @Test(dataProvider = "AnyTask", invocationCount = 1)
+    @Test(dataProvider = "AnyTask", invocationCount = 1,description = "Создание отчета с отказом с полной формы отчеты")
     public void makeReportByBigForm(Instruction instruction) {
 
         inst.ActionPanel.refreshButton.click();
@@ -148,6 +148,9 @@ public class MakeReportTests extends TestBase {
 
     @AfterClass
     public void after() {
+        inst.goToFolder(2101);
+        sleep(3000);
+
         inst.goToFolder(1999);
     }
 
