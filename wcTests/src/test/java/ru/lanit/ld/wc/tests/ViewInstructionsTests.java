@@ -18,7 +18,7 @@ public class ViewInstructionsTests extends TestBase {
         LoginPage lp = new LoginPage();
         instSection = lp.open("#/login").LoginAs(app.focusedUser).goToFolder(1999);
         folderList = app.focusedUser.getUserApi().getFolderList(1999);
-        instSection.ActionPanel.PreviewIs("Off");
+        instSection.ActionPanel.PreviewIs("On");
         instSection.ActionPanel.viewOnlyNew(false);
         sleep(1000);
 
@@ -34,7 +34,7 @@ public class ViewInstructionsTests extends TestBase {
     @Test(dataProvider = "InstructionIds")
     public void ListViewWithPreviewTest(int InstructionID) {
 
-        instSection.ActionPanel.PreviewIs("On");
+        //instSection.ActionPanel.PreviewIs("On");
 
         instSection.InstructionListWithPreview.get(folderList.getInstructionNumInFolder(InstructionID)).click();
         sleep(2000);
@@ -66,6 +66,8 @@ public class ViewInstructionsTests extends TestBase {
     @AfterClass
     public void after() {
         instSection.goToFolder(1999);
+        instSection.ActionPanel.PreviewIs("Off");
+        sleep(2000);
     }
 
 
