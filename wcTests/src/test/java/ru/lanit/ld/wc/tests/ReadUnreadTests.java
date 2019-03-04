@@ -17,34 +17,30 @@ public class ReadUnreadTests extends TestBase {
     @BeforeClass
     public void before() {
 
+        folderList = app.focusedUser.getUserApi().getFolderList(1999);
+        app.focusedUser.getUserApi().setReaded(true,folderList.items.get(0).getInstructionId());
+
         LoginPage lp = new LoginPage();
         instSection = lp.open("#/login").LoginAs(app.focusedUser).goToFolder(1999);
         instSection.ActionPanel.PreviewIs("Off");
         instSection.ActionPanel.viewOnlyNew(false);
-
-
     }
 
     @DataProvider
     public Object[][] Object() {
 
-        folderList = app.focusedUser.getUserApi().getFolderList(1999);
-        app.focusedUser.getUserApi().setReaded(true,folderList.items.get(0).getInstructionId());
-
-        return new Object[][] {new Object[]{folderList.items.get(0).getInstructionId()}};
+         return new Object[][] {new Object[]{folderList.items.get(0).getInstructionId()}};
     }
 
     @Test(dataProvider = "Object", description = "Сделать непрочитанным и просмотреть непрочитанные")
     public void makeUnread(int InstructionId){
-        instSection.ActionPanel.refreshButton.click();
-        sleep(3000);
 
         instSection.cardView.menuReaded(folderList.getInstructionNumInFolder(InstructionId));
-        instSection.ActionPanel.refreshButton.click();
+       // instSection.ActionPanel.refreshButton.click();
         sleep(2000);
 
         instSection.ActionPanel.viewOnlyNew(true);
-        sleep(3000);
+        sleep(2000);
 
     }
 
