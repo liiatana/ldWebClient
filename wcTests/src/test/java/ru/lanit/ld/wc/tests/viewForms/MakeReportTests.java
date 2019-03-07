@@ -1,4 +1,4 @@
-package ru.lanit.ld.wc.tests;
+package ru.lanit.ld.wc.tests.viewForms;
 
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -8,6 +8,7 @@ import ru.lanit.ld.wc.model.*;
 import ru.lanit.ld.wc.pages.BigReportForm;
 import ru.lanit.ld.wc.pages.Instructions;
 import ru.lanit.ld.wc.pages.LoginPage;
+import ru.lanit.ld.wc.tests.TestBase;
 
 import static com.codeborne.selenide.Selenide.sleep;
 
@@ -32,7 +33,7 @@ public class MakeReportTests extends TestBase {
     @DataProvider
     public Object[][] TaskWithoutCheck() {
 
-        UserInfo instructionInitiator = app.UserList.anyUser(1).users.get(0); // инициатор
+        UserInfo instructionInitiator = app.UserList.anyUser(1).users.get(2); // инициатор
         instructionType type = instructionInitiator.getUserTypes().getControlTypeWithoutCheck(true);
 
         Instruction instr = new Instruction(type);

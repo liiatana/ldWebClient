@@ -14,12 +14,8 @@ import ru.lanit.ld.wc.appmanager.ApplicationManager;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
-//import org.testng.annotations.AfterMethod;
-//import org.testng.annotations.BeforeMethod;
-//import ru.stqa.pft.addressbook.model.NewContactData;
-
 public class TestBase {
-    Logger logger = LoggerFactory.getLogger(TestBase.class);
+    public Logger logger = LoggerFactory.getLogger(TestBase.class);
 
 
     protected static final ApplicationManager app
@@ -31,16 +27,13 @@ public class TestBase {
     public void setUp() throws Exception {
 
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide().screenshots(true).savePageSource(false));
-
-
         app.init();
-        //Configuration.browser = "firefox";
+
     }
 
 
     @AfterSuite(alwaysRun = true)
     public void tearDown() {
-
         app.stop();
     }
 
@@ -54,19 +47,7 @@ public class TestBase {
     @AfterMethod(alwaysRun = true) //@AfterMethod //после каждого меnода
     public void logTestStop(Method m) {
         logger.info("End test: " + m.getName());
-        //   sleep(3000);
-
-
     }
-
-    //    @AfterClass
-//    public void after(Instructions instSection) {
-//
-//        instSection.goToFolder(1999);
-//        //sleep(3000);
-//
-//    }
-
 
 }
 

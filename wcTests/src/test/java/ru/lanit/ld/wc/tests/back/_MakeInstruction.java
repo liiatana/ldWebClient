@@ -1,4 +1,6 @@
-package ru.lanit.ld.wc.tests;
+package ru.lanit.ld.wc.tests.back;
+
+import ru.lanit.ld.wc.tests.TestBase;
 
 public class _MakeInstruction extends TestBase {
 

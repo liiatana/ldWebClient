@@ -1,4 +1,4 @@
-package ru.lanit.ld.wc.tests;
+package ru.lanit.ld.wc.tests.viewForms;
 
 import io.qameta.allure.Flaky;
 import org.testng.annotations.AfterClass;
@@ -12,10 +12,11 @@ import ru.lanit.ld.wc.pages.ChoosePersonForm;
 import ru.lanit.ld.wc.pages.Instructions;
 import ru.lanit.ld.wc.pages.LoginPage;
 import ru.lanit.ld.wc.pages.NewInstructionPage;
+import ru.lanit.ld.wc.tests.TestBase;
 
 import static com.codeborne.selenide.Selenide.sleep;
 
-public class ChoosePersonFormTests extends TestBase {
+public class wChoosePersonFormTests extends TestBase {
     Instructions inst;
 
 

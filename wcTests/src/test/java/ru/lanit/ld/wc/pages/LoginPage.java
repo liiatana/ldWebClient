@@ -15,15 +15,15 @@ public class LoginPage {
 
 
     private SelenideElement userLogin;
-    private SelenideElement userPassword = $(By.name("input-10-1"));
+    private SelenideElement userPassword = $(By.xpath("//input[@id=\"psw-field\"]"));
     private SelenideElement loginButton;
 
     public SelenideElement errorText;
 
     public LoginPage() {
 
-        userLogin=$(By.xpath("//input[@aria-label=\"Логин\"]"));
-        loginButton=$ (By.xpath("(//div[@class=\"layout row wrap justify-center column\"]/*//button)[1]"));
+        userLogin=$(By.xpath("//input[@id=\"login-field\"]"));
+        loginButton=$ (By.xpath("//button[@id=\"sql-auth-btn\"]"));
         errorText=$(By.xpath("//span[@class=\"error-message\"]"));
 
     }

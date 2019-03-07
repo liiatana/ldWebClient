@@ -54,7 +54,7 @@ public class NewInstructionPage {
         //choosePersonForm=new ChoosePersonForm();
     }
 
-    public void fillForm(Instruction newInstruction, ApplicationManager app, boolean choosePersonInSeparateForm) {
+    public void fillForm(Instruction newInstruction, ApplicationManager app, boolean useChoosePersonForm) {
 
         sleep(2000);
 
@@ -86,7 +86,7 @@ public class NewInstructionPage {
 
         //получатель
         //receiver.sendKeys(app.UserList.getUserById(newInstruction.getReceiverID()[0]).getLastName());
-        if (!choosePersonInSeparateForm) {
+        if (!useChoosePersonForm) {
             setValueToTextFeild(receiver, app.UserList.getUserById(newInstruction.getReceiverID()[0]).getLastName());
             receiversList.findBy(Condition.text(app.UserList.getUserById(newInstruction.getReceiverID()[0]).getUserName())).click();
         } else {

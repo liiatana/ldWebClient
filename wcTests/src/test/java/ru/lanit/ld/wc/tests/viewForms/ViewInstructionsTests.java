@@ -1,4 +1,4 @@
-package ru.lanit.ld.wc.tests;
+package ru.lanit.ld.wc.tests.viewForms;
 
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -8,6 +8,7 @@ import ru.lanit.ld.wc.model.FolderList;
 import ru.lanit.ld.wc.pages.Instructions;
 import ru.lanit.ld.wc.pages.LoginPage;
 import ru.lanit.ld.wc.pages.ViewInstruction;
+import ru.lanit.ld.wc.tests.TestBase;
 
 import static com.codeborne.selenide.Selenide.sleep;
 

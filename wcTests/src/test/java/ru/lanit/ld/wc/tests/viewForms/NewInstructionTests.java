@@ -1,4 +1,4 @@
-package ru.lanit.ld.wc.tests;
+package ru.lanit.ld.wc.tests.viewForms;
 
 import io.qameta.allure.Flaky;
 import org.testng.annotations.AfterClass;
@@ -11,10 +11,11 @@ import ru.lanit.ld.wc.model.instructionType;
 import ru.lanit.ld.wc.pages.Instructions;
 import ru.lanit.ld.wc.pages.LoginPage;
 import ru.lanit.ld.wc.pages.NewInstructionPage;
+import ru.lanit.ld.wc.tests.TestBase;
 
 import static com.codeborne.selenide.Selenide.sleep;
 
-public class NewInstructionTests extends  TestBase{
+public class NewInstructionTests extends TestBase {
     Instructions inst;
 
 
@@ -95,7 +96,7 @@ public class NewInstructionTests extends  TestBase{
         NewInstructionPage newP=inst.Header.CreateButtonClick(newInstruction,app);
         sleep(2000);
 
-        newP.fillForm(newInstruction,app,false);
+        newP.fillForm(newInstruction,app,true);
         newP.sendButton.click();
         sleep(4000);
 

@@ -1,4 +1,4 @@
-package ru.lanit.ld.wc.tests;
+package ru.lanit.ld.wc.tests.smoke;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
@@ -8,11 +8,12 @@ import org.testng.annotations.Test;
 import ru.lanit.ld.wc.model.UserInfo;
 import ru.lanit.ld.wc.pages.Instructions;
 import ru.lanit.ld.wc.pages.LoginPage;
+import ru.lanit.ld.wc.tests.TestBase;
 
 import static com.codeborne.selenide.Selenide.sleep;
 
 
-public class LoginTests extends TestBase {
+public class _LoginTests extends TestBase {
 
 
     @DataProvider
