@@ -23,6 +23,8 @@ public class ActionPanel {
 
     private SelenideElement onlyNew = $(By.xpath("//input[@aria-label=\"Только непрочитанные\"]"));
 
+    private SelenideElement sortButton = $(By.xpath("//button[@class=\"my-0 grey--border lighten-2 small-button v-btn v-btn--outline v-btn--depressed theme--light\"]"));
+    private ElementsCollection sortOptions = $$(By.xpath("//div[@class=\"v-menu__content theme--light menuable__content__active\"]/*//div[@role=\"listitem\"]"));
 
     public void PreviewIs(String state) {
 
@@ -50,10 +52,27 @@ public class ActionPanel {
     }
 
     public void viewOnlyNew(boolean state) {
-        Boolean currentState= Boolean.valueOf(onlyNew.getAttribute("aria-checked"));
-        if(state!=currentState){
+        Boolean currentState = Boolean.valueOf(onlyNew.getAttribute("aria-checked"));
+        if (state != currentState) {
             onlyNew.parent().click();
         }
+    }
+
+    public void sortBy(String field, boolean isAsc) {
+        String currentSortFeild=sortButton.$x("span").getText();
+        Boolean currentSortDirection=sortButton.$x("i").getText().equals("arrow_downward"); //true=asc, иначе=false
+
+        if(field!=currentSortFeild){
+            sortButton.click();
+            sortOptions.filter(Condition.text( field)).get(0).click();
+            sortButton.click();
+        };
+
+        if(currentSortDirection!=isAsc){
+            sortButton.click();
+            sortOptions.filter(Condition.text( field)).get(0).click();
+            sortButton.click();
+        };
 
     }
 }
