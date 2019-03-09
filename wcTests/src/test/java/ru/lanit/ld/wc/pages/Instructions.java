@@ -38,7 +38,8 @@ public class Instructions {
 
     public Instructions goToFolder(int Folder_ID){
         Selenide.open(String.format("#/instructions/%s",Folder_ID));
-        sleep(4000);
+
+        sleep(10000);
         return this;
     }
 

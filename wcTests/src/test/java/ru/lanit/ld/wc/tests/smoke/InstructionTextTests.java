@@ -2,6 +2,7 @@ package ru.lanit.ld.wc.tests.smoke;
 
 import com.codeborne.selenide.Condition;
 import io.qameta.allure.Flaky;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -21,20 +22,26 @@ import static com.codeborne.selenide.Selenide.sleep;
 public class InstructionTextTests extends TestBase {
 
     Instructions instSection;
-    UserInfo instructionInitiator = app.focusedUser; // app.UserList.anyUser(1); //или любой
-    Users instructionReceivers =app.UserList.anyUser(1);// получатель = любые пользователи (число = кол-во получателей)(обязательный)
+    UserInfo instructionInitiator ; // app.UserList.anyUser(1); //или любой
+    Users instructionReceivers ;// получатель = любые пользователи (число = кол-во получателей)(обязательный)
 
     @BeforeClass
     public void before() {
 
+        instructionInitiator = app.focusedUser; // app.UserList.anyUser(1); //или любой
+        instructionReceivers =app.UserList.anyUser(1);// получатель = любые пользователи (число = кол-во получателей)(обязательный)
+
         LoginPage lp = new LoginPage();
-        instSection = lp.open("#/login").LoginAs(instructionInitiator).goToFolder(1999);
+        instSection = lp.open("#/login").LoginAs(instructionInitiator).goToFolder(2101);
         //sleep(2000);
 
     }
 
     @DataProvider
     public Object[][] Notice() {
+
+
+
         //UserInfo instructionInitiator = app.focusedUser; // app.UserList.anyUser(1); //или любой
         Instruction newInstruction = new Instruction(instructionInitiator.getUserTypes().getAnyNoticeType());
         newInstruction
@@ -50,21 +57,26 @@ public class InstructionTextTests extends TestBase {
 
         newInstructionPage.fillForm(newInstruction, app, true);
         newInstructionPage.sendButton.click();
+        sleep(4000);
 
         return new Object[][]{new Object[]{newInstruction}};
     }
 
-    @Flaky
+
     @Test(dataProvider = "Notice", invocationCount = 1, description = "Проверить текст сообщения в режиме Список")
     public void instructionText(Instruction newInstruction) {
 
+        instSection.goToFolder(2101);
         instSection.ActionPanel.PreviewIs("Off");
         instSection.ActionPanel.viewOnlyNew(false);
         instSection.ActionPanel.sortBy("Дата создания", true);
 
-        instSection.cardView.cards.get(0).$().shouldHave(Condition.text(newInstruction.getText()));
-        class="layout row"
+        logger.info(instSection.cardView.getInstructionText(0));
+        Assert.assertEquals(instSection.cardView.getInstructionText(0),newInstruction.getText());
 
     }
+
+
+
 
 }

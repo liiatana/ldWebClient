@@ -58,21 +58,26 @@ public class ActionPanel {
         }
     }
 
-    public void sortBy(String field, boolean isAsc) {
-        String currentSortFeild=sortButton.$x("span").getText();
-        Boolean currentSortDirection=sortButton.$x("i").getText().equals("arrow_downward"); //true=asc, иначе=false
+    public void sortBy(String field, boolean isDesc) {
+        String currentSortFeild=sortButton.$x("div").$x("span").$$x("span").get(0).getText();
+                if (sortButton.$x("div").$x("span").$$x("span").get(1).getText().length()!=0){
+                    currentSortFeild=currentSortFeild.concat(" ").concat(sortButton.$x("div").$x("span").$$x("span").get(1).getText());
+                }
 
-        if(field!=currentSortFeild){
+        if(!field.equals(currentSortFeild)){
             sortButton.click();
             sortOptions.filter(Condition.text( field)).get(0).click();
             sortButton.click();
         };
 
-        if(currentSortDirection!=isAsc){
+        Boolean currentSortDirection=sortButton.$x("div").$x("span").$x("i").getText().equals("arrow_downward"); //true=asc, иначе=false
+
+        if(currentSortDirection!=isDesc){
             sortButton.click();
             sortOptions.filter(Condition.text( field)).get(0).click();
             sortButton.click();
         };
 
+        sleep(2000);
     }
 }

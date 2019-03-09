@@ -36,4 +36,8 @@ public class InstructionCardView {
 
     }
 
+   public String getInstructionText(int instructionNumInFolder){
+       return cards.get(instructionNumInFolder).$x(".//div[@class=\"layout body-1 ml-1 pop-up font-weight-regular\"]").getText();
+   }
+
 }
