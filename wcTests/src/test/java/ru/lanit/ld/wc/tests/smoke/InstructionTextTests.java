@@ -64,7 +64,7 @@ public class InstructionTextTests extends TestBase {
 
 
     @Test(dataProvider = "Notice", invocationCount = 1, description = "Проверить текст сообщения в режиме Список")
-    public void instructionText(Instruction newInstruction) {
+    public void instructionTextInList(Instruction newInstruction) {
 
         instSection.goToFolder(2101);
         instSection.ActionPanel.PreviewIs("Off");
@@ -76,7 +76,19 @@ public class InstructionTextTests extends TestBase {
 
     }
 
+    @Test(dataProvider = "Notice", invocationCount = 1, description = "Проверить текст сообщения во всплывающей подсказке в режиме Список")
+    public void instructionPopUpTextInList(Instruction newInstruction) {
 
+        instSection.goToFolder(2101);
+
+        instSection.ActionPanel.PreviewIs("Off");
+        instSection.ActionPanel.viewOnlyNew(false);
+        instSection.ActionPanel.sortBy("Дата создания", true);
+
+        logger.info(instSection.cardView.getInstructionText(0));
+        Assert.assertEquals(instSection.cardView.getInstructionPopUpText(0),newInstruction.getText());
+
+    }
 
 
 }
