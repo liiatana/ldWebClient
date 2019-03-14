@@ -57,7 +57,7 @@ public class LoginPage {
 
 
     public LoginPage open(String url) {
-        Selenide.open(url);
+        Selenide.open(url);// .open(url);
         return this;
 
     }

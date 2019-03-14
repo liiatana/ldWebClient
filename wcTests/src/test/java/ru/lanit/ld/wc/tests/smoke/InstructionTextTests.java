@@ -32,7 +32,7 @@ public class InstructionTextTests extends TestBase {
         instructionReceivers =app.UserList.anyUser(1);// получатель = любые пользователи (число = кол-во получателей)(обязательный)
 
         LoginPage lp = new LoginPage();
-        instSection = lp.open("#/login").LoginAs(instructionInitiator).goToFolder(2101);
+        instSection = lp.open("login").LoginAs(instructionInitiator).goToFolder(2101);
         //sleep(2000);
 
     }
@@ -57,7 +57,9 @@ public class InstructionTextTests extends TestBase {
 
         newInstructionPage.fillForm(newInstruction, app, true);
         newInstructionPage.sendButton.click();
-        sleep(4000);
+        //sleep(4000);
+
+        instSection.goToFolder(2101);
 
         return new Object[][]{new Object[]{newInstruction}};
     }
@@ -66,29 +68,28 @@ public class InstructionTextTests extends TestBase {
     @Test(dataProvider = "Notice", invocationCount = 1, description = "Проверить текст сообщения в режиме Список")
     public void instructionTextInList(Instruction newInstruction) {
 
-        instSection.goToFolder(2101);
-        instSection.ActionPanel.PreviewIs("Off");
-        instSection.ActionPanel.viewOnlyNew(false);
-        instSection.ActionPanel.sortBy("Дата создания", true);
 
-        logger.info(instSection.cardView.getInstructionText(0));
+        instSection.ActionPanel.setViewState("Off",false,"Дата создания",true);
+
         Assert.assertEquals(instSection.cardView.getInstructionText(0),newInstruction.getText());
 
     }
 
+
+
     @Test(dataProvider = "Notice", invocationCount = 1, description = "Проверить текст сообщения во всплывающей подсказке в режиме Список")
     public void instructionPopUpTextInList(Instruction newInstruction) {
 
-        instSection.goToFolder(2101);
-
-        instSection.ActionPanel.PreviewIs("Off");
-        instSection.ActionPanel.viewOnlyNew(false);
-        instSection.ActionPanel.sortBy("Дата создания", true);
-
-        logger.info(instSection.cardView.getInstructionText(0));
+        instSection.ActionPanel.setViewState("Off",false,"Дата создания",true);
         Assert.assertEquals(instSection.cardView.getInstructionPopUpText(0),newInstruction.getText());
 
     }
 
+    @Test(dataProvider = "Notice", invocationCount = 1, description = "Проверить текст сообщения во всплывающей подсказке в режиме Список")
+    public void instructionTextInPreviewList(Instruction newInstruction) {
 
+        instSection.ActionPanel.setViewState("On",false,"Дата создания",true);
+        Assert.assertEquals(instSection.cardView.getInstructionPopUpText(0),newInstruction.getText());
+
+    }
 }

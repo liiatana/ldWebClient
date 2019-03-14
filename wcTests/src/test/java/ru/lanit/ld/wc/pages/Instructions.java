@@ -17,7 +17,7 @@ public class Instructions {
 
     public ElementsCollection InstructionListWithPreview = $$(By.xpath("//div[@class=\"data-iteraror marginless-list\"]/*"));
 
-    public ElementsCollection InstructionListWithoutPreview=$$(By.xpath("//div[@class=\"layout list-item\"]"));
+    //public ElementsCollection InstructionListWithoutPreview=$$(By.xpath("//div[@class=\"layout list-item\"]"));
 
     public String threePoints= "div.v-menu.menu-vert.v-menu--inline > div > button > div > i";
 
@@ -31,13 +31,13 @@ public class Instructions {
     }
 
     public ViewInstruction openInstructionView(int ID) {
-        Selenide.open(String.format("#/instruction/%s",ID));
+        Selenide.open(String.format("instruction/%s",ID));
         sleep(3000);
         return page(ViewInstruction.class);
     }
 
     public Instructions goToFolder(int Folder_ID){
-        Selenide.open(String.format("#/instructions/%s",Folder_ID));
+        Selenide.open(String.format("instructions/%s",Folder_ID));
 
         sleep(10000);
         return this;
