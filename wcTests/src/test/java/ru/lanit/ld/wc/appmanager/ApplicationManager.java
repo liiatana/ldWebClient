@@ -1,6 +1,7 @@
 package ru.lanit.ld.wc.appmanager;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import ru.lanit.ld.wc.model.InstructionTypes;
 import ru.lanit.ld.wc.model.UserInfo;
 import ru.lanit.ld.wc.model.Users;
@@ -33,6 +34,7 @@ public class ApplicationManager {
 
         this.browser = browser;
         this.defaultBrowserSize = browserSize;
+
     }
 
     public void init() throws IOException {
@@ -49,6 +51,15 @@ public class ApplicationManager {
         baseUrl = properties.getProperty("web.baseUrl");
 
 
+        switch (browser) {
+            case  ("chrome"):
+                System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
+                break;
+
+        }
+
+
+
         Configuration.browser = browser;
         Configuration.baseUrl = baseUrl;
         Configuration.timeout = 10000;
@@ -56,12 +67,12 @@ public class ApplicationManager {
         Configuration.screenshots=true;
         Configuration.reopenBrowserOnFail=true;
 
-        exportEnvirometInfornationToFile();
+        exportEnviromentInfornationToFile();
 
 
     }
 
-    private void exportEnvirometInfornationToFile() throws IOException {
+    private void exportEnviromentInfornationToFile() throws IOException {
         File allureEnvFile = new File("allure-results\\environment.properties");
         if (allureEnvFile.exists()) {
             allureEnvFile.delete();
