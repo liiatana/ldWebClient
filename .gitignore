@@ -19,3 +19,4 @@ gradle-app.setting
 
 *.log
 
+wcTests/out/test/classes/META-INF/wcTests.main.kotlin_module
