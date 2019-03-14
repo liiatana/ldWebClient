@@ -8,7 +8,7 @@ repositories{
 dependencies{
     compile 'org.testng:testng:7.0.0-beta1'
     
-    implementation 'com.codeborne:selenide:5.2.0'
+    implementation 'com.codeborne:selenide:5.1.0'
     implementation 'io.qameta.allure:allure-testng:2.10.0'
     implementation 'io.qameta.allure:allure-selenide:2.10.0'
     
@@ -26,9 +26,6 @@ test{
     if(project.hasProperty('target'))    {
         systemProperty 'target', "&{target}"
 
-    }
-    if(project.hasProperty('verifyUI'))    {
-        systemProperty 'verifyUI', "&{verifyUI}"
     }
 }
 
