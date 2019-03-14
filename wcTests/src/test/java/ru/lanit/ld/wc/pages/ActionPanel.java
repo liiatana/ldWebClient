@@ -80,4 +80,10 @@ public class ActionPanel {
 
         sleep(2000);
     }
+
+    public void setViewState(String PreviewState, boolean viewOnlyNew, String sortingField, boolean isDescSorting) {
+        PreviewIs(PreviewState);
+        viewOnlyNew(viewOnlyNew);
+        sortBy(sortingField, isDescSorting);
+    }
 }
