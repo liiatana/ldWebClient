@@ -1,11 +1,15 @@
 package ru.lanit.ld.wc.model;
 
+import java.time.LocalDateTime;
+
 public class instResponse {
 
     public int instructionId;
     public String message;
 
+
     public instResponse(int instructionId, String message) {
+
         this.instructionId = instructionId;
         this.message = message;
     }

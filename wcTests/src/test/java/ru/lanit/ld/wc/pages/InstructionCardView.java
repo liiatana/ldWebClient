@@ -13,8 +13,8 @@ public class InstructionCardView {
 
     public ElementsCollection cards = $$(By.xpath("//div[@class=\"layout list-item\"]"));
 
-    private ElementsCollection popUps = $$(By.xpath("//div[@class=\"v-tooltip__content white\"]/span[@class=\"grey--text darken-4\"]"));
-
+    //private ElementsCollection popUps ; //= $$(By.xpath("//div[@class=\"v-tooltip__content white\"]/span[@class=\"grey--text darken-4\"]"))
+    SelenideElement popUp = $(By.cssSelector("div.v-tooltip__content.menuable__content__active.white"));
 
     public BigReportForm menuCreateReport(int instructionNumInFolder) {
         cards.get(instructionNumInFolder).lastChild().find("div.v-menu.menu-vert.v-menu--inline > div > button > div > i").click();
@@ -47,7 +47,18 @@ public class InstructionCardView {
         SelenideElement cardText = cards.get(instructionNumInFolder).$x(".//div[@class=\"layout body-1 ml-1 pop-up font-weight-regular\"]");
         cardText.hover();
         sleep(1000);
-        return popUps.last().innerHtml().toString();
+              return popUp.getText();
     }
 
+    public String getReceiverName(int instructionNumInFolder) {
+        return cards.get(instructionNumInFolder).$x(".//*//span").getText();
+    }
+
+    public String getCreationDate (int instructionNumInFolder){
+        return cards.get(instructionNumInFolder).$$x(".//*//div[@class=\"grey--text darken text-no-wrap caption type-name hidden-xs-only font-weight-regular\"]").first().getText();
+    }
+
+    public String getTypeName(int instructionNumInFolder) {
+        return cards.get(instructionNumInFolder).$$x(".//*//div[@class=\"grey--text darken text-no-wrap caption type-name hidden-xs-only font-weight-regular\"]/span").get(2).getText();
+    }
 }

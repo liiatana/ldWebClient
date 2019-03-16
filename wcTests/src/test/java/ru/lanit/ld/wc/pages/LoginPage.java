@@ -8,8 +8,7 @@ import org.openqa.selenium.Keys;
 import ru.lanit.ld.wc.appmanager.ApplicationManager;
 import ru.lanit.ld.wc.model.UserInfo;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.page;
+import static com.codeborne.selenide.Selenide.*;
 
 public class LoginPage {
 
@@ -22,15 +21,16 @@ public class LoginPage {
 
     public LoginPage() {
 
-        userLogin=$(By.xpath("//input[@id=\"login-field\"]"));
-        loginButton=$ (By.xpath("//button[@id=\"sql-auth-btn\"]"));
-        errorText=$(By.xpath("//span[@class=\"error-message\"]"));
+        userLogin = $(By.xpath("//input[@id=\"login-field\"]"));
+        loginButton = $(By.xpath("//button[@id=\"sql-auth-btn\"]"));
+        errorText = $(By.xpath("//span[@class=\"error-message\"]"));
 
     }
 
     public Instructions LoginAs(UserInfo user) {
 
         fillLoginInfomation(user);
+        sleep(5000);
         return page(Instructions.class);
 
     }

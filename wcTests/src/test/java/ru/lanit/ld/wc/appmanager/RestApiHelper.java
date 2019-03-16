@@ -158,4 +158,16 @@ public class RestApiHelper {
 
         //response.getStatusCode();
     }
+
+    public Instruction getInstruction(int instructionId) {
+
+        String json = RestAssured
+                .given().header("Cookie", cookies)
+                .get(String.format("%sinstruction/%s", apiPath,instructionId))
+                .asString();
+
+
+        JsonElement parsed = new JsonParser().parse(json);
+        return new Instruction(parsed);
+    }
 }

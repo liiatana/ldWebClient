@@ -3,7 +3,6 @@ package ru.lanit.ld.wc.model;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import ru.lanit.ld.wc.appmanager.ApplicationManager;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -39,16 +38,41 @@ public class Instruction {
     //public String signServiceUrl;
 
     private int InstructionId;
+    private instructionType instructionType;
+
+    private LocalDateTime creationDate;
 
     public Instruction(JsonElement parsed, int InstructionNum) {
-            //тип сообщения
-       // this.instructionTypeId=
+        //тип сообщения
+        // this.instructionTypeId=
         //        parsed.getAsJsonObject().getAsJsonArray("items").get(0).getAsJsonObject().get("instructionType").getAsJsonObject().get("id").getAsInt();
-            //Id сообщения
-        this.InstructionId=
+        //Id сообщения
+        this.InstructionId =
                 parsed.getAsJsonObject().getAsJsonArray("items").get(InstructionNum).getAsJsonObject().get("instruction").getAsJsonObject().get("id").getAsInt();
 
     }
+
+    public Instruction(JsonElement parsed) {
+        //тип сообщения
+        // this.instructionTypeId=
+        //        parsed.getAsJsonObject().getAsJsonArray("items").get(0).getAsJsonObject().get("instructionType").getAsJsonObject().get("id").getAsInt();
+        //Id сообщения
+        this.InstructionId =
+                parsed.getAsJsonObject().getAsJsonArray("items").get(1).getAsJsonObject().get("instruction").getAsJsonObject().get("id").getAsInt();
+
+
+        LocalDateTime secondParseResult = LocalDateTime.parse("September, 24, 2014 17:18:55", DateTimeFormatter.ofPattern("MMMM, dd, yyyy HH:mm:ss"));
+
+
+    }
+
+
+
+
+
+
+
+
 
     public int getInstructionTypeId() {
         return instructionTypeId;
@@ -58,7 +82,7 @@ public class Instruction {
 
         // this.hasPlugin=false;
         // this.signServiceUrl=app.properties.getProperty("web.securityUrl");
-
+        this.instructionType = type;
         this.instructionTypeId = type.getId();
         //this.documentId = 0;
         this.sendType = 0;
@@ -84,8 +108,7 @@ public class Instruction {
 
         //"executionDate": null,
         //"execInterval": null
-        this.operationTypeId=type.getOperationID();
-
+        this.operationTypeId = type.getOperationID();
 
 
     }
@@ -149,7 +172,7 @@ public class Instruction {
     }
 
     public Instruction withExecAuditorID(int[] execAuditorID) {
-        this.control=true;
+        this.control = true;
         this.execAuditorID = execAuditorID[0];
         return this;
     }
@@ -160,7 +183,9 @@ public class Instruction {
 
     public Instruction withInitiatorID(int[] initiatorID) {
         this.initiatorID = initiatorID[0];
-        if (this.reportReceiverID  == 0 ) {this.reportReceiverID=this.initiatorID;}
+        if (this.reportReceiverID == 0) {
+            this.reportReceiverID = this.initiatorID;
+        }
         return this;
     }
 
@@ -230,7 +255,19 @@ public class Instruction {
     }
 
 
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
 
+    public Instruction withCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
+        return this;
+    }
+
+
+    public ru.lanit.ld.wc.model.instructionType getInstructionType() {
+        return instructionType;
+    }
 
     public JsonObject toJson(boolean send) {
         JsonObject mainInstruction = new JsonObject();
@@ -238,8 +275,8 @@ public class Instruction {
 
         mainInstruction.addProperty("receiverID", this.receiverID[0]);
         mainInstruction.addProperty("subject", this.subject);
-        mainInstruction.addProperty("text", this.text+String.format("_%sZ", this.startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.000"))));
-
+        mainInstruction.addProperty("text", this.text);
+//+String.format("_%sZ", this.startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.000")))
         mainInstruction.addProperty("comment", this.comment);
 
         if (this.fileIds == null) {
@@ -253,12 +290,11 @@ public class Instruction {
 
         if (!this.control) {
             mainInstruction.addProperty("reportReceiverID", 0);
-        }else if (this.reportReceiverID != 0) {
+        } else if (this.reportReceiverID != 0) {
             mainInstruction.addProperty("reportReceiverID", this.reportReceiverID);
         } else {
             mainInstruction.addProperty("reportReceiverID", this.initiatorID);
         }
-
 
 
         if (this.startDate == null) {
@@ -299,7 +335,7 @@ public class Instruction {
         jsonInstruction.addProperty("withExecutive", this.withExecutive);
         jsonInstruction.addProperty("control", this.control);
 
-        if (send){
+        if (send) {
             jsonInstruction.addProperty("doEdit", false);
             jsonInstruction.add("instructionId", null);
             jsonInstruction.addProperty("operationTypeId", this.operationTypeId);
@@ -309,20 +345,20 @@ public class Instruction {
 
         jsonInstruction.add("mainInstruction", mainInstruction);
 
-        if(this.receiverID.length>1){
+        if (this.receiverID.length > 1) {
 
-            JsonArray coExecutorInstruction=new JsonArray();
+            JsonArray coExecutorInstruction = new JsonArray();
 
-            JsonObject coExecFirst= mainInstruction.deepCopy();
+            JsonObject coExecFirst = mainInstruction.deepCopy();
             coExecFirst.remove("receiverID");
             coExecFirst.addProperty("receiverID", this.receiverID[1]);
             coExecutorInstruction.add(coExecFirst);
 
 
-            JsonObject coExecOthers= mainInstruction.deepCopy();
+            JsonObject coExecOthers = mainInstruction.deepCopy();
             //coExecFirst.remove("receiverID");
 
-            if(this.withExecutive && this.reportToExecutive){
+            if (this.withExecutive && this.reportToExecutive) {
                 coExecOthers.remove("reportReceiverID");
                 coExecOthers.addProperty("reportReceiverID", this.receiverID[1]);
             }
