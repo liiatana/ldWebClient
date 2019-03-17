@@ -18,7 +18,7 @@ public class ReadUnreadTests extends TestBase {
     @BeforeClass
     public void before() {
 
-        folderList = app.focusedUser.getUserApi().getFolderList(1999);
+        folderList = app.focusedUser.getUserApi().getFolderList(1999,10);
         app.focusedUser.getUserApi().setReaded(true,folderList.items.get(0).getInstructionId());
 
         LoginPage lp = new LoginPage();

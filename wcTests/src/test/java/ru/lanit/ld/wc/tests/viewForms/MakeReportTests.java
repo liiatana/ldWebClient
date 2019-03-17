@@ -58,7 +58,7 @@ public class MakeReportTests extends TestBase {
 
         instSection.ActionPanel.refreshButton.click();
         sleep(3000);
-        folderList = app.focusedUser.getUserApi().getFolderList(1999);
+        folderList = app.focusedUser.getUserApi().getFolderList(1999,10);
 
         instSection.cardView.possitiveReport(folderList.getInstructionNumInFolder(instruction.getInstructionId()));
         instSection.Dialog.buttonOK.click();
@@ -94,7 +94,7 @@ public class MakeReportTests extends TestBase {
 
         instSection.ActionPanel.refreshButton.click();
         sleep(3000);
-        folderList = app.focusedUser.getUserApi().getFolderList(1999);
+        folderList = app.focusedUser.getUserApi().getFolderList(1999,10);
 
         instSection.cardView.negativeReport(folderList.getInstructionNumInFolder(instruction.getInstructionId()));
         sleep(3000);
@@ -138,7 +138,7 @@ public class MakeReportTests extends TestBase {
     public void makeReportByBigForm(Instruction instruction) {
 
         instSection.ActionPanel.refreshButton.click();
-        folderList = app.focusedUser.getUserApi().getFolderList(1999);
+        folderList = app.focusedUser.getUserApi().getFolderList(1999,10);
         sleep(2000);
 
         BigReportForm report=instSection.cardView.menuCreateReport(folderList.getInstructionNumInFolder(instruction.getInstructionId()));
