@@ -1,15 +1,12 @@
 package ru.lanit.ld.wc.tests.viewForms;
 
-import io.qameta.allure.Flaky;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.lanit.ld.wc.model.Instruction;
 import ru.lanit.ld.wc.model.UserInfo;
-import ru.lanit.ld.wc.model.instructionType;
 import ru.lanit.ld.wc.pages.ChoosePersonForm;
-import ru.lanit.ld.wc.pages.Instructions;
+import ru.lanit.ld.wc.pages.InstructionsSection;
 import ru.lanit.ld.wc.pages.LoginPage;
 import ru.lanit.ld.wc.pages.NewInstructionPage;
 import ru.lanit.ld.wc.tests.TestBase;
@@ -17,7 +14,7 @@ import ru.lanit.ld.wc.tests.TestBase;
 import static com.codeborne.selenide.Selenide.sleep;
 
 public class wChoosePersonFormTests extends TestBase {
-    Instructions inst;
+    InstructionsSection inst;
 
 
     @BeforeClass

@@ -5,7 +5,6 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import ru.lanit.ld.wc.appmanager.ApplicationManager;
 import ru.lanit.ld.wc.model.UserInfo;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -27,11 +26,11 @@ public class LoginPage {
 
     }
 
-    public Instructions LoginAs(UserInfo user) {
+    public InstructionsSection LoginAs(UserInfo user) {
 
         fillLoginInfomation(user);
         sleep(5000);
-        return page(Instructions.class);
+        return page(InstructionsSection.class);
 
     }
 

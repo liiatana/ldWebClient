@@ -6,7 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.lanit.ld.wc.model.UserInfo;
-import ru.lanit.ld.wc.pages.Instructions;
+import ru.lanit.ld.wc.pages.InstructionsSection;
 import ru.lanit.ld.wc.pages.LoginPage;
 import ru.lanit.ld.wc.tests.TestBase;
 
@@ -52,7 +52,7 @@ public class _LoginTests extends TestBase {
 
 
         LoginPage lp = new LoginPage();
-        Instructions inst = lp.open("login").LoginAs(user);
+        InstructionsSection inst = lp.open("login").LoginAs(user);
 
         sleep(10000);
 

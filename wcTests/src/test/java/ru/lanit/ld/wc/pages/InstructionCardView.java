@@ -7,6 +7,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+
 import static com.codeborne.selenide.Selenide.*;
 
 public class InstructionCardView {
@@ -54,9 +59,21 @@ public class InstructionCardView {
         return cards.get(instructionNumInFolder).$x(".//*//span").getText();
     }
 
-    public String getCreationDate (int instructionNumInFolder){
-        return cards.get(instructionNumInFolder).$$x(".//*//div[@class=\"grey--text darken text-no-wrap caption type-name hidden-xs-only font-weight-regular\"]").first().getText();
+    public LocalDateTime getCreationDateAsLocalDate (int instructionNumInFolder){
+
+        String d=cards.get(instructionNumInFolder).$$x(".//*//div[@class=\"grey--text darken text-no-wrap caption type-name hidden-xs-only font-weight-regular\"]/span").get(0).getText();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy HH:mm");
+
+        //LocalDateTime formatDateTime = LocalDateTime.parse(d, formatter);
+
+        return LocalDateTime.parse(d, formatter);
     }
+
+//    public String getCreationDate (int instructionNumInFolder){
+//
+//        return cards.get(instructionNumInFolder).$$x(".//*//div[@class=\"grey--text darken text-no-wrap caption type-name hidden-xs-only font-weight-regular\"]/span").get(0).getText();
+//    }
 
     public String getTypeName(int instructionNumInFolder) {
         return cards.get(instructionNumInFolder).$$x(".//*//div[@class=\"grey--text darken text-no-wrap caption type-name hidden-xs-only font-weight-regular\"]/span").get(2).getText();

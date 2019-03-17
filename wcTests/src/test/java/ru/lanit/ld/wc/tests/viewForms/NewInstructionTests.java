@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 import ru.lanit.ld.wc.model.Instruction;
 import ru.lanit.ld.wc.model.UserInfo;
 import ru.lanit.ld.wc.model.instructionType;
-import ru.lanit.ld.wc.pages.Instructions;
+import ru.lanit.ld.wc.pages.InstructionsSection;
 import ru.lanit.ld.wc.pages.LoginPage;
 import ru.lanit.ld.wc.pages.NewInstructionPage;
 import ru.lanit.ld.wc.tests.TestBase;
@@ -16,7 +16,7 @@ import ru.lanit.ld.wc.tests.TestBase;
 import static com.codeborne.selenide.Selenide.sleep;
 
 public class NewInstructionTests extends TestBase {
-    Instructions inst;
+    InstructionsSection inst;
 
 
     @BeforeClass

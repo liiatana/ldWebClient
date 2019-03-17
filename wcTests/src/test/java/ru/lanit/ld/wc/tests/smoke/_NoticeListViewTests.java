@@ -1,7 +1,5 @@
 package ru.lanit.ld.wc.tests.smoke;
 
-import com.codeborne.selenide.Condition;
-import io.qameta.allure.Flaky;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -9,7 +7,7 @@ import org.testng.annotations.Test;
 import ru.lanit.ld.wc.model.Instruction;
 import ru.lanit.ld.wc.model.UserInfo;
 import ru.lanit.ld.wc.model.Users;
-import ru.lanit.ld.wc.pages.Instructions;
+import ru.lanit.ld.wc.pages.InstructionsSection;
 import ru.lanit.ld.wc.pages.LoginPage;
 import ru.lanit.ld.wc.pages.NewInstructionPage;
 import ru.lanit.ld.wc.tests.TestBase;
@@ -21,7 +19,7 @@ import static com.codeborne.selenide.Selenide.sleep;
 
 public class _NoticeListViewTests extends TestBase {
 
-    Instructions instSection;
+    InstructionsSection instSection;
     UserInfo instructionInitiator ; // app.UserList.anyUser(1); //или любой
     Users instructionReceivers ;// получатель = любые пользователи (число = кол-во получателей)(обязательный)
 

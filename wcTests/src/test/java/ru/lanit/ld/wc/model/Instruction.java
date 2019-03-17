@@ -41,6 +41,9 @@ public class Instruction {
     private instructionType instructionType;
 
     private LocalDateTime creationDate;
+    private int state;
+    private String stateName;
+
 
     public Instruction(JsonElement parsed, int InstructionNum) {
         //тип сообщения
@@ -57,21 +60,36 @@ public class Instruction {
         // this.instructionTypeId=
         //        parsed.getAsJsonObject().getAsJsonArray("items").get(0).getAsJsonObject().get("instructionType").getAsJsonObject().get("id").getAsInt();
         //Id сообщения
-        this.InstructionId =
-                parsed.getAsJsonObject().getAsJsonArray("items").get(1).getAsJsonObject().get("instruction").getAsJsonObject().get("id").getAsInt();
+        // this.InstructionId =
+        //        parsed.getAsJsonObject().getAsJsonArray("items").get(1).getAsJsonObject().get("instruction").getAsJsonObject().get("id").getAsInt();
+
+        //JsonObject jsonObject = parsed.getAsJsonObject();
+
+        //this.instructionTypeId = parsed.getAsJsonObject().get("instructionType").getAsJsonObject().get("id").getAsInt();
+        //this.instructionType=
+
+        JsonObject jsonInstruction = parsed.getAsJsonObject().get("instruction").getAsJsonObject();
 
 
-        LocalDateTime secondParseResult = LocalDateTime.parse("September, 24, 2014 17:18:55", DateTimeFormatter.ofPattern("MMMM, dd, yyyy HH:mm:ss"));
+        this.comment = jsonInstruction.get("comment").getAsString();
+
+        this.creationDate = LocalDateTime.parse(jsonInstruction.get("createDateTime").getAsString().substring(0, 16).replace("T", ""),
+                DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm"));
+
+        this.InstructionId = jsonInstruction.get("id").getAsInt();
+        this.initiatorID = jsonInstruction.get("initiatorID").getAsInt();
+        this.instructionTypeId = jsonInstruction.get("instructionTypeID").getAsInt();
+        this.initiatorID = jsonInstruction.get("receiverID").getAsInt();
+        //startDate
+        this.state = jsonInstruction.get("state").getAsInt();
+        this.stateName = jsonInstruction.get("stateName").getAsString();
+        this.subject = jsonInstruction.get("subject").getAsString();
+        this.text = jsonInstruction.get("text").getAsString();
+
+        //LocalDateTime secondParseResult = LocalDateTime.parse("September, 24, 2014 17:18:55", DateTimeFormatter.ofPattern("MMMM, dd, yyyy HH:mm:ss"));
 
 
     }
-
-
-
-
-
-
-
 
 
     public int getInstructionTypeId() {
@@ -259,11 +277,32 @@ public class Instruction {
         return creationDate;
     }
 
-    public Instruction withCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
+    public Instruction withCreationDate(LocalDateTime d) {
+        creationDate=d;
         return this;
     }
 
+    public int getState() {
+        return state;
+    }
+
+    public Instruction withState(int state) {
+        this.state = state;
+        return this;
+    }
+
+    public String getStateName() {
+        return stateName;
+    }
+
+    public Instruction withStateName(String stateName) {
+        this.stateName = stateName;
+        return this;
+    }
+
+    //public String getCreationDateAsTextInWeb() {
+    //    return creationDate.format(DateTimeFormatter.ofPattern("dd MMMM yyyy HH:mm"));
+    //}
 
     public ru.lanit.ld.wc.model.instructionType getInstructionType() {
         return instructionType;

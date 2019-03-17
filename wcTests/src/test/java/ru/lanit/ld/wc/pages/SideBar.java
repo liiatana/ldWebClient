@@ -1,6 +1,5 @@
 package ru.lanit.ld.wc.pages;
 
-import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 
@@ -26,9 +25,9 @@ public class SideBar {
         HomeButton.click();
     }
 
-    public Instructions goToInstructions() {
+    public InstructionsSection goToInstructions() {
         InstructionSection.click();
-        return new Instructions();
+        return new InstructionsSection();
     }
 
     public void goToDocs() {

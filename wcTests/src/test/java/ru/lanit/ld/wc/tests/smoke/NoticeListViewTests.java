@@ -8,30 +8,26 @@ import ru.lanit.ld.wc.model.Instruction;
 import ru.lanit.ld.wc.model.UserInfo;
 import ru.lanit.ld.wc.model.Users;
 import ru.lanit.ld.wc.model.instResponse;
-import ru.lanit.ld.wc.pages.Instructions;
+import ru.lanit.ld.wc.pages.InstructionsSection;
 import ru.lanit.ld.wc.pages.LoginPage;
-import ru.lanit.ld.wc.pages.NewInstructionPage;
 import ru.lanit.ld.wc.tests.TestBase;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import static com.codeborne.selenide.Selenide.sleep;
-
 public class NoticeListViewTests extends TestBase {
 
-    Instructions instSection;
-    UserInfo instructionInitiator ; // app.UserList.anyUser(1); //или любой
-    Users instructionReceivers ;// получатель = любые пользователи (число = кол-во получателей)(обязательный)
+    InstructionsSection instSection;
+    UserInfo instructionInitiator; // app.UserList.anyUser(1); //или любой
+    Users instructionReceivers;// получатель = любые пользователи (число = кол-во получателей)(обязательный)
     Instruction newInstruction;
-
 
 
     @BeforeClass
     public void before() {
 
         instructionInitiator = app.focusedUser; // app.UserList.anyUser(1); //или любой
-        instructionReceivers =app.UserList.anyUser(1);// получатель = любые пользователи (число = кол-во получателей)(обязательный)
+        instructionReceivers = app.UserList.anyUser(1);// получатель = любые пользователи (число = кол-во получателей)(обязательный)
 
         newInstruction = new Instruction(instructionInitiator.getUserTypes().getAnyNoticeType());
         newInstruction
@@ -43,13 +39,19 @@ public class NoticeListViewTests extends TestBase {
 
         instResponse instResponse = instructionInitiator.getUserApi().createInstruction(newInstruction, true);
 
-        newInstruction.withInstructionId(instResponse.getInstructionId());
+        Instruction instruction = instructionInitiator.getUserApi().getInstruction(instResponse.instructionId);
+
+
+        newInstruction.withCreationDate(instruction.getCreationDate())
+                .withState(instruction.getState())
+                .withStateName(instruction.getStateName())
+                .withInstructionId(instResponse.getInstructionId());
 
         logger.info("instruction : " + newInstruction.toString());
 
         LoginPage lp = new LoginPage();
         instSection = lp.open("login").LoginAs(instructionInitiator).goToFolder(2101);
-        instSection.ActionPanel.setViewState("Off",false,"Дата создания",true);
+        instSection.ActionPanel.setViewState("Off", false, "Дата создания", true);
         //sleep(2000);
 
     }
@@ -63,35 +65,32 @@ public class NoticeListViewTests extends TestBase {
     @Test(dataProvider = "Notice", invocationCount = 1, description = "Проверить текст сообщения в режиме Список")
     public void instructionTextInList(Instruction newInstruction) {
 
-        Assert.assertEquals(instSection.cardView.getInstructionText(0),newInstruction.getText());
+        Assert.assertEquals(instSection.cardView.getInstructionText(0), newInstruction.getText());
     }
-
 
 
     @Test(dataProvider = "Notice", invocationCount = 1, description = "Проверить текст сообщения во всплывающей подсказке в режиме Список")
     public void instructionPopUpTextInList(Instruction newInstruction) {
 
-        Assert.assertEquals(instSection.cardView.getInstructionPopUpText(0),newInstruction.getText());
+        Assert.assertEquals(instSection.cardView.getInstructionPopUpText(0), newInstruction.getText());
     }
 
     @Test(dataProvider = "Notice", invocationCount = 1, description = "Проверить ФИО получателя в режиме Список")
     public void instructionReceiverNameInList(Instruction newInstruction) {
 
-        Assert.assertEquals(instSection.cardView.getReceiverName(0),app.UserList.getUserById(newInstruction.getReceiverID()[0]).getUserName() );
+        Assert.assertEquals(instSection.cardView.getReceiverName(0), app.UserList.getUserById(newInstruction.getReceiverID()[0]).getUserName());
     }
 
     @Test(dataProvider = "Notice", invocationCount = 1, description = "Проверить дату создания в режиме Список")
     public void instructionCreationDateInList(Instruction newInstruction) {
 
-        //instructionInitiator.getUserApi().getInstruction(newInstruction.getInstructionId()).getCreationDate();
-        Assert.assertEquals(instSection.cardView.getCreationDate (0),
-                instructionInitiator.getUserApi().getInstruction(newInstruction.getInstructionId()).getCreationDate());
+        Assert.assertEquals(instSection.cardView.getCreationDateAsLocalDate(0), newInstruction.getCreationDate());
     }
 
     @Test(dataProvider = "Notice", invocationCount = 1, description = "Проверить тип сообщения в режиме Список")
     public void instructionTypeNameInList(Instruction newInstruction) {
 
-        Assert.assertEquals(instSection.cardView.getTypeName(0),newInstruction.getInstructionType().getName() );
+        Assert.assertEquals(instSection.cardView.getTypeName(0), newInstruction.getInstructionType().getName());
     }
 
 

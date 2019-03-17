@@ -5,15 +5,15 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.lanit.ld.wc.model.FolderList;
-import ru.lanit.ld.wc.pages.Instructions;
+import ru.lanit.ld.wc.pages.InstructionsSection;
 import ru.lanit.ld.wc.pages.LoginPage;
 import ru.lanit.ld.wc.pages.ViewInstruction;
 import ru.lanit.ld.wc.tests.TestBase;
 
 import static com.codeborne.selenide.Selenide.sleep;
 
-public class ViewInstructionsTests extends TestBase {
-    Instructions instSection;
+public class ViewInstructionsSectionTests extends TestBase {
+    InstructionsSection instSection;
     FolderList folderList;
 
     @BeforeClass

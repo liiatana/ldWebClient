@@ -2,12 +2,11 @@ package ru.lanit.ld.wc.pages;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class Instructions {
+public class InstructionsSection {
     public SideBar SideBar;
     public Header Header;
     public ActionPanel ActionPanel;
@@ -21,7 +20,7 @@ public class Instructions {
 
     public String threePoints= "div.v-menu.menu-vert.v-menu--inline > div > button > div > i";
 
-    public Instructions() {
+    public InstructionsSection() {
         SideBar= new SideBar();
         Header= new Header();
         ActionPanel=new ActionPanel();
@@ -36,7 +35,7 @@ public class Instructions {
         return page(ViewInstruction.class);
     }
 
-    public Instructions goToFolder(int Folder_ID){
+    public InstructionsSection goToFolder(int Folder_ID){
         Selenide.open(String.format("instructions/%s",Folder_ID));
 
         sleep(10000);
