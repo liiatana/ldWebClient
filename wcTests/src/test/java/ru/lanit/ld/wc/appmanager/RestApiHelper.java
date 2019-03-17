@@ -123,9 +123,11 @@ public class RestApiHelper {
 
     }
 
-    public FolderList getFolderList(int Folder_ID) {
+    public FolderList getFolderList(int Folder_ID, int count) {
 
-        String data = "{\"top\": \"50\",\"skip\":0,\"searchText\":null,\"members\":null,\"filterId\":null,\"filterValues\":null } ";
+        String data ;//= "{\"top\": \"50\",\"skip\":0,\"searchText\":null,\"members\":null,\"filterId\":null,\"filterValues\":null } ";
+
+        data=String.format("{\"top\": \"%s\",\"skip\":0,\"searchText\":null,\"members\":null,\"filterId\":null,\"filterValues\":null } ",count);
 
         String res = RestAssured
                 .given().header("Cookie", cookies)
