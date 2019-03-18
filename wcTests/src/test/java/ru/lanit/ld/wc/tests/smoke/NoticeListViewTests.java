@@ -62,32 +62,32 @@ public class NoticeListViewTests extends TestBase {
     }
 
 
-    @Test(dataProvider = "Notice", invocationCount = 1, description = "Проверить текст сообщения в режиме Список")
+    @Test(dataProvider = "Notice", priority =  1, description = "Проверить текст сообщения в режиме Список")
     public void instructionTextInList(Instruction newInstruction) {
 
         Assert.assertEquals(instSection.cardView.getInstructionText(0), newInstruction.getText());
     }
 
 
-    @Test(dataProvider = "Notice", invocationCount = 1, description = "Проверить текст сообщения во всплывающей подсказке в режиме Список")
+    @Test(dataProvider = "Notice", invocationCount = 1, priority =  1,description = "Проверить текст сообщения во всплывающей подсказке в режиме Список")
     public void instructionPopUpTextInList(Instruction newInstruction) {
 
         Assert.assertEquals(instSection.cardView.getInstructionPopUpText(0), newInstruction.getText());
     }
 
-    @Test(dataProvider = "Notice", invocationCount = 1, description = "Проверить ФИО получателя в режиме Список")
+    @Test(dataProvider = "Notice", invocationCount = 1, priority =  1,description = "Проверить ФИО получателя в режиме Список")
     public void instructionReceiverNameInList(Instruction newInstruction) {
 
         Assert.assertEquals(instSection.cardView.getReceiverName(0), app.UserList.getUserById(newInstruction.getReceiverID()[0]).getUserName());
     }
 
-    @Test(dataProvider = "Notice", invocationCount = 1, description = "Проверить дату создания в режиме Список")
+    @Test(dataProvider = "Notice", invocationCount = 1,priority =  1, description = "Проверить дату создания в режиме Список")
     public void instructionCreationDateInList(Instruction newInstruction) {
 
         Assert.assertEquals(instSection.cardView.getCreationDateAsLocalDate(0), newInstruction.getCreationDate());
     }
 
-    @Test(dataProvider = "Notice", invocationCount = 1, description = "Проверить тип сообщения в режиме Список")
+    @Test(dataProvider = "Notice", invocationCount = 1, priority =  1,description = "Проверить тип сообщения в режиме Список")
     public void instructionTypeNameInList(Instruction newInstruction) {
 
         Assert.assertEquals(instSection.cardView.getTypeName(0), newInstruction.getInstructionType().getName());
