@@ -32,7 +32,7 @@ public class _LoginTests extends TestBase {
 
 
         LoginPage lp = new LoginPage();
-        LoginPage loginPage = lp.open("login").failedLoginAs(badUser);
+        LoginPage loginPage = lp.open().failedLoginAs(badUser);
         sleep(1000);
 
         loginPage.errorText.shouldHave(Condition.text("Не удалось авторизоваться. Попробуйте еще раз!"));
@@ -52,7 +52,7 @@ public class _LoginTests extends TestBase {
 
 
         LoginPage lp = new LoginPage();
-        InstructionsSection inst = lp.open("login").LoginAs(user);
+        InstructionsSection inst = lp.open().LoginAs(user);
 
         sleep(10000);
 
