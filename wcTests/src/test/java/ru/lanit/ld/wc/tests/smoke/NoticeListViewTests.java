@@ -50,10 +50,9 @@ public class NoticeListViewTests extends TestBase {
         logger.info("instruction : " + newInstruction.toString());
 
         LoginPage lp = new LoginPage();
-        instSection = lp.open("login").LoginAs(instructionInitiator).goToFolder(2101);
+        instSection = lp.open().LoginAs(instructionInitiator).goToFolder(2101);
         instSection.ActionPanel.setViewState("Off", false, "Дата создания", true);
         //sleep(2000);
-
     }
 
     @DataProvider

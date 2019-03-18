@@ -32,7 +32,7 @@ public class CreateNoticeTests extends TestBase {
         instructionReceivers =app.UserList.anyUser(2);// получатель = любые пользователи (число = кол-во получателей)(обязательный)
 
         LoginPage lp = new LoginPage();
-        instSection = lp.open("login").LoginAs(instructionInitiator);
+        instSection = lp.open().LoginAs(instructionInitiator);
         instSection.ActionPanel.setViewState("Off",false,"Дата создания",true);
 
         newInstruction = new Instruction(instructionInitiator.getUserTypes().getAnyNoticeType());

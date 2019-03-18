@@ -19,7 +19,11 @@ public class InstructionCardView {
     public ElementsCollection cards = $$(By.xpath("//div[@class=\"layout list-item\"]"));
 
     //private ElementsCollection popUps ; //= $$(By.xpath("//div[@class=\"v-tooltip__content white\"]/span[@class=\"grey--text darken-4\"]"))
-    SelenideElement popUp = $(By.cssSelector("div.v-tooltip__content.menuable__content__active.white"));
+    private SelenideElement popUp = $(By.cssSelector("div.v-tooltip__content.menuable__content__active.white"));
+
+    private ElementsCollection actionsMenuItems;
+
+
 
     public BigReportForm menuCreateReport(int instructionNumInFolder) {
         cards.get(instructionNumInFolder).lastChild().find("div.v-menu.menu-vert.v-menu--inline > div > button > div > i").click();
@@ -44,9 +48,19 @@ public class InstructionCardView {
 
     }
 
+    public ElementsCollection clickActionsMenu(int instructionNumInFolder) {
+
+        return actionsMenuItems=cards.get(instructionNumInFolder).lastChild().$$x(".//div[@class=\"v-menu--inline\"]/button");
+    }
+
     public String getInstructionText(int instructionNumInFolder) {
         return cards.get(instructionNumInFolder).$x(".//div[@class=\"layout body-1 ml-1 pop-up font-weight-regular\"]").getText();
     }
+
+    public SelenideElement getInstructionTextAsSE(int instructionNumInFolder) {
+        return cards.get(instructionNumInFolder).$x(".//div[@class=\"layout body-1 ml-1 pop-up font-weight-regular\"]");
+    }
+
 
     public String getInstructionPopUpText(int instructionNumInFolder) {
         SelenideElement cardText = cards.get(instructionNumInFolder).$x(".//div[@class=\"layout body-1 ml-1 pop-up font-weight-regular\"]");
@@ -62,20 +76,16 @@ public class InstructionCardView {
     public LocalDateTime getCreationDateAsLocalDate (int instructionNumInFolder){
 
         String d=cards.get(instructionNumInFolder).$$x(".//*//div[@class=\"grey--text darken text-no-wrap caption type-name hidden-xs-only font-weight-regular\"]/span").get(0).getText();
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy HH:mm");
-
-        //LocalDateTime formatDateTime = LocalDateTime.parse(d, formatter);
-
         return LocalDateTime.parse(d, formatter);
     }
 
-//    public String getCreationDate (int instructionNumInFolder){
-//
-//        return cards.get(instructionNumInFolder).$$x(".//*//div[@class=\"grey--text darken text-no-wrap caption type-name hidden-xs-only font-weight-regular\"]/span").get(0).getText();
-//    }
 
     public String getTypeName(int instructionNumInFolder) {
         return cards.get(instructionNumInFolder).$$x(".//*//div[@class=\"grey--text darken text-no-wrap caption type-name hidden-xs-only font-weight-regular\"]/span").get(2).getText();
     }
+
+
+
+
 }
