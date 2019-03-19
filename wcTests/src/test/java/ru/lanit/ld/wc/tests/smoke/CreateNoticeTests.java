@@ -29,7 +29,7 @@ public class CreateNoticeTests extends TestBase {
     public void before() {
 
         instructionInitiator = app.focusedUser; // app.UserList.anyUser(1); //или любой
-        instructionReceivers =app.UserList.anyUser(2);// получатель = любые пользователи (число = кол-во получателей)(обязательный)
+        instructionReceivers =app.UserList.anyUser(1);// получатель = любые пользователи (число = кол-во получателей)(обязательный)
 
         LoginPage lp = new LoginPage();
         instSection = lp.open().LoginAs(instructionInitiator);

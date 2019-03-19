@@ -45,17 +45,12 @@ public class Instruction {
     private String stateName;
 
 
-    public Instruction(JsonElement parsed, int InstructionNum) {
-        //тип сообщения
-        // this.instructionTypeId=
-        //        parsed.getAsJsonObject().getAsJsonArray("items").get(0).getAsJsonObject().get("instructionType").getAsJsonObject().get("id").getAsInt();
-        //Id сообщения
+    public Instruction(JsonElement parsed, int InstructionNum) { // для создания объектов Instruction при чтении списка
         this.InstructionId =
                 parsed.getAsJsonObject().getAsJsonArray("items").get(InstructionNum).getAsJsonObject().get("instruction").getAsJsonObject().get("id").getAsInt();
-
     }
 
-    public Instruction(JsonElement parsed) {
+    public Instruction(JsonElement parsed) { // для создания объекта INstruction при олучении ифнормации о сообщении
 
         JsonObject jsonInstruction = parsed.getAsJsonObject().get("instruction").getAsJsonObject();
 
@@ -74,10 +69,7 @@ public class Instruction {
         this.subject = jsonInstruction.get("subject").getAsString();
         this.text = jsonInstruction.get("text").getAsString();
 
-
-
-        this.receiverID[0]=jsonInstruction.get("initiatorID").getAsInt();
-
+        this.receiverID= Arrays.stream(jsonInstruction.get("receiverID").getAsString().split(",")).mapToInt(Integer::parseInt).toArray();
         //LocalDateTime secondParseResult = LocalDateTime.parse("September, 24, 2014 17:18:55", DateTimeFormatter.ofPattern("MMMM, dd, yyyy HH:mm:ss"));
 
 
