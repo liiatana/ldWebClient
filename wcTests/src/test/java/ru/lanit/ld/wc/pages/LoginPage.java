@@ -56,8 +56,8 @@ public class LoginPage {
 
 
     public LoginPage open() {
-        String url1="login";
-        Selenide.open(url1);// .open(url);
+        String url="login";
+        Selenide.open(url);
         return this;
 
     }

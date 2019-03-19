@@ -22,7 +22,7 @@ public class MakeReportTests extends TestBase {
     public void before() {
 
         LoginPage lp = new LoginPage();
-        instSection = lp.open("#/login").LoginAs(app.focusedUser).goToFolder(1999);
+        instSection = lp.open().LoginAs(app.focusedUser).goToFolder(1999);
         instSection.ActionPanel.PreviewIs("Off");
         instSection.ActionPanel.viewOnlyNew(false);
 

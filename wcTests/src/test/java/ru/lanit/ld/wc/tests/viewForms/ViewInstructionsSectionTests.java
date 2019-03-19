@@ -20,7 +20,7 @@ public class ViewInstructionsSectionTests extends TestBase {
     public void before() {
 
         LoginPage lp = new LoginPage();
-        instSection = lp.open("#/login").LoginAs(app.focusedUser).goToFolder(1999);
+        instSection = lp.open().LoginAs(app.focusedUser).goToFolder(1999);
         folderList = app.focusedUser.getUserApi().getFolderList(1999,10);
         instSection.ActionPanel.PreviewIs("On");
         instSection.ActionPanel.viewOnlyNew(false);

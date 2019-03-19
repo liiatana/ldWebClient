@@ -22,7 +22,7 @@ public class ReadUnreadTests extends TestBase {
         app.focusedUser.getUserApi().setReaded(true,folderList.items.get(0).getInstructionId());
 
         LoginPage lp = new LoginPage();
-        instSection = lp.open("#/login").LoginAs(app.focusedUser).goToFolder(1999);
+        instSection = lp.open().LoginAs(app.focusedUser).goToFolder(1999);
         instSection.ActionPanel.PreviewIs("Off");
         instSection.ActionPanel.viewOnlyNew(false);
     }

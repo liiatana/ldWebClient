@@ -23,7 +23,7 @@ public class NewInstructionTests extends TestBase {
     public void before() {
 
         LoginPage lp = new LoginPage();
-        inst = lp.open("#/login").LoginAs(app.focusedUser).goToFolder(1999);
+        inst = lp.open().LoginAs(app.focusedUser).goToFolder(1999);
         sleep(6000);
 
     }
