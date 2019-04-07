@@ -36,7 +36,7 @@ public class ReadUnreadTests extends TestBase {
     @Test(dataProvider = "Object", description = "Сделать непрочитанным и просмотреть непрочитанные")
     public void makeUnread(int InstructionId){
 
-        instSection.cardView.menuReaded(folderList.getInstructionNumInFolder(InstructionId));
+        //instSection.cardView.menuReaded(folderList.getInstructionNumInFolder(InstructionId));
        // instSection.ActionPanel.refreshButton.click();
         sleep(2000);
 

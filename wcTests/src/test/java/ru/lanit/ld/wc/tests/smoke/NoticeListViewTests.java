@@ -1,6 +1,8 @@
 package ru.lanit.ld.wc.tests.smoke;
 
+import com.codeborne.selenide.Condition;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -38,59 +40,60 @@ public class NoticeListViewTests extends TestBase {
                 .withReceiverID(instructionReceivers.Ids());// получатель = любые пользователи (число = кол-во получателей)(обязательный)
 
         instResponse instResponse = instructionInitiator.getUserApi().createInstruction(newInstruction, true);
-
-        Instruction instruction = instructionInitiator.getUserApi().getInstruction(instResponse.instructionId);
-
-
-        newInstruction.withCreationDate(instruction.getCreationDate())
-                .withState(instruction.getState())
-                .withStateName(instruction.getStateName())
-                .withInstructionId(instResponse.getInstructionId());
-
-        logger.info("instruction : " + newInstruction.toString());
+        newInstruction.withStartDate (instructionInitiator.getUserApi().getInstruction(instResponse.getInstructionId()).getStartDate());
 
         LoginPage lp = new LoginPage();
-        instSection = lp.open().LoginAs(instructionInitiator).goToFolder(2101);
+        instSection = lp.open().LoginAs(instructionInitiator);//.goToFolder(2101);
+        instSection.goToFolder(2101);
         instSection.ActionPanel.setViewState("Off", false, "Дата создания", true);
         //sleep(2000);
     }
 
     @DataProvider
     public Object[][] Notice() {
-        return new Object[][]{new Object[]{newInstruction}};
+             return new Object[][]{new Object[]{newInstruction}};
     }
 
 
-    @Test(dataProvider = "Notice", priority =  1, description = "Проверить текст сообщения в режиме Список")
+    @Test(dataProvider = "Notice", priority =  3, description = "Проверить текст сообщения в режиме Список")
     public void instructionTextInList(Instruction newInstruction) {
 
-        Assert.assertEquals(instSection.cardView.getInstructionText(0), newInstruction.getText());
+        //Assert.assertEquals(instSection.cardView.getInstructionText(0), newInstruction.getText());
+        instSection.cardView.getInstructionTextAsSE(0).shouldHave(Condition.text(newInstruction.getText()));
     }
 
 
-    @Test(dataProvider = "Notice", invocationCount = 1, priority =  1,description = "Проверить текст сообщения во всплывающей подсказке в режиме Список")
+    @Test(dataProvider = "Notice", invocationCount = 1, priority =  3,description = "Проверить текст сообщения во всплывающей подсказке в режиме Список")
     public void instructionPopUpTextInList(Instruction newInstruction) {
 
         Assert.assertEquals(instSection.cardView.getInstructionPopUpText(0), newInstruction.getText());
+
     }
 
-    @Test(dataProvider = "Notice", invocationCount = 1, priority =  1,description = "Проверить ФИО получателя в режиме Список")
+    @Test(dataProvider = "Notice", invocationCount = 1, priority =  3,description = "Проверить ФИО получателя в режиме Список")
     public void instructionReceiverNameInList(Instruction newInstruction) {
 
-        Assert.assertEquals(instSection.cardView.getReceiverName(0), app.UserList.getUserById(newInstruction.getReceiverID()[0]).getUserName());
+       // Assert.assertEquals(instSection.cardView.getReceiverName(0), app.UserList.getUserById(newInstruction.getReceiverID()[0]).getUserName());
+        instSection.cardView.getReceiverNameAsSE(0).shouldHave(Condition.text(app.UserList.getUserById(newInstruction.getReceiverID()[0]).getUserName()));
     }
 
-    @Test(dataProvider = "Notice", invocationCount = 1,priority =  1, description = "Проверить дату создания в режиме Список")
+    @Test(dataProvider = "Notice", invocationCount = 1,priority =  3, description = "Проверить дату создания в режиме Список")
     public void instructionCreationDateInList(Instruction newInstruction) {
 
         Assert.assertEquals(instSection.cardView.getCreationDateAsLocalDate(0), newInstruction.getCreationDate());
+
+
     }
 
-    @Test(dataProvider = "Notice", invocationCount = 1, priority =  1,description = "Проверить тип сообщения в режиме Список")
+    @Test(dataProvider = "Notice", invocationCount = 1, priority =  3,description = "Проверить тип сообщения в режиме Список")
     public void instructionTypeNameInList(Instruction newInstruction) {
 
-        Assert.assertEquals(instSection.cardView.getTypeName(0), newInstruction.getInstructionType().getName());
+       //Assert.assertEquals(instSection.cardView.getTypeName(0), newInstruction.getInstructionType().getName());
+        instSection.cardView.getInstructionTypeAsSe(0).shouldHave(Condition.text(newInstruction.getInstructionType().getName()));
     }
 
-
+    @AfterClass
+    public void after() {
+        instSection.goToFolder(2101);
+    }
 }

@@ -27,7 +27,7 @@ public class _LoginTests extends TestBase {
         return new Object[][]{new Object[]{badUser1}, new Object[]{badUser2}, new Object[]{badUser3}};
     }
 
-    @Test(dataProvider = "badAuthUsers", enabled = true,description ="Авторизация пользователя с НЕкорректным паролем" )
+    @Test(dataProvider = "badAuthUsers",priority = 1, enabled = true,description ="Авторизация пользователя с НЕкорректным паролем" )
     public void loginWithWrongAuthenticationData(UserInfo badUser) {
 
 
@@ -47,7 +47,7 @@ public class _LoginTests extends TestBase {
     }
 
 
-    @Test(dataProvider = "CoodUsers",description ="Авторизация пользователя с верными данными" )
+    @Test(dataProvider = "CoodUsers",priority = 2, description ="Авторизация пользователя с верными данными" )
     public void loginWithGoodAuthenticationData(UserInfo user) {
 
 

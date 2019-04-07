@@ -39,6 +39,7 @@ public class NewInstructionTests extends TestBase {
                 .withSubject("Ваша тема") // тема сообщения. Если не задано по умолчанию = тема из типа сообщения
                 .withReceiverID(app.UserList.anyUser(2).Ids());// получатель = любые пользователи (число = кол-во получателей)(обязательный)
 
+
         return new Object[][] {new Object[]{instr}};
     }
 

@@ -1,5 +1,6 @@
 package ru.lanit.ld.wc.tests.smoke;
 
+import com.codeborne.selenide.Condition;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -48,17 +49,17 @@ public class CreateNoticeTests extends TestBase {
 
         newInstructionPage.fillForm(newInstruction, app, true);
         newInstructionPage.sendButton.click();
-        //sleep(4000);
+        sleep(4000);
 
         instSection.goToFolder(2101);
 
-        FolderList fl=instructionInitiator.getUserApi().getFolderList(2101,10);
+        FolderList fl=instructionInitiator.getUserApi().getFolderList(2101,1);
         sendedInstruction=fl.items.get(0);
 
         sendedInstruction=instructionInitiator.getUserApi().getInstruction(sendedInstruction.getInstructionId());
         logger.info("instruction : " + newInstruction.toString());
 
-        //sleep(2000);
+        sleep(2000);
 
     }
 
@@ -69,59 +70,60 @@ public class CreateNoticeTests extends TestBase {
     }
 
 
-    @Test(dataProvider = "Notice", invocationCount = 1, description = "Проверить текст сообщения")
+    @Test(dataProvider = "Notice", priority = 3,invocationCount = 1, description = "Проверить текст сообщения")
     public void apiNoticeText(Instruction newInstruction) {
 
         Assert.assertEquals(sendedInstruction.getText(),newInstruction.getText());
     }
 
 
-    @Test(dataProvider = "Notice", invocationCount = 1, description = "Проверить комментарий")
+    @Test(dataProvider = "Notice", invocationCount = 1, priority = 3,description = "Проверить комментарий")
     public void apiNoticeComment(Instruction newInstruction) {
 
         Assert.assertEquals(sendedInstruction.getComment(),newInstruction.getComment());
     }
 
-    @Test(dataProvider = "Notice", invocationCount = 1, description = "Проверить тему")
+    @Test(dataProvider = "Notice", invocationCount = 1,priority = 3, description = "Проверить тему")
     public void apiNoticeSubject(Instruction newInstruction) {
 
         Assert.assertEquals(sendedInstruction.getSubject(),newInstruction.getSubject());
     }
 
-    @Test(dataProvider = "Notice", invocationCount = 1, description = "Проверить инициатора")
+    @Test(dataProvider = "Notice", invocationCount = 1,priority = 3, description = "Проверить инициатора")
     public void apiInitiator(Instruction newInstruction) {
 
         Assert.assertEquals(sendedInstruction.getInitiatorID(),newInstruction.getInitiatorID());
     }
 
-    @Test(dataProvider = "Notice", invocationCount = 1, description = "Проверить получателя")
+    @Test(dataProvider = "Notice", invocationCount = 1, priority = 3,description = "Проверить получателя")
     public void apiReceiver(Instruction newInstruction) {
 
         Assert.assertEquals(sendedInstruction.getReceiverID(),newInstruction.getReceiverID());
     }
 
-    @Test(dataProvider = "Notice", invocationCount = 1, description = "Проверить ID тип уведомления")
+    @Test(dataProvider = "Notice", invocationCount = 1,priority = 3, description = "Проверить ID тип уведомления")
     public void apiInstructionTypeId(Instruction newInstruction) {
 
         Assert.assertEquals(sendedInstruction.getInstructionTypeId(),newInstruction.getInstructionTypeId());
     }
 
-    @Test(dataProvider = "Notice", invocationCount = 1, description = "Проверить ID статуса")
+    @Test(dataProvider = "Notice", invocationCount = 1, priority = 3,description = "Проверить ID статуса")
     public void apiInstructionState(Instruction newInstruction) {
 
         Assert.assertEquals(sendedInstruction.getState(),2);
     }
 
-    @Test(dataProvider = "Notice", invocationCount = 1, description = "Проверить название статуса")
+    @Test(dataProvider = "Notice", invocationCount = 1, priority = 3,description = "Проверить название статуса")
     public void apiInstructionStateName(Instruction newInstruction) {
 
         Assert.assertEquals(sendedInstruction.getStateName(),"Активно");
     }
 
-    @Test(dataProvider = "Notice", invocationCount = 1, description = "aaaaaaaaaaaaaaaaaaaa")
+ /*   @Test(dataProvider = "Notice", invocationCount = 1, priority = 3,description = "aaaaaaaaaaaaaaaaaaaa")
     public void qqqqqqqqqqqqqqqqqqqqqqqq(Instruction newInstruction) {
 
-        Assert.assertEquals(instSection.cardView.getTypeName(0), newInstruction.getInstructionType().getName());
-    }
+       // Assert.assertEquals(instSection.cardView.getTypeName(0), newInstruction.getInstructionType().getName());
+        instSection.cardView.getInstructionTypeAsSe(0).shouldHave(Condition.text(newInstruction.getInstructionType().getName()));
+    }*/
 
 }

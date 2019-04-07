@@ -6,6 +6,7 @@ import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
+import ru.lanit.ld.wc.model.Instruction;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -25,12 +26,9 @@ public class InstructionCardView {
 
 
 
-    public BigReportForm menuCreateReport(int instructionNumInFolder) {
-        cards.get(instructionNumInFolder).lastChild().find("div.v-menu.menu-vert.v-menu--inline > div > button > div > i").click();
-        //activeCard.$$x("div//[@role=\"listitem\"]").filter(Condition.text(item)).get(0).click();
-        cards.get(instructionNumInFolder).$$x("//div[@role=\"listitem\"]").filter(Condition.text("Создать отчет")).get(0).click();
-        return page(BigReportForm.class);
-    }
+
+
+    // --------Кнопки Отчитаться/Отказать-----
 
     public void possitiveReport(int instructionNumInFolder) {
         cards.get(instructionNumInFolder).$$x("/*//div[@class=\"quick-access\"]").get(0).click();
@@ -41,38 +39,67 @@ public class InstructionCardView {
         cards.get(instructionNumInFolder).$$x("/*//div[@class=\"quick-access\"]").get(1).click();
     }
 
-    public void menuReaded(int instructionNumInFolder) {
+
+
+    // --------Меню действий-----
+    public void closeMenu (int instructionNumInFolder) {
+
+        cards.get(instructionNumInFolder).lastChild().find("div.v-menu.menu-vert.v-menu--inline > div > button > div > i").click();
+    }
+
+    public ElementsCollection ActionsMenu(int instructionNumInFolder) {
+        cards.get(instructionNumInFolder).lastChild().find("div.v-menu.menu-vert.v-menu--inline > div > button > div > i").click();
+        return cards.get(instructionNumInFolder).$$x("//div[@role=\"listitem\"]");
+    }
+
+    public BigReportForm menuCreateReport(int instructionNumInFolder) {
         cards.get(instructionNumInFolder).lastChild().find("div.v-menu.menu-vert.v-menu--inline > div > button > div > i").click();
         //activeCard.$$x("div//[@role=\"listitem\"]").filter(Condition.text(item)).get(0).click();
-        cards.get(instructionNumInFolder).$$x("//div[@role=\"listitem\"]").filter(Condition.matchText("Пометить как.*")).get(0).click();
-
+        cards.get(instructionNumInFolder).$$x("//div[@role=\"listitem\"]").filter(Condition.text("Создать отчет")).get(0).click();
+        return page(BigReportForm.class);
     }
 
-    public ElementsCollection clickActionsMenu(int instructionNumInFolder) {
-
-        return actionsMenuItems=cards.get(instructionNumInFolder).lastChild().$$x(".//div[@class=\"v-menu--inline\"]/button");
-    }
-
-    public String getInstructionText(int instructionNumInFolder) {
-        return cards.get(instructionNumInFolder).$x(".//div[@class=\"layout body-1 ml-1 pop-up font-weight-regular\"]").getText();
-    }
+    // --------Текст сообщения-----
+    //public String getInstructionText(int instructionNumInFolder) {
+    //    return cards.get(instructionNumInFolder).$x(".//div[@class=\"layout body-1 ml-1 pop-up font-weight-regular\"]").getText();
+    //}
 
     public SelenideElement getInstructionTextAsSE(int instructionNumInFolder) {
-        return cards.get(instructionNumInFolder).$x(".//div[@class=\"layout body-1 ml-1 pop-up font-weight-regular\"]");
+        return cards.get(instructionNumInFolder).$x(".//span[@class=\"nowrap-text\"]");
     }
 
-
-    public String getInstructionPopUpText(int instructionNumInFolder) {
+    // --------Всплывающий текст-----
+    public SelenideElement getInstructionPopUpText(int instructionNumInFolder) {
         SelenideElement cardText = cards.get(instructionNumInFolder).$x(".//div[@class=\"layout body-1 ml-1 pop-up font-weight-regular\"]");
         cardText.hover();
         sleep(1000);
-              return popUp.getText();
+        return popUp;
     }
 
-    public String getReceiverName(int instructionNumInFolder) {
-        return cards.get(instructionNumInFolder).$x(".//*//span").getText();
+
+    // --------Получатель-----
+   // public String getReceiverName(int instructionNumInFolder) {
+   //     return cards.get(instructionNumInFolder).$x(".//*//span").getText();
+   // }
+
+    public SelenideElement getReceiverNameAsSE(int instructionNumInFolder) {
+        return cards.get(instructionNumInFolder).$x(".//*//span");
     }
 
+    //-------Признак Прочитано----------
+    public Boolean getFlagState(int instructionNumInFolder) {
+        //return cards.get(instructionNumInFolder).$x(".//*//span").$x("./following-sibling::");
+
+      // if (cards.get(instructionNumInFolder).$x(".//*//span/following-sibling::*").getAttribute("class").equals("v-avatar ml-2 mt-1 hidden-xs-only error")){
+      //      return true;
+      //  } else return false;
+        return cards.get(instructionNumInFolder).$x(".//*//div[@class=\"v-avatar ml-2 mt-1 error\"]").exists();
+    }
+
+
+
+
+    // --------Даты ----
     public LocalDateTime getCreationDateAsLocalDate (int instructionNumInFolder){
 
         String d=cards.get(instructionNumInFolder).$$x(".//*//div[@class=\"grey--text darken text-no-wrap caption type-name hidden-xs-only font-weight-regular\"]/span").get(0).getText();
@@ -80,12 +107,24 @@ public class InstructionCardView {
         return LocalDateTime.parse(d, formatter);
     }
 
+    public SelenideElement getCreationDateAsSE (int instructionNumInFolder){
+        return cards.get(instructionNumInFolder).$$x(".//*//div[@class=\"layout align-baseline row\"]/div/span").get(0);
+    }
 
-    public String getTypeName(int instructionNumInFolder) {
-        return cards.get(instructionNumInFolder).$$x(".//*//div[@class=\"grey--text darken text-no-wrap caption type-name hidden-xs-only font-weight-regular\"]/span").get(2).getText();
+    public SelenideElement getExecutionDateAsSE (int instructionNumInFolder){
+        return cards.get(instructionNumInFolder).$$x(".//*//div[@class=\"layout align-baseline row\"]/div/span").get(4);
     }
 
 
+
+    // --------Тип сообщения-----
+  //  public String getTypeName(int instructionNumInFolder) {
+   //     return cards.get(instructionNumInFolder).$$x(".//*//div[@class=\"grey--text darken text-no-wrap caption type-name hidden-xs-only font-weight-regular\"]/span").get(2).getText();
+   // }
+
+    public SelenideElement getInstructionTypeAsSe(int instructionNumInFolder) {
+        return cards.get(instructionNumInFolder).$$x(".//*//div[@class=\"layout align-baseline row\"]/div/span").get(2);
+    }
 
 
 }

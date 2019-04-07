@@ -26,11 +26,11 @@ public class NewInstructionPage {
 
     private ElementsCollection receiversList = $$(By.xpath("//div[@class=\"multiselect__content-wrapper\"]/ul/li"));
 
-    public SelenideElement cancelButton = $(By.xpath("(//div[@class=\"layout instruction-right-btn-panel edit-btn justify-end px-0 mt-3\"]/button)[1]"));
+    public SelenideElement cancelButton = $(By.xpath("(//div[@class=\"layout instruction-right-btn-panel edit-btn justify-end px-0\"]/button)[1]"));
 
-    public SelenideElement saveProjectButton = $(By.xpath("(//div[@class=\"layout instruction-right-btn-panel edit-btn justify-end px-0 mt-3\"]/button)[2]"));
+    public SelenideElement saveProjectButton = $(By.xpath("(//div[@class=\"layout instruction-right-btn-panel edit-btn justify-end px-0\"]/button)[2]"));
 
-    public SelenideElement sendButton = $(By.xpath("(//div[@class=\"layout instruction-right-btn-panel edit-btn justify-end px-0 mt-3\"]/button)[3]"));
+    public SelenideElement sendButton = $(By.xpath("(//div[@class=\"layout instruction-right-btn-panel edit-btn justify-end px-0\"]/button)[3]"));
 
     private ElementsCollection sendType = $$(By.xpath("//div[@class=\"flex pt-2 pl-1\"]/*//button"));
 

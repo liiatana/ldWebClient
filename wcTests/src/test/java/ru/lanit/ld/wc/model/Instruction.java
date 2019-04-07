@@ -72,6 +72,12 @@ public class Instruction {
         this.receiverID= Arrays.stream(jsonInstruction.get("receiverID").getAsString().split(",")).mapToInt(Integer::parseInt).toArray();
         //LocalDateTime secondParseResult = LocalDateTime.parse("September, 24, 2014 17:18:55", DateTimeFormatter.ofPattern("MMMM, dd, yyyy HH:mm:ss"));
 
+        // срок исполнения
+        if (!jsonInstruction.get("executionEndDate").isJsonNull()) {
+            this.executionDate =LocalDateTime.parse(jsonInstruction.get("executionEndDate").getAsString().substring(0,16).replace("T", ""),
+                    DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm"));
+            // DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm"));
+        }
 
     }
 

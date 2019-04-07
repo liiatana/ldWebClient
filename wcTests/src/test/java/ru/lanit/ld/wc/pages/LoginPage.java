@@ -12,18 +12,13 @@ import static com.codeborne.selenide.Selenide.*;
 public class LoginPage {
 
 
-    private SelenideElement userLogin;
+    private SelenideElement userLogin= $(By.xpath("//input[@id=\"login-field\"]"));
     private SelenideElement userPassword = $(By.xpath("//input[@id=\"psw-field\"]"));
-    private SelenideElement loginButton;
+    private SelenideElement loginButton= $(By.xpath("//button[@id=\"sql-auth-btn\"]"));
 
-    public SelenideElement errorText;
+    public SelenideElement errorText=$(By.xpath("//span[@class=\"error-message\"]"));
 
     public LoginPage() {
-
-        userLogin = $(By.xpath("//input[@id=\"login-field\"]"));
-        loginButton = $(By.xpath("//button[@id=\"sql-auth-btn\"]"));
-        errorText = $(By.xpath("//span[@class=\"error-message\"]"));
-
     }
 
     public InstructionsSection LoginAs(UserInfo user) {
