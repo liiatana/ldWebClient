@@ -29,6 +29,8 @@ public class ActionPanel {
     private SelenideElement sortButton = $(By.xpath("//button[@class=\"my-0 grey--border lighten-2 small-button v-btn v-btn--outline v-btn--depressed theme--light\"]"));
     private ElementsCollection sortOptions = $$(By.xpath("//div[@class=\"v-menu__content theme--light menuable__content__active\"]/*//div[@role=\"listitem\"]"));
 
+    private SelenideElement viewObjectTreeButton=$(By.xpath("//nav/*/button"));
+
     public void PreviewIs(String state) {
 
         switch (state) {
@@ -92,5 +94,10 @@ public class ActionPanel {
         PreviewIs(PreviewState);
         viewOnlyNew(viewOnlyNew);
         sortBy(sortingField, isDescSorting);
+    }
+
+    public void openObjectTree (){
+        viewObjectTreeButton.click();
+        sleep(1000);
     }
 }

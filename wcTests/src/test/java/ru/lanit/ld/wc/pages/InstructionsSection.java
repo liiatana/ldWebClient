@@ -42,6 +42,12 @@ public class InstructionsSection {
         return this;
     }
 
+    public InstructionsSection goTo(String section,String rootFolder, String additionalPath){
+        ActionPanel.openObjectTree();
+        SideBar.goToSection(section,rootFolder, additionalPath);
+        return this;
+    }
+
 
 
 }
