@@ -1,11 +1,12 @@
 package ru.lanit.ld.wc.pages;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selectors;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.*;
 
 public class ViewInstruction {
 
@@ -14,7 +15,9 @@ public class ViewInstruction {
 
     public SelenideElement ThreePoints =$(By.xpath("(//div[@class=\"v-menu__activator\"])[4]"));
 
-    public SelenideElement Area=$(By.xpath("//*[@id=\"insrtuction-common-info\"]"));
+    //public SelenideElement Area=$(By.xpath("//*[@id=\"insrtuction-common-info\"]"));
+
+    private SelenideElement BackButton=$(By.xpath("//div[@class=\"layout navigation-container row\"]"));
 
 
     public boolean IsBlockActive(int BlockId) {
@@ -28,7 +31,10 @@ public class ViewInstruction {
         Blocks.get(BlockId).click();
     }
 
-
-
+    public void BackStep()
+    {
+        BackButton.click();
+        sleep(10000);
+    }
 
 }

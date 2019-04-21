@@ -31,7 +31,7 @@ public class InstructionsSection {
 
     public ViewInstruction openInstructionView(int ID) {
         Selenide.open(String.format("instruction/%s",ID));
-        sleep(3000);
+        sleep(10000);
         return page(ViewInstruction.class);
     }
 

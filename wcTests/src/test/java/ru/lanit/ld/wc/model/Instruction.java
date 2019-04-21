@@ -409,6 +409,7 @@ public class Instruction {
 
     public String toString() {
         return "Instruction: {" +
+                "Id="+InstructionId+
                 "receiverID=" + Arrays.toString(receiverID) +
                 ", text='" + text + '\'' +
                 ", subject='" + subject + '\'' +

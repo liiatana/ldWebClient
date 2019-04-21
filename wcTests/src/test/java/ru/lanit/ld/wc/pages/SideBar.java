@@ -14,7 +14,7 @@ public class SideBar {
     private ElementsCollection sections = $$(By.xpath("//div[@class=\"flex secondary main-menu-panel\"]/div/*"));
 
     public void goToSection(String section, String rootFolder, String additionalFolder) {
-        sections.findBy(Condition.text())
+        //sections.findBy(Condition.text())
 
     }
 

@@ -1,4 +1,4 @@
-package ru.lanit.ld.wc.tests.viewForms;
+package ru.lanit.ld.wc.tests.unused;
 
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;

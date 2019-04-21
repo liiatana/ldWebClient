@@ -26,6 +26,8 @@ public class MakeReportTests extends TestBase {
         instSection.ActionPanel.PreviewIs("Off");
         instSection.ActionPanel.viewOnlyNew(false);
 
+
+
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

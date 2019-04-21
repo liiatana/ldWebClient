@@ -22,8 +22,9 @@ public class NewInstructionTests extends TestBase {
     @BeforeClass
     public void before() {
 
+        app.focusedUser.getUserApi().makeHomeAsLastUrl();
         LoginPage lp = new LoginPage();
-        inst = lp.open().LoginAs(app.focusedUser).goToFolder(1999);
+        inst = lp.open().LoginAs(app.focusedUser);
         sleep(6000);
 
     }
@@ -49,19 +50,18 @@ public class NewInstructionTests extends TestBase {
 
 
         NewInstructionPage newP=inst.ActionPanel.createNewByPlusButton(newInstruction,app);
-        sleep(5000);
+        sleep(10000);// нужно сделать УМНОЕ ожидание
 
         newP.fillForm(newInstruction,app,true);
         newP.saveProjectButton.click();
-        sleep(4000);
+        sleep(10000); // нужно сделать УМНОЕ ожидание
 
         newP.dialog.buttonOK.click();
 
-        inst.goToFolder(2102);
+        sleep(8000); //// нужно сделать УМНОЕ ожидание
 
-        inst.ActionPanel.PreviewIs("On");
-        inst.InstructionListWithPreview.get(0).click();
-        sleep(2000);
+        newP.cancelButton.click();
+
     }
 
     @DataProvider
@@ -99,19 +99,14 @@ public class NewInstructionTests extends TestBase {
 
         newP.fillForm(newInstruction,app,true);
         newP.sendButton.click();
-        sleep(4000);
 
-        inst.goToFolder(2101);
-        sleep(4000);
 
-        inst.ActionPanel.PreviewIs("On");
-        inst.InstructionListWithPreview.get(0).click();
-        sleep(3000);
+
     }
 
     @AfterClass
     public void after() {
-        inst.goToFolder(1999);
+        //inst.goToFolder(1999);
     }
 
 }

@@ -127,4 +127,15 @@ public class InstructionCardView {
     }
 
 
+    // --------Открыть сообщение-----
+    //  public String getTypeName(int instructionNumInFolder) {
+    //     return cards.get(instructionNumInFolder).$$x(".//*//div[@class=\"grey--text darken text-no-wrap caption type-name hidden-xs-only font-weight-regular\"]/span").get(2).getText();
+    // }
+
+    public ViewInstruction open(int instructionNumInFolder) {
+        cards.get(instructionNumInFolder).$$x(".//*//i").findBy(Condition.text("exit_to_app")).click();
+        return new ViewInstruction();
+    }
+
+
 }

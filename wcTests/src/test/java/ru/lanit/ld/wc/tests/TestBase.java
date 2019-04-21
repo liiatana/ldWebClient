@@ -5,10 +5,7 @@ import io.qameta.allure.selenide.AllureSelenide;
 import org.openqa.selenium.remote.BrowserType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.*;
 import ru.lanit.ld.wc.appmanager.ApplicationManager;
 
 import java.lang.reflect.Method;
@@ -48,6 +45,14 @@ public class TestBase {
     public void logTestStop(Method m) {
         logger.info("End test: " + m.getName());
     }
+
+
+    /*@AfterClass //от лямбды
+    public void tearDown() {
+        if (driver != null)
+            driver.quit();
+
+    }*/
 
 }
 

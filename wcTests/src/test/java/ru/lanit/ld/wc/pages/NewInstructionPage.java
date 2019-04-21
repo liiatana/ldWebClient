@@ -40,10 +40,16 @@ public class NewInstructionPage {
 
     private SelenideElement hasAuditor = $(By.xpath("(//input[@id=\"withExecutive\"])[2]"));
     private SelenideElement auditorArea = $(By.xpath("//div[@class=\"flex xl12 lg12 md12 sm12 xs12 pr-2 pl-1\"]"));
+    //private SelenideElement auditorInput=$(By.xpath("//input[@id=\"auditor\"]"));
+
 
     private SelenideElement initiatorArea = $(By.xpath("//div[@class=\"flex pr-2 pl-1 xl12 lg12 md12 sm12 xs12\"]"));
+   // private SelenideElement initiatorInput=$(By.xpath("//input[@id=\"initiator\"]"));
+
 
     private SelenideElement reportReceiverArea = $(By.xpath("//div[@id=\"use-control\"]/div"));
+    //private SelenideElement reportReceiverInput=$(By.xpath("//input[@id=\"receiver\"]"));
+
 
     private SelenideElement choosePerson = $(By.xpath("//button[@id=\"addReceiver\"]"));
 
@@ -155,12 +161,20 @@ public class NewInstructionPage {
 
     private void setEmployerToField(UserInfo user, SelenideElement field) {
 
-        if (field.lastChild().text().length() > 0) {
+       /* if (field.lastChild().text().length() > 0) {
             field.lastChild().lastChild().lastChild().click();
         }
 
-        field.lastChild().sendKeys(user.getLastName());
+        field.lastChild().sendKeys(user.getLastName());*/
+
+
+       if(field.$$x(".//span").filter(Condition.text("person")).size()>0){
+           field.$x(".//span/*/div[@class=\"v-chip__close\"]").click();
+       }
+
         sleep(3000);
+
+        field. $x(".//input").parent().parent().sendKeys(user.getLastName());
         receiversList.findBy(Condition.text(user.getUserName())).click();
     }
 
