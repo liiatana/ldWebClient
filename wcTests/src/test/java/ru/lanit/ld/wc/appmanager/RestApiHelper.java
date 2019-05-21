@@ -172,4 +172,19 @@ public class RestApiHelper {
         JsonElement parsed = new JsonParser().parse(json);
         return new Instruction(parsed);
     }
+
+
+    public void setViewState(viewState defaultViewState, String section, int folder) {
+
+        JsonObject currentState = new JsonObject();
+
+        /*Response response = */
+        RestAssured
+                .given().header("Cookie", cookies)
+                .contentType("application/json")
+                .body(defaultViewState.toJson().toString())
+                .when()
+                .put(String.format("%sviewstate?key=%s-%s", apiPath,section,folder));
+
+    }
 }
