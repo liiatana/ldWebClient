@@ -15,13 +15,8 @@ public class Header {
             //$(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Настройки пользователя'])[1]/following::button[4]"));
     $(By.xpath("//button[@class=\"deputy-btn v-btn v-btn--flat theme--light\"]"));
 
-    private ElementsCollection FIOmenu=$$(By.xpath("//div[@class=\"v-menu__content theme--light menuable__content__active\"]/*"));
-    //private SelenideElement exit =
-    //$(By.);
-    //        $(By.cssSelector("div.v-list:nth-child(3) > div:nth-child(1) > a:nth-child(1) > div:nth-child(1)"));
-    //$(By.xpath("xpath=(.//*[normalize-space(text()) and normalize-space(.)='На резолюцию'])[2]/following::div[5]"));
-//.filter(Condition.text("Создать отчет")).get(0).click();
-
+    private ElementsCollection FIOmenu=$$(By.xpath("//div[@class=\"v-menu__content theme--light v-menu__content--fixed menuable__content__active\"]/*"));
+    //class="v-menu__content theme--light v-menu__content--fixed menuable__content__active "
 
     private SelenideElement createButton = $(By.xpath("(//div[@class=\"v-menu v-menu--inline\"])[1]"));
 

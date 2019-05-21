@@ -54,8 +54,6 @@ public class _LoginTests extends TestBase {
         LoginPage lp = new LoginPage();
         InstructionsSection inst = lp.open().LoginAs(user);
 
-        sleep(10000);
-
         Assert.assertEquals(inst.Header.getLastName(), user.getLastName());
         inst.Header.exit();
 
