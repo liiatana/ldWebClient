@@ -28,13 +28,22 @@ public class CreateNoticeTests extends TestBase {
 
     @BeforeClass
     public void before() {
+    // создаем фронтом, проверяем бэком
+
 
         instructionInitiator = app.focusedUser; // app.UserList.anyUser(1); //или любой
+
+        //lastURL=Сообщения/Входящая для инициатора сообщения
+        instructionInitiator.getUserApi().makeHomeAsLastUrl();
+        //вид по умолчанию для инициатора сообщения
+        instructionInitiator.getUserApi().setViewState(app.defaultViewState, "Instruction", 1999);
+
+
         instructionReceivers =app.UserList.anyUser(1);// получатель = любые пользователи (число = кол-во получателей)(обязательный)
 
         LoginPage lp = new LoginPage();
         instSection = lp.open().LoginAs(instructionInitiator);
-        instSection.ActionPanel.setViewState("Off",false,"Дата создания",true);
+
 
         newInstruction = new Instruction(instructionInitiator.getUserTypes().getAnyNoticeType());
         newInstruction
@@ -49,9 +58,7 @@ public class CreateNoticeTests extends TestBase {
 
         newInstructionPage.fillForm(newInstruction, app, true);
         newInstructionPage.sendButton.click();
-        sleep(4000);
-
-        instSection.goToFolder(2101);
+        sleep(5000);
 
         FolderList fl=instructionInitiator.getUserApi().getFolderList(2101,1);
         sendedInstruction=fl.items.get(0);
@@ -59,71 +66,66 @@ public class CreateNoticeTests extends TestBase {
         sendedInstruction=instructionInitiator.getUserApi().getInstruction(sendedInstruction.getInstructionId());
         logger.info("instruction : " + newInstruction.toString());
 
-        sleep(2000);
-
     }
 
     @DataProvider
     public Object[][] Notice() {
 
-        return new Object[][]{new Object[]{newInstruction}};
+       // return new Object[][]{new Object[]{newInstruction}};
+        return new Object[][] {
+                {newInstruction, sendedInstruction}
+        };
     }
 
 
     @Test(dataProvider = "Notice", priority = 3,invocationCount = 1, description = "Проверить текст сообщения")
-    public void apiNoticeText(Instruction newInstruction) {
+    public void apiNoticeText(Instruction newInstruction,Instruction sendedInstruction) {
 
         Assert.assertEquals(sendedInstruction.getText(),newInstruction.getText());
     }
 
 
     @Test(dataProvider = "Notice", invocationCount = 1, priority = 3,description = "Проверить комментарий")
-    public void apiNoticeComment(Instruction newInstruction) {
+    public void apiNoticeComment(Instruction newInstruction,Instruction sendedInstruction) {
 
         Assert.assertEquals(sendedInstruction.getComment(),newInstruction.getComment());
     }
 
     @Test(dataProvider = "Notice", invocationCount = 1,priority = 3, description = "Проверить тему")
-    public void apiNoticeSubject(Instruction newInstruction) {
+    public void apiNoticeSubject(Instruction newInstruction,Instruction sendedInstruction) {
 
         Assert.assertEquals(sendedInstruction.getSubject(),newInstruction.getSubject());
     }
 
     @Test(dataProvider = "Notice", invocationCount = 1,priority = 3, description = "Проверить инициатора")
-    public void apiInitiator(Instruction newInstruction) {
+    public void apiInitiator(Instruction newInstruction,Instruction sendedInstruction) {
 
         Assert.assertEquals(sendedInstruction.getInitiatorID(),newInstruction.getInitiatorID());
     }
 
     @Test(dataProvider = "Notice", invocationCount = 1, priority = 3,description = "Проверить получателя")
-    public void apiReceiver(Instruction newInstruction) {
+    public void apiReceiver(Instruction newInstruction,Instruction sendedInstruction) {
 
         Assert.assertEquals(sendedInstruction.getReceiverID(),newInstruction.getReceiverID());
     }
 
     @Test(dataProvider = "Notice", invocationCount = 1,priority = 3, description = "Проверить ID тип уведомления")
-    public void apiInstructionTypeId(Instruction newInstruction) {
+    public void apiInstructionTypeId(Instruction newInstruction,Instruction sendedInstruction) {
 
         Assert.assertEquals(sendedInstruction.getInstructionTypeId(),newInstruction.getInstructionTypeId());
     }
 
     @Test(dataProvider = "Notice", invocationCount = 1, priority = 3,description = "Проверить ID статуса")
-    public void apiInstructionState(Instruction newInstruction) {
+    public void apiInstructionState(Instruction newInstruction,Instruction sendedInstruction) {
 
         Assert.assertEquals(sendedInstruction.getState(),2);
     }
 
     @Test(dataProvider = "Notice", invocationCount = 1, priority = 3,description = "Проверить название статуса")
-    public void apiInstructionStateName(Instruction newInstruction) {
+    public void apiInstructionStateName(Instruction newInstruction,Instruction sendedInstruction) {
 
         Assert.assertEquals(sendedInstruction.getStateName(),"Активно");
     }
 
- /*   @Test(dataProvider = "Notice", invocationCount = 1, priority = 3,description = "aaaaaaaaaaaaaaaaaaaa")
-    public void qqqqqqqqqqqqqqqqqqqqqqqq(Instruction newInstruction) {
-
-       // Assert.assertEquals(instSection.cardView.getTypeName(0), newInstruction.getInstructionType().getName());
-        instSection.cardView.getInstructionTypeAsSe(0).shouldHave(Condition.text(newInstruction.getInstructionType().getName()));
-    }*/
 
 }

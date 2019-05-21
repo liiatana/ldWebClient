@@ -15,6 +15,7 @@ import ru.lanit.ld.wc.pages.LoginPage;
 import ru.lanit.ld.wc.tests.TestBase;
 
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 
 public class NoticeListViewTests extends TestBase {
@@ -27,6 +28,7 @@ public class NoticeListViewTests extends TestBase {
 
     @BeforeClass
     public void before() {
+        //отправляем бэком , проверяем фронтом
 
         instructionInitiator = app.focusedUser; // app.UserList.anyUser(1); //или любой
         instructionReceivers = app.UserList.anyUser(1);// получатель = любые пользователи (число = кол-во получателей)(обязательный)
@@ -40,13 +42,15 @@ public class NoticeListViewTests extends TestBase {
                 .withReceiverID(instructionReceivers.Ids());// получатель = любые пользователи (число = кол-во получателей)(обязательный)
 
         instResponse instResponse = instructionInitiator.getUserApi().createInstruction(newInstruction, true);
-        newInstruction.withStartDate (instructionInitiator.getUserApi().getInstruction(instResponse.getInstructionId()).getStartDate());
+        //newInstruction.withStartDate (instructionInitiator.getUserApi().getInstruction(instResponse.getInstructionId()).getStartDate());
+        newInstruction.withCreationDate(instructionInitiator.getUserApi().getInstruction(instResponse.getInstructionId()).getCreationDate());
+
+        instructionInitiator.getUserApi().LastUrl("/instructions/2101");
+        instructionInitiator.getUserApi().setViewState(app.defaultViewState, "Instruction", 2101);
 
         LoginPage lp = new LoginPage();
         instSection = lp.open().LoginAs(instructionInitiator);//.goToFolder(2101);
-        instSection.goToFolder(2101);
-        instSection.ActionPanel.setViewState("Off", false, "Дата создания", true);
-        //sleep(2000);
+
     }
 
     @DataProvider
@@ -58,7 +62,6 @@ public class NoticeListViewTests extends TestBase {
     @Test(dataProvider = "Notice", priority =  3, description = "Проверить текст сообщения в режиме Список")
     public void instructionTextInList(Instruction newInstruction) {
 
-        //Assert.assertEquals(instSection.cardView.getInstructionText(0), newInstruction.getText());
         instSection.cardView.getInstructionTextAsSE(0).shouldHave(Condition.text(newInstruction.getText()));
     }
 
@@ -66,7 +69,7 @@ public class NoticeListViewTests extends TestBase {
     @Test(dataProvider = "Notice", invocationCount = 1, priority =  3,description = "Проверить текст сообщения во всплывающей подсказке в режиме Список")
     public void instructionPopUpTextInList(Instruction newInstruction) {
 
-        Assert.assertEquals(instSection.cardView.getInstructionPopUpText(0), newInstruction.getText());
+        Assert.assertEquals(instSection.cardView.getInstructionPopUp(0).innerText().trim(), newInstruction.getText());
 
     }
 
@@ -80,8 +83,7 @@ public class NoticeListViewTests extends TestBase {
     @Test(dataProvider = "Notice", invocationCount = 1,priority =  3, description = "Проверить дату создания в режиме Список")
     public void instructionCreationDateInList(Instruction newInstruction) {
 
-        Assert.assertEquals(instSection.cardView.getCreationDateAsLocalDate(0), newInstruction.getCreationDate());
-
+        Assert.assertEquals(instSection.cardView.getCreationDateAsLocalDate(0),newInstruction.getCreationDate() );
 
     }
 
@@ -94,6 +96,11 @@ public class NoticeListViewTests extends TestBase {
 
     @AfterClass
     public void after() {
-        instSection.goToFolder(2101);
+
+        //lastURL=Сообщения/Входящая для инициатора сообщения
+        instructionInitiator.getUserApi().makeHomeAsLastUrl();
+        //вид по умолчанию для инициатора сообщения
+        instructionInitiator.getUserApi().setViewState(app.defaultViewState, "Instruction", 1999);
+
     }
 }
