@@ -187,4 +187,19 @@ public class RestApiHelper {
                 .put(String.format("%sviewstate?key=%s-%s", apiPath,section,folder));
 
     }
+
+    public void LastUrl(String url) {
+
+        JsonObject lastVisitedUrl = new JsonObject();
+        lastVisitedUrl.addProperty("lastVisitedUrl",url );//"/instructions/1999"
+
+        /*Response response = */
+        RestAssured
+                .given().header("Cookie", cookies)
+                .contentType("application/json")
+                .body(lastVisitedUrl.toString())
+                .when()
+                .put(String.format("%sme/lasturl", apiPath));
+
+    }
 }
