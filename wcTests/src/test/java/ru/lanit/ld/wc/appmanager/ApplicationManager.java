@@ -5,6 +5,7 @@ import com.codeborne.selenide.Selenide;
 import ru.lanit.ld.wc.model.InstructionTypes;
 import ru.lanit.ld.wc.model.UserInfo;
 import ru.lanit.ld.wc.model.Users;
+import ru.lanit.ld.wc.model.viewState;
 
 import java.io.File;
 import java.io.FileReader;
@@ -24,6 +25,7 @@ public class ApplicationManager {
     public Users UserList;
     public InstructionTypes InstructionList;
     public UserInfo focusedUser;
+    public viewState defaultViewState;
 
 
     public ApplicationManager(String browser, String browserSize) {
@@ -31,6 +33,8 @@ public class ApplicationManager {
         properties = new Properties();
         UserList = new Users();
         InstructionList = new InstructionTypes();
+        defaultViewState= new viewState();
+
 
         this.browser = browser;
         this.defaultBrowserSize = browserSize;
@@ -62,7 +66,7 @@ public class ApplicationManager {
 
         Configuration.browser = browser;
         Configuration.baseUrl = baseUrl;
-        Configuration.timeout = 10000;
+        Configuration.timeout = 30000;
         Configuration.browserSize = defaultBrowserSize;
         Configuration.screenshots=true;
         Configuration.reopenBrowserOnFail=true;
