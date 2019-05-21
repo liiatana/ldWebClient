@@ -1,5 +1,8 @@
 package ru.lanit.ld.wc.tests.smoke;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -19,40 +22,35 @@ public class ChangeReadState_InList_Tests extends TestBase {
     @BeforeClass
     public void before() {
 
-        //lastURL=Сообщения/Входящая
-        app.focusedUser.getUserApi().makeHomeAsLastUrl();
-        //вид по умолчанию
-        app.focusedUser.getUserApi().setViewState(app.defaultViewState, "Instruction", 1999);
+        focusedInstructionNum=0; // порядковый номер сообщения в папке, над которым будем эксперементировать
+        folderList = app.focusedUser.getUserApi().getFolderList(1999,focusedInstructionNum+1);
 
-        // порядковый номер сообщения в папке, над которым будем эксперементировать
-        focusedInstructionNum = 0;
+        app.focusedUser.getUserApi().setReaded(false,folderList.items.get(focusedInstructionNum+1).getInstructionId());
 
-        //получаем ID этого сообщения и делаем его непрочитанным
-        folderList = app.focusedUser.getUserApi().getFolderList(1999, focusedInstructionNum + 1);
-        app.focusedUser.getUserApi().setReaded(false, folderList.items.get(focusedInstructionNum + 1).getInstructionId());
-
-        // авторизуемся
         LoginPage lp = new LoginPage();
-        instSection = lp.open().LoginAs(app.focusedUser);
+        instSection = lp.open().LoginAs(app.focusedUser).goToFolder(1999);
+
+        instSection.ActionPanel.setViewState("Off", false, "Дата создания", true);
 
     }
 
     @DataProvider
     public Object[][] Object() {
 
-        return new Object[][]{
-                {app.focusedUser.getUserApi().getInstruction(folderList.items.get(focusedInstructionNum).getInstructionId())},
-        };
+        return new Object[][] {
+                {app.focusedUser.getUserApi().getInstruction(folderList.items.get(focusedInstructionNum).getInstructionId()),focusedInstructionNum},
+         };
     }
 
-    @Test(dataProvider = "Object", priority = 1, description = "Непрочитанное сообщение.Сделать прочитанным")
-    public void setReaded(Instruction focusedInstruction) {
+    @Test(dataProvider = "Object", priority=3, description = "Непрочитанное сообщение.Сделать прочитанным")
+    public void setReaded(Instruction instr,int num, String expected_fontWeight, String expected_menuText, Boolean expected_redCircleState){
 
         //ElementsCollection menu = instSection.cardView.clickActionsMenu(focusedInstructionNum);
         //       Assert.assertTrue(menu.filter(Condition.text("Пометить непрочитаным")).size()==1);
 
-         instSection.cardView.ActionsMenu(focusedInstructionNum);
-    }
+       // instSection.cardView.clickActionsMenu(focusedInstructionNum);
+     }
+
 
 
     @AfterClass
