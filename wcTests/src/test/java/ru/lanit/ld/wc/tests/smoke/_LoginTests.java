@@ -41,13 +41,13 @@ public class _LoginTests extends TestBase {
     }
 
     @DataProvider
-    public Object[][] CoodUsers() {
+    public Object[][] GoodUsers() {
         UserInfo user = app.focusedUser;
         return new Object[][]{new Object[]{user}};
     }
 
 
-    @Test(dataProvider = "CoodUsers",priority = 2, description ="Авторизация пользователя с верными данными" )
+    @Test(dataProvider = "GoodUsers",priority = 2, description ="Авторизация пользователя с верными данными" )
     public void loginWithGoodAuthenticationData(UserInfo user) {
 
 
