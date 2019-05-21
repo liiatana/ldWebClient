@@ -20,7 +20,7 @@ public class InstructionCardView {
     public ElementsCollection cards = $$(By.xpath("//div[@class=\"layout list-item\"]"));
 
     //private ElementsCollection popUps ; //= $$(By.xpath("//div[@class=\"v-tooltip__content white\"]/span[@class=\"grey--text darken-4\"]"))
-    private SelenideElement popUp = $(By.cssSelector("div.v-tooltip__content.menuable__content__active.white"));
+    //private SelenideElement popUp = $(By.cssSelector("div.v-tooltip__content.menuable__content__active.white"));
 
     private ElementsCollection actionsMenuItems;
 
@@ -69,11 +69,12 @@ public class InstructionCardView {
     }
 
     // --------Всплывающий текст-----
-    public SelenideElement getInstructionPopUpText(int instructionNumInFolder) {
-        SelenideElement cardText = cards.get(instructionNumInFolder).$x(".//div[@class=\"layout body-1 ml-1 pop-up font-weight-regular\"]");
-        cardText.hover();
+    public SelenideElement getInstructionPopUp(int instructionNumInFolder) {
+        //SelenideElement cardText = cards.get(instructionNumInFolder).$x(".//div[@class=\"v-tooltip__content black\"]");
+        SelenideElement popup=$$x("//div[@class=\"v-tooltip__content black\"]").last(10-instructionNumInFolder).last();
+        //popup.hover();
         sleep(1000);
-        return popUp;
+        return popup;
     }
 
 
