@@ -123,7 +123,7 @@ public class RestApiHelper {
 
     }
 
-    public FolderList getFolderList(int Folder_ID, int count) {
+    public FolderList getFolderList(int folder, int count) {
 
         String data ;//= "{\"top\": \"50\",\"skip\":0,\"searchText\":null,\"members\":null,\"filterId\":null,\"filterValues\":null } ";
 
@@ -134,7 +134,7 @@ public class RestApiHelper {
                 .contentType("application/json")
                 .body(data)
                 .when()
-                .post(String.format("%sinstructions/folder/%s/instructions", apiPath, Folder_ID))
+                .post(String.format("%sinstructions/folder/%s/instructions", apiPath, folder))
                 //instructions/folder/2107/instructions
                 .asString();
 
