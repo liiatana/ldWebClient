@@ -22,7 +22,7 @@ public class ActionPanel {
             //$$(By.xpath("//div[@class=\"v-menu__content theme--light menuable__content__active\"]/div[@role=\"list\"]/*/a"));
             $$(By.xpath("//div[@class=\"v-card v-sheet theme--light\"]/*//ul/li"));
 
-    public SelenideElement refreshButton = $(By.xpath("(//span[@class=\"v-tooltip v-tooltip--bottom\"])[3]"));
+    private SelenideElement refreshButton = $(By.xpath("(//span[@class=\"v-tooltip v-tooltip--bottom\"])[3]"));
 
     private SelenideElement onlyNew = $(By.xpath("//input[@aria-label=\"Только непрочитанные\"]"));
 
@@ -100,4 +100,10 @@ public class ActionPanel {
         viewObjectTreeButton.click();
         sleep(1000);
     }
+
+    public void refreshList(){
+        refreshButton.click();
+        sleep(5000);
+    }
+
 }
