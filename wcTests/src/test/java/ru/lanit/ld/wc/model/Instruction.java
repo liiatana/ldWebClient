@@ -46,6 +46,8 @@ public class Instruction {
 
 
     private instructionPermissions permissions;
+    private String result;
+    private instructionFolder folder;
 
 
 
@@ -84,10 +86,29 @@ public class Instruction {
         }
 
         this.permissions=new instructionPermissions(parsed);
+        this.result=jsonInstruction.get("result").getAsString();
+
+        this.folder= new instructionFolder(parsed);
 
 
     }
 
+    public Instruction() {
+
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public instructionFolder getFolder() {
+        return folder;
+    }
+
+    public Instruction withInstructionType(ru.lanit.ld.wc.model.instructionType instructionType) {
+        this.instructionType = instructionType;
+        return this;
+    }
 
     public int getInstructionTypeId() {
         return instructionTypeId;
@@ -95,8 +116,6 @@ public class Instruction {
 
     public Instruction(instructionType type) {
 
-        // this.hasPlugin=false;
-        // this.signServiceUrl=app.properties.getProperty("web.securityUrl");
         this.instructionType = type;
         this.instructionTypeId = type.getId();
         //this.documentId = 0;
@@ -105,24 +124,13 @@ public class Instruction {
         this.withExecutive = false;
 
         this.reportToExecutive = false;
-        //"receiverID": 40808836,
+
         this.text = type.getName();
         this.subject = String.format("%s", type.getName());
         this.comment = String.format("%s", type.getName());
-        // "fileIds": null,
-        //"execAuditorID": null,
 
-        //this.reportflag = type.getReportFlag();
-        // "initiatorID": 1000,
-
-        // "reportReceiverID": 1000,
-        //this.reportReceiverID=
-
-        //"startDate": "2018-12-02T18:50:39.000Z",
         this.startDate = LocalDateTime.now();//.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
 
-        //"executionDate": null,
-        //"execInterval": null
         this.operationTypeId = type.getOperationID();
 
 
