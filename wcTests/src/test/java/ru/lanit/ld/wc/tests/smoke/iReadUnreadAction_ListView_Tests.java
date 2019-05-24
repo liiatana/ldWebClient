@@ -12,7 +12,7 @@ import ru.lanit.ld.wc.pages.InstructionsSection;
 import ru.lanit.ld.wc.pages.LoginPage;
 import ru.lanit.ld.wc.tests.TestBase;
 
-public class ReadUnreadAction_ListView_Tests extends TestBase {
+public class iReadUnreadAction_ListView_Tests extends TestBase {
     InstructionsSection instSection;
     FolderList folderList;
     Instruction instruction,focusInatructionNewState;
@@ -53,6 +53,7 @@ public class ReadUnreadAction_ListView_Tests extends TestBase {
     public void checkPermission(boolean readFlagState,Instruction focusedInstruction, String action, String expectedNewMenuItemName) {
 
         app.focusedUser.getUserApi().setReaded(readFlagState, instruction.getInstructionId());
+        
         instSection.cardView.ActionsMenu(focusedInstructionNum).filter(Condition.text(action)).get(0).click();
 
         focusInatructionNewState=app.focusedUser.getUserApi().getInstruction(focusedInstruction.getInstructionId());
@@ -65,6 +66,7 @@ public class ReadUnreadAction_ListView_Tests extends TestBase {
     public void checkMenuItemName(boolean readFlagState,Instruction focusedInstruction, String action, String expectedNewMenuItemName) {
 
         app.focusedUser.getUserApi().setReaded(readFlagState, instruction.getInstructionId());
+
         instSection.cardView.ActionsMenu(focusedInstructionNum).filter(Condition.text(action)).get(0).click();
 
         Assert.assertTrue(instSection.cardView.ActionsMenu(focusedInstructionNum).filter(Condition.text(expectedNewMenuItemName)).size()==1);
