@@ -15,7 +15,7 @@ import ru.lanit.ld.wc.tests.TestBase;
 public class iReadUnreadAction_ListView_Tests extends TestBase {
     InstructionsSection instSection;
     FolderList folderList;
-    Instruction instruction,focusInatructionNewState;
+    Instruction instruction, focusInstructionNewState;
     int focusedInstructionNum;
 
     @BeforeClass
@@ -62,10 +62,10 @@ public class iReadUnreadAction_ListView_Tests extends TestBase {
         instSection.cardView.ActionsMenu(focusedInstructionNum).filter(Condition.text(action)).get(0).click();
 
         // бэк:считать новое состояние сообщения
-        focusInatructionNewState=app.focusedUser.getUserApi().getInstruction(focusedInstruction.getInstructionId());
+        focusInstructionNewState =app.focusedUser.getUserApi().getInstruction(focusedInstruction.getInstructionId());
 
         // проверить permission на новом состоянии
-        Assert.assertTrue(focusInatructionNewState.getPermissions().isCanUnreadInstruction()==readFlagState);
+        Assert.assertTrue(focusInstructionNewState.getPermissions().isCanUnreadInstruction()==readFlagState);
     }
 
 
