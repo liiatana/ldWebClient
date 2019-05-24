@@ -110,4 +110,13 @@ public class Users {
         return null;
     }
 
+    public int getUserIdByFIO(String FIO) {
+        int Id,i=0;
+        do {
+            if( this.users.get(i).getUserName()==FIO) {return this.users.get(i).getId();}
+            i++;
+        }while( i< this.users.size());
+
+        return -1;
+    }
 }
