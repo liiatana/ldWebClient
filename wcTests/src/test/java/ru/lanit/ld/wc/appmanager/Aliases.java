@@ -1,8 +1,8 @@
 package ru.lanit.ld.wc.appmanager;
 
-public final class Alias {
+public final class Aliases {
 
-    public Alias() {
+    public Aliases() {
     }
 
     //разделы
