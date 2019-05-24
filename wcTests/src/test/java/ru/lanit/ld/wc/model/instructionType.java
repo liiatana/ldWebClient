@@ -52,7 +52,6 @@ public class instructionType {
 
     public int getId() {
         return id;
-
     }
 
     public void setId(int id) {
@@ -71,7 +70,7 @@ public class instructionType {
         return operationID;
     }
 
-    public void setOperationID(int operationID) {
+        public void setOperationID(int operationID) {
         this.operationID = operationID;
     }
 
