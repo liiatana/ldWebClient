@@ -54,4 +54,9 @@ public class instructionPermissions {
         this.canTakeInstructionInWork = jsonInstruction.get("canTakeInstructionInWork").getAsBoolean();
         this.canUnreadInstruction = jsonInstruction.get("canUnreadInstruction").getAsBoolean();
     }
+
+    public boolean isCanUnreadInstruction() {
+        return canUnreadInstruction;
+    }
+
 }
