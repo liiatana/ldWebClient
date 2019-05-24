@@ -126,4 +126,17 @@ public class InstructionTypes {
     }
 
 
+    public instructionType getInstructionTypeIdByName(String typeName) {
+        int i = 0;
+
+        do {
+            if (this.typeList.get(i).getName() == typeName) {
+                return this.typeList.get(i);
+            }
+            i++;
+        } while (i < this.typeList.size());
+
+        return null;
+
+    }
 }
