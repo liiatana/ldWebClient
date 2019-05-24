@@ -58,7 +58,7 @@ public class MakeReportTests extends TestBase {
     public void makeQuickPossitiveReport(Instruction instruction) {
 
 
-        instSection.ActionPanel.refreshButton.click();
+        instSection.ActionPanel.refreshList();
         sleep(3000);
         folderList = app.focusedUser.getUserApi().getFolderList(1999,10);
 
@@ -94,7 +94,7 @@ public class MakeReportTests extends TestBase {
     @Test(dataProvider = "TaskWithTextCheck", invocationCount = 1,description = "Создание отчета с отказом с краткой формы отчеты")
     public void makeNegativeReportBySmallForm(Instruction instruction) {
 
-        instSection.ActionPanel.refreshButton.click();
+        instSection.ActionPanel.refreshList();
         sleep(3000);
         folderList = app.focusedUser.getUserApi().getFolderList(1999,10);
 
@@ -139,7 +139,7 @@ public class MakeReportTests extends TestBase {
     @Test(dataProvider = "AnyTask", invocationCount = 1,description = "Создание отчета с отказом с полной формы отчеты")
     public void makeReportByBigForm(Instruction instruction) {
 
-        instSection.ActionPanel.refreshButton.click();
+        instSection.ActionPanel.refreshList();
         folderList = app.focusedUser.getUserApi().getFolderList(1999,10);
         sleep(2000);
 
