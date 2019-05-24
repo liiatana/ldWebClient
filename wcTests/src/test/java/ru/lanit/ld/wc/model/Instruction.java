@@ -297,6 +297,10 @@ public class Instruction {
         return this;
     }
 
+    public instructionPermissions getPermissions() {
+        return permissions;
+    }
+
     //public String getCreationDateAsTextInWeb() {
     //    return creationDate.format(DateTimeFormatter.ofPattern("dd MMMM yyyy HH:mm"));
     //}
