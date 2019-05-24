@@ -45,12 +45,16 @@ public class Instruction {
     private String stateName;
 
 
+    private instructionPermissions permissions;
+
+
+
     public Instruction(JsonElement parsed, int InstructionNum) { // для создания объектов Instruction при чтении списка
         this.InstructionId =
                 parsed.getAsJsonObject().getAsJsonArray("items").get(InstructionNum).getAsJsonObject().get("instruction").getAsJsonObject().get("id").getAsInt();
     }
 
-    public Instruction(JsonElement parsed) { // для создания объекта INstruction при олучении ифнормации о сообщении
+    public Instruction(JsonElement parsed) { // для создания объекта Instruction при олучении ифнормации о сообщении
 
         JsonObject jsonInstruction = parsed.getAsJsonObject().get("instruction").getAsJsonObject();
 
@@ -78,6 +82,9 @@ public class Instruction {
                     DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm"));
             // DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm"));
         }
+
+        this.permissions=new instructionPermissions(parsed);
+
 
     }
 
