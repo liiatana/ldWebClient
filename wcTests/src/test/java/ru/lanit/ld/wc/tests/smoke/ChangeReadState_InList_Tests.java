@@ -1,5 +1,7 @@
 package ru.lanit.ld.wc.tests.smoke;
 
+import com.codeborne.selenide.Condition;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -13,7 +15,7 @@ import ru.lanit.ld.wc.tests.TestBase;
 public class ChangeReadState_InList_Tests extends TestBase {
     InstructionsSection instSection;
     FolderList folderList;
-    Instruction instruction;
+    Instruction instruction,focusInatructionNewState;
     int focusedInstructionNum;
 
     @BeforeClass
@@ -27,9 +29,10 @@ public class ChangeReadState_InList_Tests extends TestBase {
         // порядковый номер сообщения в папке, над которым будем эксперементировать
         focusedInstructionNum = 0;
 
-        //получаем ID этого сообщения и делаем его непрочитанным
+        //получаем ID этого сообщения
         folderList = app.focusedUser.getUserApi().getFolderList(1999, focusedInstructionNum + 1);
-        app.focusedUser.getUserApi().setReaded(false, folderList.items.get(focusedInstructionNum + 1).getInstructionId());
+        instruction=folderList.items.get(focusedInstructionNum + 1);
+        //app.focusedUser.getUserApi().setReaded(false, instruction.getInstructionId());
 
         // авторизуемся
         LoginPage lp = new LoginPage();
@@ -40,19 +43,33 @@ public class ChangeReadState_InList_Tests extends TestBase {
     @DataProvider
     public Object[][] Object() {
 
-        return new Object[][]{
-                {app.focusedUser.getUserApi().getInstruction(folderList.items.get(focusedInstructionNum).getInstructionId())},
-        };
+                return new Object[][] {
+                    {false,instruction, "Пометить как прочитанное","Пометить как непрочитанное"},
+                    {true,instruction, "Пометить как непрочитанное","Пометить как прочитанное"} };
+
     }
 
-    @Test(dataProvider = "Object", priority = 1, description = "Непрочитанное сообщение.Сделать прочитанным")
-    public void setReaded(Instruction focusedInstruction) {
+    @Test(dataProvider = "Object", priority = 1, description = "Проверка изменения permission после выполнения действия.")
+    public void checkPermission(boolean readFlagState,Instruction focusedInstruction, String action, String expectedNewMenuItemName) {
 
-        //ElementsCollection menu = instSection.cardView.clickActionsMenu(focusedInstructionNum);
-        //       Assert.assertTrue(menu.filter(Condition.text("Пометить непрочитаным")).size()==1);
+        app.focusedUser.getUserApi().setReaded(readFlagState, instruction.getInstructionId());
+        instSection.cardView.ActionsMenu(focusedInstructionNum).filter(Condition.text(action)).get(0).click();
 
-         instSection.cardView.ActionsMenu(focusedInstructionNum);
+        focusInatructionNewState=app.focusedUser.getUserApi().getInstruction(focusedInstruction.getInstructionId());
+
+        Assert.assertTrue(focusInatructionNewState.getPermissions().isCanUnreadInstruction()==readFlagState);
     }
+
+
+    @Test(dataProvider = "Object", priority = 2, description = "Проверка изменения пункта меню после выполнения действия.")
+    public void checkMenuItemName(boolean readFlagState,Instruction focusedInstruction, String action, String expectedNewMenuItemName) {
+
+        app.focusedUser.getUserApi().setReaded(readFlagState, instruction.getInstructionId());
+        instSection.cardView.ActionsMenu(focusedInstructionNum).filter(Condition.text(action)).get(0).click();
+
+        Assert.assertTrue(instSection.cardView.ActionsMenu(focusedInstructionNum).filter(Condition.text(expectedNewMenuItemName)).size()==1);
+    }
+
 
 
     @AfterClass
