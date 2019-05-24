@@ -13,7 +13,7 @@ import ru.lanit.ld.wc.tests.TestBase;
 import static com.codeborne.selenide.Selenide.sleep;
 
 
-public class _LoginTests extends TestBase {
+public class _Login_Tests extends TestBase {
 
 
     @DataProvider

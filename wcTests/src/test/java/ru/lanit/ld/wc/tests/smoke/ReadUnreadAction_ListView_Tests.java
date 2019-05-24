@@ -12,7 +12,7 @@ import ru.lanit.ld.wc.pages.InstructionsSection;
 import ru.lanit.ld.wc.pages.LoginPage;
 import ru.lanit.ld.wc.tests.TestBase;
 
-public class ChangeReadState_InList_Tests extends TestBase {
+public class ReadUnreadAction_ListView_Tests extends TestBase {
     InstructionsSection instSection;
     FolderList folderList;
     Instruction instruction,focusInatructionNewState;

@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 
-public class NoticeListViewTests extends TestBase {
+public class Notice_ListView_Tests extends TestBase {
 
     InstructionsSection instSection;
     UserInfo instructionInitiator; // app.UserList.anyUser(1); //или любой

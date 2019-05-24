@@ -14,7 +14,7 @@ import ru.lanit.ld.wc.pages.InstructionsSection;
 import ru.lanit.ld.wc.pages.LoginPage;
 import ru.lanit.ld.wc.tests.TestBase;
 
-public class ReadStateInstruction_InList_Tests extends TestBase {
+public class ReadStateInstruction_ListView_Tests extends TestBase {
     InstructionsSection instSection;
     FolderList folderList;
     //Instruction instruction;
