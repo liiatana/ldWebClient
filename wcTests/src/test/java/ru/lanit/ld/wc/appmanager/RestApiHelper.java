@@ -202,4 +202,13 @@ public class RestApiHelper {
                 .put(String.format("%sme/lasturl", apiPath));
 
     }
+
+    public String getBackVersion() {
+        Response response  = RestAssured
+                //.given().header("Cookie", cookies)
+                .get(String.format("%sadmin/apiversion", apiPath));
+
+        return response.getBody().toString();
+
+    }
 }
