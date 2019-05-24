@@ -26,8 +26,8 @@ public class instructionPermissions {
     private  boolean canTakeInstructionInWork;
     private  boolean canUnreadInstruction;
 
-    public instructionPermissions() {
-    }
+
+
 
     public instructionPermissions(JsonElement parsed) {
 
