@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.*;
 import ru.lanit.ld.wc.appmanager.ApplicationManager;
+import ru.lanit.ld.wc.pages.LoginPage;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -25,6 +26,7 @@ public class TestBase {
 
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide().screenshots(true).savePageSource(false));
         app.init();
+        app.logManager.addEnviromentInfo("FrontVersion",getFrontVersion());
 
     }
 
@@ -53,6 +55,13 @@ public class TestBase {
             driver.quit();
 
     }*/
+
+    private String getFrontVersion(){
+
+        LoginPage lp = new LoginPage();
+        return lp.open().version.getText();
+
+    }
 
 }
 

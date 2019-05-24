@@ -1,7 +1,6 @@
 package ru.lanit.ld.wc.appmanager;
 
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
 import ru.lanit.ld.wc.model.InstructionTypes;
 import ru.lanit.ld.wc.model.UserInfo;
 import ru.lanit.ld.wc.model.Users;
@@ -9,23 +8,25 @@ import ru.lanit.ld.wc.model.viewState;
 
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Properties;
 
 public class ApplicationManager {
 
     //public WebDriver wd;
-    private String browser;
+    public String browser;
     public String baseUrl;
-    public String version;
-    private String defaultBrowserSize;
+    public String apiUrl;
+    public String defaultBrowserSize;
+
 
     public final Properties properties;
     public Users UserList;
     public InstructionTypes InstructionList;
     public UserInfo focusedUser;
     public viewState defaultViewState;
+
+    public LogManager logManager;
 
 
     public ApplicationManager(String browser, String browserSize) {
@@ -34,7 +35,6 @@ public class ApplicationManager {
         UserList = new Users();
         InstructionList = new InstructionTypes();
         defaultViewState= new viewState();
-
 
         this.browser = browser;
         this.defaultBrowserSize = browserSize;
@@ -51,18 +51,16 @@ public class ApplicationManager {
 
         focusedUser.getUserApi().makeHomeAsLastUrl();
 
-        version = properties.getProperty("version");
+
         baseUrl = properties.getProperty("web.baseUrl");
+        apiUrl=properties.getProperty("web.apiUrl");
 
-
-        switch (browser) {
+        /*switch (browser) {
             case  ("chrome"):
                 System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
                 break;
 
-        }
-
-
+        }*/
 
         Configuration.browser = browser;
         Configuration.baseUrl = baseUrl;
@@ -71,12 +69,13 @@ public class ApplicationManager {
         Configuration.screenshots=true;
         Configuration.reopenBrowserOnFail=true;
 
-        exportEnviromentInfornationToFile();
-
+        //exportEnviromentInfornationToFile();
+        logManager=new LogManager(properties.getProperty("data.allureProrertyFilePath"));
+        logManager.exportEnviromentInfornationToFile(this);
 
     }
 
-    private void exportEnviromentInfornationToFile() throws IOException {
+   /* private void exportEnviromentInfornationToFile() throws IOException {
         File allureEnvFile = new File("allure-results\\environment.properties");
         if (allureEnvFile.exists()) {
             allureEnvFile.delete();
@@ -96,7 +95,7 @@ public class ApplicationManager {
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
-    }
+    }*/
 
 
     public void stop() {

@@ -15,6 +15,7 @@ public class LoginPage {
     private SelenideElement userLogin= $(By.xpath("//input[@id=\"login-field\"]"));
     private SelenideElement userPassword = $(By.xpath("//input[@id=\"psw-field\"]"));
     private SelenideElement loginButton= $(By.xpath("//button[@id=\"sql-auth-btn\"]"));
+    public SelenideElement version=$(By.xpath("//div[@class=\"version\"]"));
 
     public SelenideElement errorText=$(By.xpath("//span[@class=\"error-message\"]"));
 
