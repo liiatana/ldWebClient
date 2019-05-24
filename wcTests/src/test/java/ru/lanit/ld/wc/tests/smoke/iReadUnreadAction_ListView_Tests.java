@@ -23,18 +23,18 @@ public class iReadUnreadAction_ListView_Tests extends TestBase {
 
         //lastURL=Сообщения/Входящая
         app.focusedUser.getUserApi().makeHomeAsLastUrl();
-        //вид по умолчанию
+        //установить вид по умолчанию
         app.focusedUser.getUserApi().setViewState(app.defaultViewState, "Instruction", 1999);
 
         // порядковый номер сообщения в папке, над которым будем эксперементировать
         focusedInstructionNum = 0;
 
-        //получаем ID этого сообщения
+        //получить ID этого сообщения
         folderList = app.focusedUser.getUserApi().getFolderList(1999, focusedInstructionNum + 1);
         instruction=folderList.items.get(focusedInstructionNum + 1);
         //app.focusedUser.getUserApi().setReaded(false, instruction.getInstructionId());
 
-        // авторизуемся
+        // авторизация
         LoginPage lp = new LoginPage();
         instSection = lp.open().LoginAs(app.focusedUser);
 
@@ -52,12 +52,19 @@ public class iReadUnreadAction_ListView_Tests extends TestBase {
     @Test(dataProvider = "Object", priority = 1, description = "Проверка изменения permission после выполнения действия.")
     public void checkPermission(boolean readFlagState,Instruction focusedInstruction, String action, String expectedNewMenuItemName) {
 
+        //бэк:сделать сообщение как указано во флаге readFlagState
         app.focusedUser.getUserApi().setReaded(readFlagState, instruction.getInstructionId());
-        
+        //обновить список папки
+        instSection.ActionPanel.refreshList();
+
+
+        //в меню выбрать действие "action"
         instSection.cardView.ActionsMenu(focusedInstructionNum).filter(Condition.text(action)).get(0).click();
 
+        // бэк:считать новое состояние сообщения
         focusInatructionNewState=app.focusedUser.getUserApi().getInstruction(focusedInstruction.getInstructionId());
 
+        // проверить permission на новом состоянии
         Assert.assertTrue(focusInatructionNewState.getPermissions().isCanUnreadInstruction()==readFlagState);
     }
 
@@ -65,10 +72,15 @@ public class iReadUnreadAction_ListView_Tests extends TestBase {
     @Test(dataProvider = "Object", priority = 2, description = "Проверка изменения пункта меню после выполнения действия.")
     public void checkMenuItemName(boolean readFlagState,Instruction focusedInstruction, String action, String expectedNewMenuItemName) {
 
+        //бэк:сделать сообщение как указано во флаге readFlagState
         app.focusedUser.getUserApi().setReaded(readFlagState, instruction.getInstructionId());
+        //обновить список папки
+        instSection.ActionPanel.refreshList();
 
+        //в меню выбрать действие "action"
         instSection.cardView.ActionsMenu(focusedInstructionNum).filter(Condition.text(action)).get(0).click();
 
+        // проверить, что заговловок меню сменился
         Assert.assertTrue(instSection.cardView.ActionsMenu(focusedInstructionNum).filter(Condition.text(expectedNewMenuItemName)).size()==1);
     }
 
