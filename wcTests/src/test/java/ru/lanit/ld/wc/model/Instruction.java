@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Instruction {
 
@@ -450,6 +451,57 @@ public class Instruction {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Instruction that = (Instruction) o;
+        return documentId == that.documentId &&
+                execAuditorID == that.execAuditorID &&
+                initiatorID == that.initiatorID &&
+                reportReceiverID == that.reportReceiverID &&
+                execInterval == that.execInterval &&
+                execIntervalType == that.execIntervalType &&
+                sendType == that.sendType &&
+                control == that.control &&
+                withExecutive == that.withExecutive &&
+                reportToExecutive == that.reportToExecutive &&
+                instructionTypeId == that.instructionTypeId &&
+                operationTypeId == that.operationTypeId &&
+                InstructionId == that.InstructionId &&
+                state == that.state &&
+                Arrays.equals(receiverID, that.receiverID) &&
+                Objects.equals(text, that.text) &&
+                Objects.equals(subject, that.subject) &&
+                Objects.equals(comment, that.comment) &&
+                Objects.equals(startDate, that.startDate) &&
+                Objects.equals(executionDate, that.executionDate) &&
+                Arrays.equals(fileIds, that.fileIds) &&
+                Objects.equals(instructionType, that.instructionType) &&
+                Objects.equals(creationDate, that.creationDate) &&
+                Objects.equals(stateName, that.stateName) &&
+                Objects.equals(permissions, that.permissions) &&
+                Objects.equals(result, that.result) &&
+                Objects.equals(folder, that.folder);
+    }
 
+    @Override
+    public int hashCode() {
+        int result1 = Objects.hash(text, subject, comment, documentId, execAuditorID, initiatorID, reportReceiverID, startDate, executionDate, execInterval, execIntervalType, sendType, control, withExecutive, reportToExecutive, instructionTypeId, operationTypeId, InstructionId, instructionType, creationDate, state, stateName, permissions, result, folder);
+        result1 = 31 * result1 + Arrays.hashCode(receiverID);
+        result1 = 31 * result1 + Arrays.hashCode(fileIds);
+        return result1;
+    }
 
+    public Instruction getOnlyListViewInformation() {
+        Instruction inst = new Instruction();
+
+        inst.receiverID=this.receiverID;
+        inst.instructionType=this.instructionType;
+        inst.stateName=this.stateName;
+        inst.startDate=this.startDate;
+        inst.executionDate=this.executionDate;
+
+        return inst;
+    }
 }
