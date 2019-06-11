@@ -19,7 +19,7 @@ import java.time.format.DateTimeFormatter;
 
 import static com.codeborne.selenide.Selenide.sleep;
 
-public class iCreateNotice_Tests extends TestBase {
+public class iNotice_Create_Tests extends TestBase {
 
     InstructionsSection instSection;
     UserInfo instructionInitiator ; // app.UserList.anyUser(1); //или любой

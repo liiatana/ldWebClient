@@ -69,7 +69,7 @@ public class Instruction {
         this.InstructionId = jsonInstruction.get("id").getAsInt();
         this.initiatorID = jsonInstruction.get("initiatorID").getAsInt();
         this.instructionTypeId = jsonInstruction.get("instructionTypeID").getAsInt();
-        this.initiatorID = jsonInstruction.get("receiverID").getAsInt();
+
         //startDate
         this.state = jsonInstruction.get("state").getAsInt();
         this.stateName = jsonInstruction.get("stateName").getAsString();
@@ -87,9 +87,12 @@ public class Instruction {
         }
 
         this.permissions=new instructionPermissions(parsed);
-        this.result=jsonInstruction.get("result").getAsString();
+        if (!jsonInstruction.get("result").isJsonNull()) {
+            this.result=jsonInstruction.get("result").getAsString();
+        }
+//instructionFolder iFolder=new instructionFolder(jsonInstruction.get("folder").getAsJsonObject());
 
-        this.folder= new instructionFolder(parsed);
+        this.folder= new instructionFolder(jsonInstruction.get("folder").getAsJsonObject());
 
 
     }

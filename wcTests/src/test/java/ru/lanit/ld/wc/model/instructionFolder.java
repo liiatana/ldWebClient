@@ -15,12 +15,15 @@ public class instructionFolder {
         this.name = name;
     }
 
-    public instructionFolder(JsonElement parsed) {
+    public instructionFolder(JsonObject parsed) {
 
-        JsonObject jsonFolder = parsed.getAsJsonObject().get("folder").getAsJsonObject();
+        //JsonObject jsonFolder = parsed.getAsJsonObject().get("folder").getAsJsonObject();
 
-        this.id = jsonFolder.get("id").getAsInt();
-        this.name = jsonFolder.get("name").getAsString();
+        //this.id = jsonFolder.get("id").getAsInt();
+        //this.name = jsonFolder.get("name").getAsString();
+
+        this.id = parsed.get("id").getAsInt();
+        this.name = parsed.get("name").getAsString();
     }
 
     @Override

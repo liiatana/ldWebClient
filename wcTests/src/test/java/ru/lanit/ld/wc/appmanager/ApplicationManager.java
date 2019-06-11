@@ -55,12 +55,14 @@ public class ApplicationManager {
         baseUrl = properties.getProperty("web.baseUrl");
         apiUrl=properties.getProperty("web.apiUrl");
 
-        /*switch (browser) {
+        switch (browser) {
             case  ("chrome"):
                 System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
                 break;
 
-        }*/
+        }
+
+
 
         Configuration.browser = browser;
         Configuration.baseUrl = baseUrl;
@@ -68,6 +70,9 @@ public class ApplicationManager {
         Configuration.browserSize = defaultBrowserSize;
         Configuration.screenshots=true;
         Configuration.reopenBrowserOnFail=true;
+        //Configuration.browserVersion="74";
+
+       // System.setProperty("selenide.browser", browser);
 
         //exportEnviromentInfornationToFile();
         logManager=new LogManager(properties.getProperty("data.allureProrertyFilePath"));

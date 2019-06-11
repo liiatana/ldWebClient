@@ -18,8 +18,12 @@ public class ChoosePersonForm {
 
     private ElementsCollection choosenPersons = $$(By.xpath("//div[@class=\"layout ml-2 column\"]/div/*"));
 
-    private SelenideElement buttonOk = $(By.xpath("//div[@class=\"v-dialog modal v-dialog--active v-dialog--persistent\"]/*//button[1]"));
-    private SelenideElement buttonCancel = $(By.xpath("//div[@class=\"v-dialog modal v-dialog--active v-dialog--persistent\"]/*//button[2]"));
+    //private SelenideElement buttonOk = $(By.xpath("//div[@class=\"small-button rounded-button elevation-0 v-btn theme--light primary\"]/*//button[1]"));
+    //button[@class="small-button rounded-button elevation-0 v-btn theme--light primary"]
+    private SelenideElement buttonOk = $(By.xpath("//button[@class=\"small-button rounded-button elevation-0 v-btn theme--light primary\"]"));
+
+    //private SelenideElement buttonCancel = $(By.xpath("//div[@class=\"v-dialog modal v-dialog--active v-dialog--persistent\"]/*//button[2]"));
+    private SelenideElement buttonCancel = $(By.xpath("//button[@class=\"small-button rounded-button v-btn v-btn--outline v-btn--depressed theme--light primary--text\"]"));
 
     public void insertPersons(int[] userIds, ApplicationManager app) {
         if (choosenPersons.size() > 0) {

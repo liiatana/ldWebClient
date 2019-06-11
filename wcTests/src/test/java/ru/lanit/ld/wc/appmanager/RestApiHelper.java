@@ -208,7 +208,7 @@ public class RestApiHelper {
                 //.given().header("Cookie", cookies)
                 .get(String.format("%sadmin/apiversion", apiPath));
 
-        return response.getBody().toString();
+        return response.getBody().print();
 
     }
 }

@@ -25,7 +25,7 @@ public class LoginPage {
     public InstructionsSection LoginAs(UserInfo user) {
 
         fillLoginInfomation(user);
-        sleep(5000);
+        sleep(6000);
         return page(InstructionsSection.class);
 
     }
@@ -52,7 +52,7 @@ public class LoginPage {
 
 
     public LoginPage open() {
-        String url="login";
+        String url= "http://172.29.17.193/landocsweb2/login";
         Selenide.open(url);
         return this;
 

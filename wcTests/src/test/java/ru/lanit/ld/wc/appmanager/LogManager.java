@@ -29,11 +29,7 @@ public class LogManager {
                 writer.write(System.lineSeparator());
                 writer.write("BrowserSize=" + Configuration.browserSize);
                 writer.write(System.lineSeparator());
-                writer.write(System.lineSeparator());
-                writer.write("Back=" + app.apiUrl);
-                writer.write(System.lineSeparator());
-                writer.write("Back=" + app.UserList.users.get(0).getUserApi().getBackVersion());
-                writer.write("Front=" + app.baseUrl);
+                writer.write("URL=" + app.baseUrl);
 
 
         } catch (IOException ex) {

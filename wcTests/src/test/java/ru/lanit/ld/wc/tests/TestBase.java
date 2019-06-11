@@ -20,13 +20,14 @@ public class TestBase {
             = new ApplicationManager(System.getProperty("browser", BrowserType.CHROME), System.getProperty("browserSize", "1366x768")); //
     // в настроках запуска теста нужно дописать  -Dbrowser=firefox( в поле VM)
     // -DbrowserSize="1024х768"
+    //-Dbrowser=firefox -DbrowserSize=1800x1400
 
     @BeforeSuite
     public void setUp() throws Exception {
 
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide().screenshots(true).savePageSource(false));
         app.init();
-        app.logManager.addEnviromentInfo("FrontVersion",getFrontVersion());
+
 
     }
 
@@ -56,12 +57,7 @@ public class TestBase {
 
     }*/
 
-    private String getFrontVersion(){
 
-        LoginPage lp = new LoginPage();
-        return lp.open().version.getText();
-
-    }
 
 }
 
