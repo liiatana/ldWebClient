@@ -70,7 +70,7 @@ public class Instruction {
         this.initiatorID = jsonInstruction.get("initiatorID").getAsInt();
         this.instructionTypeId = jsonInstruction.get("instructionTypeID").getAsInt();
 
-        //startDate
+
         this.state = jsonInstruction.get("state").getAsInt();
         this.stateName = jsonInstruction.get("stateName").getAsString();
         this.subject = jsonInstruction.get("subject").getAsString();
@@ -89,11 +89,10 @@ public class Instruction {
         this.permissions=new instructionPermissions(parsed);
         if (!jsonInstruction.get("result").isJsonNull()) {
             this.result=jsonInstruction.get("result").getAsString();
-        }
+        }else this.result="";
 //instructionFolder iFolder=new instructionFolder(jsonInstruction.get("folder").getAsJsonObject());
 
         this.folder= new instructionFolder(jsonInstruction.get("folder").getAsJsonObject());
-
 
     }
 
@@ -216,11 +215,14 @@ public class Instruction {
         return this;
     }
 
+
     public int getReportReceiverID() {
         return reportReceiverID;
     }
 
     public Instruction withReportReceiverID(int[] reportReceiverID) {
+
+
         this.reportReceiverID = reportReceiverID[0];
         return this;
     }
@@ -433,7 +435,7 @@ public class Instruction {
     public String toString() {
         return "Instruction: {" +
                 "Id="+InstructionId+
-                "receiverID=" + Arrays.toString(receiverID) +
+                ", receiverID=" + Arrays.toString(receiverID) +
                 ", text='" + text + '\'' +
                 ", subject='" + subject + '\'' +
                 ", comment='" + comment + '\'' +
@@ -496,14 +498,22 @@ public class Instruction {
         return result1;
     }
 
-    public Instruction getOnlyListViewInformation() {
+    public Instruction getOnlyListViewInformation(boolean isFromReceiverView) {
         Instruction inst = new Instruction();
 
-        inst.receiverID=this.receiverID;
+        if(isFromReceiverView){
+             inst.initiatorID=this.initiatorID;
+             inst.reportReceiverID=this.initiatorID;// костыль
+        }
+        else {
+            inst.receiverID[0]= this.receiverID[0];
+        }
+
         inst.instructionType=this.instructionType;
         inst.stateName=this.stateName;
         inst.startDate=this.startDate;
         inst.executionDate=this.executionDate;
+        inst.text=this.text;
 
         return inst;
     }

@@ -50,7 +50,7 @@ public class TestBase {
     }
 
 
-    /*@AfterClass //от лямбды
+    /*@AfterClass //Л
     public void tearDown() {
         if (driver != null)
             driver.quit();

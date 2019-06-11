@@ -8,6 +8,7 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import ru.lanit.ld.wc.appmanager.ApplicationManager;
 import ru.lanit.ld.wc.model.Instruction;
+import ru.lanit.ld.wc.model.UserInfo;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -32,12 +33,12 @@ public class InstructionCardView {
     // --------Кнопки Отчитаться/Отказать-----
 
     public void possitiveReport(int instructionNumInFolder) {
-        cards.get(instructionNumInFolder).$$x("/*//div[@class=\"quick-access\"]").get(0).click();
+        cards.get(instructionNumInFolder).$$x(".//button").get(0).click();
     }
 
 
     public void negativeReport(int instructionNumInFolder) {
-        cards.get(instructionNumInFolder).$$x("/*//div[@class=\"quick-access\"]").get(1).click();
+        cards.get(instructionNumInFolder).$$x(".//button").get(1).click();
     }
 
     public void quickReport (boolean isPossitive, int instructionNumInFolder){
@@ -98,7 +99,9 @@ public class InstructionCardView {
     // --------Даты ----
     public LocalDateTime getCreationDateAsLocalDate (int instructionNumInFolder){
 
-        String d=cards.get(instructionNumInFolder).$$x(".//*//div[@class=\"grey--text darken text-no-wrap caption type-name hidden-xs-only font-weight-regular\"]/span").get(0).getText();
+        String d=cards.get(instructionNumInFolder).$$x("./*//div[@class=\"layout align-baseline row\"]//span").get(7).getText();
+        //.$$x(".//*//div[@class=\"grey--text darken text-no-wrap caption type-name hidden-xs-only font-weight-regular\"]/span").get(0).getText();
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy HH:mm");
         return LocalDateTime.parse(d, formatter);
     }
@@ -120,7 +123,9 @@ public class InstructionCardView {
 
     // --------Статус сообщения-----
     public SelenideElement getInstructionStateAsSe(int instructionNumInFolder) {
-        return cards.get(instructionNumInFolder).$$x(".//*//div[@class=\"v-chip ml-2 chip caption v-chip--label v-chip--outline v-chip--small theme--light info info--text\"").get(0);
+        return cards.get(instructionNumInFolder).$$x("./*//div[@class=\"layout align-baseline row\"]//span").last();
+        //.$$x(".//*//div[@class=\"v-chip ml-2 chip caption v-chip--label v-chip--outline v-chip--small theme--light info info--text\"").get(0);
+
     }
 
 
@@ -132,14 +137,25 @@ public class InstructionCardView {
     }
 
     // --------Считать информацию о сообщении из списка-----
-    public Instruction getIstructionInfo(int focusedInstructionNum, ApplicationManager app) {
+    public Instruction getIstructionInfo(int focusedInstructionNum, ApplicationManager app, UserInfo user, boolean viewAsReceiver) {
         Instruction inst=new Instruction();
 
+        if(viewAsReceiver){
+            inst.withInitiatorID(new int[]{app.UserList.getUserIdByFIO(getReceiverNameAsSE(focusedInstructionNum).getText())});
+            //inst.withReportReceiverID(new int[]{});
+        }
+        else {
+
+            inst.withReceiverID(new int[]{app.UserList.getUserIdByFIO(getReceiverNameAsSE(focusedInstructionNum).getText())});
+        }
         inst.withText(getInstructionTextAsSE(focusedInstructionNum).getText())
-                .withReceiverID(new int[]{app.UserList.getUserIdByFIO(getReceiverNameAsSE(focusedInstructionNum).getText())})
-                .withInstructionType(app.InstructionList.getInstructionTypeIdByName( getInstructionTypeAsSe(focusedInstructionNum).getText()))
+                .withInstructionType( user.getUserTypes().getInstructionTypeIdByName( getInstructionTypeAsSe(focusedInstructionNum).getText()))
                 .withStateName(getInstructionStateAsSe(focusedInstructionNum).getText())
                 .withStartDate(getCreationDateAsLocalDate(focusedInstructionNum));
+                //.withReportReceiverID(new int[] {-1});
+
+
+
 
         return inst;
     }
