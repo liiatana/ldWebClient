@@ -25,7 +25,7 @@ public class TestBase {
     @BeforeSuite
     public void setUp() throws Exception {
 
-        SelenideLogger.addListener("AllureSelenide", new AllureSelenide().screenshots(true).savePageSource(false));
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide().screenshots(true).savePageSource(true));
         app.init();
 
 

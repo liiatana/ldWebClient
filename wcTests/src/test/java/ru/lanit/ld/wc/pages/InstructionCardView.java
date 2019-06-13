@@ -56,10 +56,36 @@ public class InstructionCardView {
         cards.get(instructionNumInFolder).lastChild().find("div.v-menu.menu-vert.v-menu--inline > div > button > div > i").click();
     }
 
+   /* public ElementsCollection ActionsMenu(int instructionNumInFolder) {
+        //cards.get(instructionNumInFolder).lastChild().find("div.v-menu.menu-vert.v-menu--inline > div > button > div > i").click();
+        //cards.get(instructionNumInFolder).$x("./*/
+        //return cards.get(instructionNumInFolder).$$x("//div[@role=\"listitem\"]");
+     //   return  cards.get(instructionNumInFolder).$$x("//div[@class=\"v-menu__content theme--light menuable__content__active\"]/*//a");
+    //}
+
     public ElementsCollection ActionsMenu(int instructionNumInFolder) {
-        cards.get(instructionNumInFolder).lastChild().find("div.v-menu.menu-vert.v-menu--inline > div > button > div > i").click();
-        return cards.get(instructionNumInFolder).$$x("//div[@role=\"listitem\"]");
+        //cards.get(instructionNumInFolder).lastChild().find("div.v-menu.menu-vert.v-menu--inline > div > button > div > i").click();
+        cards.get(instructionNumInFolder).$x("./*//div[@class=\"v-menu menu-vert v-menu--inline\"]").click();
+        //return cards.get(instructionNumInFolder).$$x("//div[@role=\"listitem\"]");
+        return  cards.get(instructionNumInFolder).$$x("//div[@class=\"v-menu__content theme--light menuable__content__active\"]/*//div[@role=\"listitem\"]");
     }
+
+    public void ActionsMenuOpen(int instructionNumInFolder, String action) {
+        //cards.get(instructionNumInFolder).lastChild().find("div.v-menu.menu-vert.v-menu--inline > div > button > div > i").click();
+        cards.get(instructionNumInFolder).$x("./*//div[@class=\"v-menu menu-vert v-menu--inline\"]").click();
+        //return cards.get(instructionNumInFolder).$$x("//div[@role=\"listitem\"]");
+        actionsMenuItems=$$x("//div[@class=\"v-menu__content theme--light menuable__content__active\"]/*//div[@role=\"listitem\"]");
+        int i=0;
+        do {
+            if( !action.equals(actionsMenuItems.get(i).getText().trim()) ) {i++;}
+            else {actionsMenuItems.get(i).click();return;};
+        }while( i< actionsMenuItems.size());
+        //actionsMenuItems.findBy(Condition.text(action)).click();
+
+    }
+
+
+    //class="v-menu__content theme--light menuable__content__active".findBy(Condition.text(action))
 
     public BigReportForm menuCreateReport(int instructionNumInFolder) {
         cards.get(instructionNumInFolder).lastChild().find("div.v-menu.menu-vert.v-menu--inline > div > button > div > i").click();

@@ -21,8 +21,14 @@ public class MakeReportTests extends TestBase {
     @BeforeClass
     public void before() {
 
+        //lastURL=Сообщения/Входящая
+        app.focusedUser.getUserApi().makeHomeAsLastUrl();
+        //установить вид по умолчанию
+        app.focusedUser.getUserApi().setViewState(app.defaultViewState, "Instruction", 1999);
+
         LoginPage lp = new LoginPage();
-        instSection = lp.open().LoginAs(app.focusedUser).goToFolder(1999);
+        instSection = lp.open().LoginAs(app.focusedUser);//.goToFolder(1999);
+
         instSection.ActionPanel.PreviewIs("Off");
         instSection.ActionPanel.viewOnlyNew(false);
 
@@ -35,7 +41,7 @@ public class MakeReportTests extends TestBase {
     @DataProvider
     public Object[][] TaskWithoutCheck() {
 
-        UserInfo instructionInitiator = app.UserList.anyUser(1).users.get(2); // инициатор
+        UserInfo instructionInitiator = app.UserList.anyUser(1).users.get(0); // инициатор
         instructionType type = instructionInitiator.getUserTypes().getControlTypeWithoutCheck(true);
 
         Instruction instr = new Instruction(type);
@@ -59,13 +65,13 @@ public class MakeReportTests extends TestBase {
 
 
         instSection.ActionPanel.refreshList();
-        sleep(3000);
+        //sleep(3000);
         folderList = app.focusedUser.getUserApi().getFolderList(1999,10);
 
         instSection.cardView.possitiveReport(folderList.getInstructionNumInFolder(instruction.getInstructionId()));
         instSection.Dialog.buttonOK.click();
 
-        sleep(3000);
+        //sleep(3000);
 
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -73,8 +79,8 @@ public class MakeReportTests extends TestBase {
     @DataProvider
     public Object[][] TaskWithTextCheck() {
 
-        UserInfo instructionInitiator = app.UserList.anyUser(1).users.get(0); // инициатор=любой пользователь
-        instructionType type = instructionInitiator.getUserTypes().getControlTypeWithTextCheck(false);
+        UserInfo instructionInitiator = app.focusedUser;//app.UserList.anyUser(1).users.get(0); // инициатор=любой пользователь
+        instructionType type = instructionInitiator.getUserTypes().getControlTypeWithTextCheck(true);
 
         Instruction instr = new Instruction(type);
         instr
@@ -102,10 +108,10 @@ public class MakeReportTests extends TestBase {
         sleep(3000);
 
         instSection.SmallReport.clickButton(1);//1= полож,2= отказ,3=сохранить проект
-        sleep(2000);
+        //sleep(2000);
 
         instSection.SmallReport.text.sendKeys("Вот текст отчета, чтоб не ругалось");
-        sleep(3000);
+        //sleep(3000);
         instSection.SmallReport.clickButton(1);//1= полож,2= отказ,3=сохранить проект
 
 
@@ -141,10 +147,10 @@ public class MakeReportTests extends TestBase {
 
         instSection.ActionPanel.refreshList();
         folderList = app.focusedUser.getUserApi().getFolderList(1999,10);
-        sleep(2000);
+        //sleep(2000);
 
         BigReportForm report=instSection.cardView.menuCreateReport(folderList.getInstructionNumInFolder(instruction.getInstructionId()));
-        sleep(3000);
+        //sleep(3000);
 
         report.text.sendKeys("отчет с большой формы");
         report.refuse(); // .save();
@@ -155,7 +161,7 @@ public class MakeReportTests extends TestBase {
     public void after() {
         instSection.goToFolder(2101);
         instSection.ActionPanel.PreviewIs("Off");
-        sleep(3000);
+        sleep(2000);
 
         instSection.goToFolder(1999);
     }

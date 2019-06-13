@@ -23,6 +23,9 @@ public class iReadUnreadState_ListView_Tests extends TestBase {
     @BeforeClass
     public void before() {
 
+
+
+
         folderList = app.focusedUser.getUserApi().getFolderList(1999,focusedInstructionNum+2);
 
         //сообщение с порядковым номером=focusedInstructionNum делаем прочитанным
@@ -31,12 +34,18 @@ public class iReadUnreadState_ListView_Tests extends TestBase {
         //следующее за ним сообщение делаем непрочитанным
         app.focusedUser.getUserApi().setReaded(false,folderList.items.get(focusedInstructionNum+1).getInstructionId());
 
+
+        //lastURL=Сообщения/Входящая для инициатора сообщения
+        app.focusedUser.getUserApi().makeHomeAsLastUrl();
+        //вид по умолчанию для инициатора сообщения
+        app.focusedUser.getUserApi().setViewState(app.defaultViewState, "Instruction", 1999);
+
         //авторизоваться, перейти в папку Входящая
         LoginPage lp = new LoginPage();
         instSection = lp.open().LoginAs(app.focusedUser);// .goToFolder(1999);
 
         //установить режим отображения
-        instSection.ActionPanel.setViewState("Off", false, "Дата создания", true);
+        //instSection.ActionPanel.setViewState("Off", false, "Дата создания", true);
 
     }
 
@@ -49,31 +58,31 @@ public class iReadUnreadState_ListView_Tests extends TestBase {
          };
     }
 
-    @Test(dataProvider = "Object", priority=3,description = "Проверка атрибута font-weight для текста сообщения")
+    @Test(dataProvider = "Object", priority=1,description = "Проверка атрибута font-weight для текста сообщения")
     public void checkTextFont_InList(Instruction instr,int num, String expected_fontWeight, String expected_menuText, Boolean expected_redCircleState){
 
         instSection.cardView.getInstructionTextAsSE(num).shouldHave(Condition.cssValue("font-weight", expected_fontWeight));
     }
 
-    @Test(dataProvider = "Object", priority = 3, description = "Проверка атрибута font-weight в поле Получатель/Отправитель ")
+    @Test(dataProvider = "Object", priority = 1, description = "Проверка атрибута font-weight в поле Получатель/Отправитель ")
     public void checkReceiverFont_InList(Instruction instr,int num, String expected_fontWeight, String expected_menuText, Boolean expected_redCircleState) {
 
         instSection.cardView.getReceiverNameAsSE(num).shouldHave(Condition.cssValue("font-weight", expected_fontWeight));
     }
 
-    @Test(dataProvider = "Object", priority = 3, description = "Проверка атрибута font-weight в поле Дата создания ")
+    @Test(dataProvider = "Object", priority = 1, description = "Проверка атрибута font-weight в поле Дата создания ")
     public void checkDateFont_InList(Instruction instr,int num, String expected_fontWeight, String expected_menuText, Boolean expected_redCircleState) {
 
         instSection.cardView.getCreationDateAsSE(num).shouldHave(Condition.cssValue("font-weight", expected_fontWeight));
     }
 
-    @Test(dataProvider = "Object", priority = 3, description = "Проверка атрибута font-weight в поле Тип сообщения ")
+    @Test(dataProvider = "Object", priority = 1, description = "Проверка атрибута font-weight в поле Тип сообщения ")
     public void checkInstrTypeFont_InList(Instruction instr,int num, String expected_fontWeight, String expected_menuText, Boolean expected_redCircleState) {
 
         instSection.cardView.getInstructionTypeAsSe(num).shouldHave(Condition.cssValue("font-weight", expected_fontWeight));
     }
 
-    @Test(dataProvider = "Object", priority = 3, description = "Проверка атрибута font-weight в поле Срок исполнения (при наличии такового)")
+    @Test(dataProvider = "Object", priority = 1, description = "Проверка атрибута font-weight в поле Срок исполнения (при наличии такового)")
     public void checkInstrExecPeriodFont_InList(Instruction instr,int num, String expected_fontWeight, String expected_menuText, Boolean expected_redCircleState) {
 
         if (instr.getExecutionDate() == null) {
@@ -83,7 +92,7 @@ public class iReadUnreadState_ListView_Tests extends TestBase {
         }
     }
 
-    @Test(dataProvider = "Object", priority = 3, description = "Проверка видимости признака Непрочитано(красного кружка)")
+    @Test(dataProvider = "Object", priority = 1, description = "Проверка видимости признака Непрочитано(красного кружка)")
     public void checkInstrFlag_InList(Instruction instr,int num, String expected_fontWeight, String expected_menuText, Boolean expected_redCircleState) {
 
         Assert.assertEquals(instSection.cardView.getFlagState(num),expected_redCircleState);
@@ -91,14 +100,14 @@ public class iReadUnreadState_ListView_Tests extends TestBase {
     }
 
 
-    @Test(dataProvider = "Object", priority = 3, description = "Проверка наличия обратной операции в меню")
+    @Test(dataProvider = "Object", priority = 1, description = "Проверка наличия обратной операции в меню")
     public void checkReverseOperationMenu_InList(Instruction instr,int num, String expected_fontWeight, String expected_menuText, Boolean expected_redCircleState) {
 
         Assert.assertEquals(instSection.cardView.ActionsMenu(num).filter(Condition.text(expected_menuText)).size(), 1);
         instSection.cardView.closeMenu(num);
     }
 
-    @Test(dataProvider = "Object", priority = 3, description = "Проверка количества операций вида Пометить как *")
+    @Test(dataProvider = "Object", priority = 1, description = "Проверка количества операций вида Пометить как *")
     public void checkMenuOperationsCount_InList(Instruction instr,int num, String expected_fontWeight, String expected_menuText, Boolean expected_redCircleState) {
 
         Assert.assertEquals(instSection.cardView.ActionsMenu(num).filter(Condition.text("Пометить как")).size(), 1);

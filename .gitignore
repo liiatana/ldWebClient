@@ -22,3 +22,6 @@ gradle-app.setting
 wcTests/out/test/classes/META-INF/wcTests.main.kotlin_module
 wcTests/out/test/classes/META-INF/wcTests_main.kotlin_module
 wcTests/src/test/resources/*.json
+*.properties
+*.json
+*.json

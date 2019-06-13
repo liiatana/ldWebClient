@@ -47,7 +47,7 @@ public class _Login_Tests extends TestBase {
     }
 
 
-    @Test(dataProvider = "GoodUsers",priority = 2, description ="Авторизация пользователя с верными данными" )
+    @Test(dataProvider = "GoodUsers",priority = 1, description ="Авторизация пользователя с верными данными" )
     public void loginWithGoodAuthenticationData(UserInfo user) {
 
 

@@ -52,7 +52,7 @@ public class NewInstructionTests extends TestBase {
         NewInstructionPage newP=inst.ActionPanel.createNewByPlusButton(newInstruction,app);
         sleep(10000);// нужно сделать УМНОЕ ожидание
 
-        newP.fillForm(newInstruction,app,true);
+        newP.fillForm(newInstruction,app,false);
         newP.saveProjectButton.click();
         sleep(10000); // нужно сделать УМНОЕ ожидание
 

@@ -23,14 +23,14 @@ public class ViewInstructionsSectionTests extends TestBase {
         LoginPage lp = new LoginPage();
         instSection = lp.open().LoginAs(app.focusedUser);
         folderList = app.focusedUser.getUserApi().getFolderList(1999,10);
-        instSection.ActionPanel.setViewState("Off",false,"Дата создания",true);
-        sleep(8000);
+        //instSection.ActionPanel.setViewState("Off",false,"Дата создания",true);
+        sleep(2000);
 
     }
 
     @DataProvider
     public Object[][] InstructionIds() {
-        int[] instr = {51199861, 51204124, 51199031};//задание, отчет, уведомление
+        int[] instr = {7222242, 7222238, 7222240};//задание, отчет, уведомление
         return new Object[][]{new Object[]{instr[0]}, new Object[]{instr[1]}, new Object[]{instr[2]}};
 
     }
