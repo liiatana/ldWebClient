@@ -52,7 +52,7 @@ public class LoginPage {
 
 
     public LoginPage open() {
-        String url= "http://172.29.17.193/landocsweb2/login";
+        String url= "login";//"http://172.29.17.193/landocsweb2/login";
         Selenide.open(url);
         return this;
 

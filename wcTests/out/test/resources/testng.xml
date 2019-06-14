@@ -1,0 +1,15 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Suite1" verbose="1" >
+    <test name="Test1" >
+        <classes>
+            <class name="ru.lanit.ld.wc.tests.viewForms.MakeReportTests" />
+            <class name="ru.lanit.ld.wc.tests.viewForms.NewInstructionTests" />
+        </classes>
+    </test>
+    <test name="Login" >
+        <classes>
+            <class name="ru.lanit.ld.wc.tests.smoke._Login_Tests" />
+        </classes>
+    </test>
+</suite>

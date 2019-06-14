@@ -80,7 +80,7 @@ public class MakeReportTests extends TestBase {
     public Object[][] TaskWithTextCheck() {
 
         UserInfo instructionInitiator = app.focusedUser;//app.UserList.anyUser(1).users.get(0); // инициатор=любой пользователь
-        instructionType type = instructionInitiator.getUserTypes().getControlTypeWithTextCheck(true);
+        instructionType type = instructionInitiator.getUserTypes().getControlTypeWithTextCheck(false);
 
         Instruction instr = new Instruction(type);
         instr
