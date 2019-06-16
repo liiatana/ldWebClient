@@ -118,7 +118,7 @@ public class InstructionTypes {
 
         for (int i = 0; i <= this.getTypeList().size() - 1; i++) {
             operation = lookForPossitive ? this.getTypeList().get(i).getCheckReportTypePositive() : this.getTypeList().get(i).getCheckReportTypeNegative();
-            if (operation == 3 || operation == 5) {
+            if (operation == 2 || operation == 5) {
                 types1.add(this.getTypeList().get(i));
             }
         }
