@@ -50,6 +50,8 @@ public class Instruction {
     private String result;
     private instructionFolder folder;
 
+    private Report report;
+
 
 
     public Instruction(JsonElement parsed, int InstructionNum) { // для создания объектов Instruction при чтении списка
@@ -89,10 +91,15 @@ public class Instruction {
         this.permissions=new instructionPermissions(parsed);
         if (!jsonInstruction.get("result").isJsonNull()) {
             this.result=jsonInstruction.get("result").getAsString();
-        }else this.result="";
+            this.report= new Report(jsonInstruction);
+
+        }else  this.result= null;//this.result="";
 //instructionFolder iFolder=new instructionFolder(jsonInstruction.get("folder").getAsJsonObject());
 
         this.folder= new instructionFolder(jsonInstruction.get("folder").getAsJsonObject());
+
+
+
 
     }
 
@@ -160,6 +167,10 @@ public class Instruction {
     public Instruction withText(String text) {
         this.text = text;
         return this;
+    }
+
+    public Report getReport() {
+        return report;
     }
 
     public boolean isControl() {

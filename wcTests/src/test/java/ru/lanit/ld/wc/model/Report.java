@@ -1,5 +1,6 @@
 package ru.lanit.ld.wc.model;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.time.LocalDateTime;
@@ -20,6 +21,7 @@ public class Report {
     private int reportId;
     private String subject;
     private String text;
+
 
     private int InstructionId;
 
@@ -56,6 +58,20 @@ public class Report {
 
     }
 
+    public Report (JsonObject jsonInstruction){
+        this.InstructionId = jsonInstruction.get("id").getAsInt();
+        this.initiatorID = jsonInstruction.get("reportCreatorID").getAsInt();
+        this.reportId = jsonInstruction.get("reportID").getAsInt();
+        this.receiverId = jsonInstruction.get("reportReceiverID").getAsInt();
+
+
+        this.subject = jsonInstruction.get("reportSubject").getAsString();
+        this.text = jsonInstruction.get("reportText").getAsString();
+    }
+
+    public Report() {
+    }
+
     public Report withInitiatorID(int initiatorID) {
         this.initiatorID = initiatorID;
         return this;
@@ -90,11 +106,21 @@ public class Report {
         return this;
     }
 
+    public Report withRepodtId(int ID) {
+        this.reportId = ID;
+        return this;
+    }
+
+
+
     public Report withCompletionTypeId(boolean positive) {
         int CompletionTypeId = positive ? 1500 : 1501;
         this.completionTypeId = CompletionTypeId;
         return this;
     }
+
+
+
 
     @Override
     public String toString() {
