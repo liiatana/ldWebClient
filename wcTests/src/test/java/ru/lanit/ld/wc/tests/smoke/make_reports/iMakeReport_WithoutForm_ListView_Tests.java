@@ -1,6 +1,8 @@
 package ru.lanit.ld.wc.tests.smoke.make_reports;
 
 import io.qameta.allure.Step;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -11,6 +13,8 @@ import ru.lanit.ld.wc.pages.LoginPage;
 import ru.lanit.ld.wc.tests.TestBase;
 
 import static com.codeborne.selenide.Selenide.sleep;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class iMakeReport_WithoutForm_ListView_Tests extends TestBase {
 
@@ -66,7 +70,7 @@ public class iMakeReport_WithoutForm_ListView_Tests extends TestBase {
                 .withStateName(app.focusedUser.getUserApi().getInstruction(instResponse.getInstructionId()).getStateName());
 
         return new Object[][] {
-                {instr2, false,"Завершено c отказом"},
+                {instr2, false, "Завершено с отказом"},
                 {instr1, true,"Завершено успешно"} };
     }
 
@@ -80,48 +84,32 @@ public class iMakeReport_WithoutForm_ListView_Tests extends TestBase {
         //получить список сообщений папки
         folderList = app.focusedUser.getUserApi().getFolderList(1999, 10);
 
-        //нажать кнопку Отчитаться/Отказать
+        //нажать кнопку Отчитаться/Отказать для сообщения
         instSection.cardView.quickReport(reportType,folderList.getInstructionNumInFolder(focusedInstruction.getInstructionId()));
-        //в диалоговом окне нажать кнопку Отмена
+        //в диалоговом окне нажать кнопку ОК
         instSection.Dialog.buttonOK.click();
 
-        sleep(4000);
+        sleep(5000);
 
         //получить новое состояние сообщения
         focusInstructionNewState=app.focusedUser.getUserApi().getInstruction(focusedInstruction.getInstructionId());
 
         //проверить наличие отчета по сообщению
-        Assert.assertTrue(focusInstructionNewState.getResult().trim().equals(expectedResult));
-        
+
+
+        String abc=new String(expectedResult);
+        String fact=new String(focusInstructionNewState.getResult().trim());
+        //Assert.assertTrue(focusInstructionNewState.getResult().trim().equals(expectedResult));
+        assertThat(focusInstructionNewState.getResult().trim(), equalTo(abc));
+        //assertThat(focusInstructionNewState.getResult().trim(), equalTo(expectedResult));
+        assertThat(focusInstructionNewState.getResult().trim(), CoreMatchers.startsWith(expectedResult));
+        //focusInstructionNewState.getResult().equals("Завершено с отказом")
+        Assert.assertTrue(focusInstructionNewState.getResult().trim().equals(abc));
+
+        Assert.assertTrue(focusInstructionNewState.getResult().trim().equals(new String(expectedResult)));
     }
 
-    @Test(dataProvider = "TaskWithoutCheck", priority = 1, description = "Сценарий: пользователь нажал кнопку Отчитаться/Отказать, " +
-            "а затем в диалоговом окне НЕ подтвердил отправку отчета. Проверка статуса сообщения", dependsOnMethods={"MakeReport_checkResultState"})
-    public void MakeReport_checkInstructionState(Instruction focusedInstruction, boolean reportType, String expectedResult) {
 
-        //обновить список папки
-        instSection.ActionPanel.refreshList();
-
-        //нажать кнопку Отчитаться/Отказать
-        instSection.cardView.quickReport(reportType,0);
-        //в диалоговом окне нажать кнопку Отмена
-        instSection.Dialog.buttonCancel.click();
-
-        //получить новое состояние сообщения
-        focusInstructionNewState=app.focusedUser.getUserApi().getInstruction(focusedInstruction.getInstructionId());
-
-        //ожидаемая информация ооб отчете
-        Report expectedReportInfo= new Report();
-        expectedReportInfo.withInitiatorID(instructionInitiator.getId())
-                .withInstructionId(focusedInstruction.getInstructionId())
-                .withReceiverId(focusedInstruction.getReportReceiverID())
-                .withRepodtId(focusInstructionNewState.getReport().getReportId());
-
-        //проверить наличие отчета по сообщению
-        Assert.assertEquals(focusInstructionNewState.getReport(),expectedReportInfo);
-
-
-    }
 
 
 

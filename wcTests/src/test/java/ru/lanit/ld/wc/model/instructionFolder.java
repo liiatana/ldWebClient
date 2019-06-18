@@ -10,6 +10,11 @@ public class instructionFolder {
     private int id;//: 1999
     private String name; //: "Входящая"
 
+    /*public instructionFolder() {
+        this.id = id;
+        this.name = name;
+    }*/
+
     public instructionFolder(int id, String name) {
         this.id = id;
         this.name = name;
