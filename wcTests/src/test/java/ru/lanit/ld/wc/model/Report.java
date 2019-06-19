@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Report {
 
@@ -62,7 +63,9 @@ public class Report {
         this.InstructionId = jsonInstruction.get("id").getAsInt();
         this.initiatorID = jsonInstruction.get("reportCreatorID").getAsInt();
         this.reportId = jsonInstruction.get("reportID").getAsInt();
-        this.receiverId = jsonInstruction.get("reportReceiverID").getAsInt();
+        if (!jsonInstruction.get("reportReceiverID").isJsonNull()){
+            this.receiverId = jsonInstruction.get("reportReceiverID").getAsInt();
+        }
 
 
         this.subject = jsonInstruction.get("reportSubject").getAsString();
@@ -138,6 +141,33 @@ public class Report {
                 ", subject='" + subject + '\'' +
                 ", text='" + text + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Report report = (Report) o;
+        return completionTypeId == report.completionTypeId &&
+                documentId == report.documentId &&
+                initiatorID == report.initiatorID &&
+                operationDocumentID == report.operationDocumentID &&
+                operationTypeId == report.operationTypeId &&
+                receiverId == report.receiverId &&
+                reportId == report.reportId &&
+                InstructionId == report.InstructionId &&
+                Objects.equals(comment, report.comment) &&
+                Objects.equals(executionDate, report.executionDate) &&
+                Arrays.equals(fileIds, report.fileIds) &&
+                Objects.equals(subject, report.subject) &&
+                Objects.equals(text, report.text);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(comment, completionTypeId, documentId, executionDate, initiatorID, operationDocumentID, operationTypeId, receiverId, reportId, subject, text, InstructionId);
+        result = 31 * result + Arrays.hashCode(fileIds);
+        return result;
     }
 
     public JsonObject toJson() {
