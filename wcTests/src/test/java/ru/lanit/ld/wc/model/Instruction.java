@@ -3,6 +3,7 @@ package ru.lanit.ld.wc.model;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import org.testng.annotations.BeforeMethod;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -109,6 +110,11 @@ public class Instruction {
 
     public String getResult() {
         return result;
+    }
+
+    public Instruction withResult(String result) {
+        this.result = result;
+        return this;
     }
 
     public instructionFolder getFolder() {
@@ -319,6 +325,11 @@ public class Instruction {
 
     public Instruction withStateName(String stateName) {
         this.stateName = stateName;
+        return this;
+    }
+
+    public Instruction withReport(Report report) {
+        this.report = report;
         return this;
     }
 

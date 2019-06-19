@@ -3,6 +3,9 @@ package ru.lanit.ld.wc.pages;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.By;
+import ru.lanit.ld.wc.appmanager.ApplicationManager;
+import ru.lanit.ld.wc.model.FolderList;
+import ru.lanit.ld.wc.model.Instruction;
 
 import static com.codeborne.selenide.Selenide.*;
 
@@ -49,5 +52,24 @@ public class InstructionsSection {
     }
 
 
+
+
+
+    public void clickOnReportButton(Instruction focusedInstruction, boolean reportType, ApplicationManager app) {
+        //обновить список папки
+        this.ActionPanel.refreshList();
+
+        FolderList folderList;
+
+        //получить список сообщений папки
+        folderList =  app.UserList.getUserById(focusedInstruction.getReceiverID()[0])  .getUserApi().getFolderList(1999, 10);
+
+        //нажать кнопку Отчитаться/Отказать для сообщения
+        this.cardView.quickReport(reportType, folderList.getInstructionNumInFolder(focusedInstruction.getInstructionId()));
+        //в диалоговом окне нажать кнопку ОК
+        this.Dialog.buttonOK.click();
+
+        sleep(7000);
+    }
 
 }
