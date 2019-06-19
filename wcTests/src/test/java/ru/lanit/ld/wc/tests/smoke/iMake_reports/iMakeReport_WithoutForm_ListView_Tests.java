@@ -1,7 +1,5 @@
-package ru.lanit.ld.wc.tests.smoke.make_reports;
+package ru.lanit.ld.wc.tests.smoke.iMake_reports;
 
-import org.hamcrest.CoreMatchers;
-import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -10,16 +8,14 @@ import ru.lanit.ld.wc.pages.InstructionsSection;
 import ru.lanit.ld.wc.pages.LoginPage;
 import ru.lanit.ld.wc.tests.TestBase;
 
-import static com.codeborne.selenide.Selenide.sleep;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class iMakeReport_WithoutForm_ListView_Tests_v2 extends TestBase {
+public class iMakeReport_WithoutForm_ListView_Tests extends TestBase {
 
     InstructionsSection instSection;
-    FolderList folderList;
     Instruction instr1, instr2,focusInstructionNewState,reportInstruction;
-    //int focusedInstructionNum;
+
     UserInfo instructionInitiator,instructionReceiver;
 
     @BeforeClass
@@ -41,7 +37,7 @@ public class iMakeReport_WithoutForm_ListView_Tests_v2 extends TestBase {
     @DataProvider
     public Object[][] TaskWithoutCheck() {
 
-        instructionInitiator = app.UserList.anyUser(1).users.get(0); // инициатор
+        instructionInitiator = app.UserList.anyUserExcept(1,instructionReceiver).users.get(0); // инициатор
 
         // отправить сообщение для создания положительного отчета
         instructionType type_positive = instructionInitiator.getUserTypes().getControlTypeWithoutCheck(true);
@@ -53,8 +49,8 @@ public class iMakeReport_WithoutForm_ListView_Tests_v2 extends TestBase {
 
         instResponse instResponse = instructionInitiator.getUserApi().createInstruction(instr1, true);
         instr1.withInstructionId(instResponse.getInstructionId())
-                .withStartDate(app.focusedUser.getUserApi().getInstruction(instResponse.getInstructionId()).getCreationDate())
-                .withStateName(app.focusedUser.getUserApi().getInstruction(instResponse.getInstructionId()).getStateName());
+                .withStartDate(instructionReceiver.getUserApi().getInstruction(instResponse.getInstructionId()).getCreationDate())
+                .withStateName(instructionReceiver.getUserApi().getInstruction(instResponse.getInstructionId()).getStateName());
 
 
         // отправить сообщение для создания отчета с отказом
@@ -66,8 +62,8 @@ public class iMakeReport_WithoutForm_ListView_Tests_v2 extends TestBase {
                 .withReceiverID(new int[]{instructionReceiver.getId()});// получатель = наш фокусный пользователь
         instResponse = instructionInitiator.getUserApi().createInstruction(instr2, true);
         instr2.withInstructionId(instResponse.getInstructionId())
-                .withStartDate(app.focusedUser.getUserApi().getInstruction(instResponse.getInstructionId()).getCreationDate())
-                .withStateName(app.focusedUser.getUserApi().getInstruction(instResponse.getInstructionId()).getStateName());
+                .withStartDate(instructionReceiver.getUserApi().getInstruction(instResponse.getInstructionId()).getCreationDate())
+                .withStateName(instructionReceiver.getUserApi().getInstruction(instResponse.getInstructionId()).getStateName());
 
         return new Object[][] {
                 {instr2, false, "Завершено с отказом"},
@@ -82,7 +78,7 @@ public class iMakeReport_WithoutForm_ListView_Tests_v2 extends TestBase {
         instSection.clickOnReportButton(focusedInstruction, reportType,app);
 
         //получить новое состояние сообщения
-        focusInstructionNewState=app.focusedUser.getUserApi().getInstruction(focusedInstruction.getInstructionId());
+        focusInstructionNewState=instructionReceiver.getUserApi().getInstruction(focusedInstruction.getInstructionId());
 
         //делаем так чтобы обнулить текст и тему, потому как в сообщении без отчета для них возвращается значение по умолчанию
         focusInstructionNewState.getReport().withSubject(null);
@@ -109,7 +105,7 @@ public class iMakeReport_WithoutForm_ListView_Tests_v2 extends TestBase {
         instSection.clickOnReportButton(focusedInstruction, reportType,app);
 
         //получить новое состояние сообщения
-        focusInstructionNewState=app.focusedUser.getUserApi().getInstruction(focusedInstruction.getInstructionId());
+        focusInstructionNewState=instructionReceiver.getUserApi().getInstruction(focusedInstruction.getInstructionId());
 
         //проверка, что сообщение перемещено в Архив/Входящая
         assertThat(focusInstructionNewState.getFolder(), equalTo(new instructionFolder(2107,"Входящая")));
@@ -125,13 +121,13 @@ public class iMakeReport_WithoutForm_ListView_Tests_v2 extends TestBase {
         instSection.clickOnReportButton(focusedInstruction, reportType,app);
 
         //получить новое состояние сообщения
-        focusInstructionNewState=app.focusedUser.getUserApi().getInstruction(focusedInstruction.getInstructionId());
+        focusInstructionNewState=instructionReceiver.getUserApi().getInstruction(focusedInstruction.getInstructionId());
 
         //получить информацию об отчете
-        reportInstruction=app.focusedUser.getUserApi().getInstruction(focusInstructionNewState.getReport().getReportId());
+        reportInstruction=instructionReceiver.getUserApi().getInstruction(focusInstructionNewState.getReport().getReportId());
 
         //проверка, что отчет в папке Исходящая
-        assertThat(focusInstructionNewState.getFolder(), equalTo(new instructionFolder(2101,"Исходящая")));
+        assertThat(reportInstruction.getFolder(), equalTo(new instructionFolder(2101,"Исходящая")));
 
     }
 
@@ -150,7 +146,7 @@ public class iMakeReport_WithoutForm_ListView_Tests_v2 extends TestBase {
         //проверить статус исходного сообщения
         boolean res=focusInstructionNewState.getResult().trim().equals(new String(expectedResult));
 
-        Assert.assertEquals (focusInstructionNewState.getResult().trim(),expectedResult);
+        //Assert.assertEquals (focusInstructionNewState.getResult().trim(),expectedResult);
         assertThat(focusInstructionNewState.getResult().trim(),equalTo(expectedResult));
         //assertThat(focusInstructionNewState.getResult().trim(),equals(expectedResult));
 

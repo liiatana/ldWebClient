@@ -1,5 +1,6 @@
-package ru.lanit.ld.wc.tests.smoke;
+package ru.lanit.ld.wc.tests.smoke.iMake_reports;
 
+import org.apache.commons.lang3.StringUtils;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -8,6 +9,9 @@ import ru.lanit.ld.wc.model.*;
 import ru.lanit.ld.wc.pages.InstructionsSection;
 import ru.lanit.ld.wc.pages.LoginPage;
 import ru.lanit.ld.wc.tests.TestBase;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class iMakeReport_WithoutForm_CancelReporting_ListView_Tests extends TestBase {
 
@@ -80,8 +84,7 @@ public class iMakeReport_WithoutForm_CancelReporting_ListView_Tests extends Test
         Instruction focusInstructionNewState=app.focusedUser.getUserApi().getInstruction(focusedInstruction.getInstructionId());
 
         //проверить наличие отчета по сообщению
-        Assert.assertTrue(focusInstructionNewState.getResult().isEmpty());
-
+        Assert.assertTrue(StringUtils.length(focusInstructionNewState.getResult())==0);
     }
 
     @Test(dataProvider = "TaskWithoutCheck", priority = 1, description = "Сценарий: пользователь нажал кнопку Отчитаться/Отказать, " +
