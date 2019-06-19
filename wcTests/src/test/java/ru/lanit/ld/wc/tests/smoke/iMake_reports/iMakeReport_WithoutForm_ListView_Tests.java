@@ -1,5 +1,7 @@
 package ru.lanit.ld.wc.tests.smoke.iMake_reports;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -144,18 +146,28 @@ public class iMakeReport_WithoutForm_ListView_Tests extends TestBase {
         focusInstructionNewState=app.focusedUser.getUserApi().getInstruction(focusedInstruction.getInstructionId());
 
         //проверить статус исходного сообщения
-        boolean res=focusInstructionNewState.getResult().trim().equals(new String(expectedResult));
-
-        //Assert.assertEquals (focusInstructionNewState.getResult().trim(),expectedResult);
         assertThat(focusInstructionNewState.getResult().trim(),equalTo(expectedResult));
-        //assertThat(focusInstructionNewState.getResult().trim(),equals(expectedResult));
 
-        //
 
     }
 
 
+ /*   @Test(dataProvider = "TaskWithoutCheck", priority = 1, description = "Сценарий: пользователь нажал кнопку Отчитаться/Отказать, " +
+            "а затем в диалоговом окне подтвердил отправку отчета. Проверка результата")
+    public void MakeReport_checkToolTips(Instruction focusedInstruction, boolean reportType, String expectedResult) {
 
+        //Нажать кнопку Отчитаться/Отказать и подтвердить отправку отчета
+        instSection.clickOnReportButton(focusedInstruction, reportType,app);
+
+        //получить всплывающие подсказки
+        ElementsCollection toolTips = instSection.toolTips.getToolTips();
+
+
+         toolTips.get(0).shouldHave(Condition.enabled);
+        assertThat(focusInstructionNewState.getResult().trim(),equalTo(expectedResult));
+
+
+    }*/
 
    /* private void clickOnReportButton(Instruction focusedInstruction, boolean reportType) {
         //обновить список папки

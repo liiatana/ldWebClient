@@ -16,6 +16,7 @@ public class InstructionsSection {
     public CancelOK_Dialog Dialog;
     public SmallReportForm SmallReport;
     public InstructionCardView cardView;
+    public ToolTips toolTips;
 
     public ElementsCollection InstructionListWithPreview = $$(By.xpath("//div[@class=\"data-iteraror marginless-list\"]/*"));
 
@@ -30,6 +31,7 @@ public class InstructionsSection {
         Dialog=new CancelOK_Dialog();
         SmallReport=new SmallReportForm();
         cardView=new InstructionCardView();
+        toolTips = new ToolTips();
     }
 
     public ViewInstruction openInstructionView(int ID) {
@@ -68,6 +70,8 @@ public class InstructionsSection {
         this.cardView.quickReport(reportType, folderList.getInstructionNumInFolder(focusedInstruction.getInstructionId()));
         //в диалоговом окне нажать кнопку ОК
         this.Dialog.buttonOK.click();
+
+        //this.toolTips.getToolTips();
 
         sleep(10000);
     }
