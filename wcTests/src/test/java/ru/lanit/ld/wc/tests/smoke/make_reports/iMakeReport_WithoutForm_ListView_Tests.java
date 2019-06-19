@@ -92,7 +92,7 @@ public class iMakeReport_WithoutForm_ListView_Tests extends TestBase {
 
         //проверить наличие отчета по сообщению
         Assert.assertTrue(focusInstructionNewState.getResult().trim().equals(expectedResult));
-        
+
     }
 
     @Test(dataProvider = "TaskWithoutCheck", priority = 1, description = "Сценарий: пользователь нажал кнопку Отчитаться/Отказать, " +
