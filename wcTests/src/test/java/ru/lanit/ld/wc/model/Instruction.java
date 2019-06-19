@@ -64,13 +64,20 @@ public class Instruction {
 
         JsonObject jsonInstruction = parsed.getAsJsonObject().get("instruction").getAsJsonObject();
 
-        this.comment = jsonInstruction.get("comment").getAsString();
+        if (!jsonInstruction.get("comment").isJsonNull()) {
+            this.comment = jsonInstruction.get("comment").getAsString();
+        }
 
         this.creationDate = LocalDateTime.parse(jsonInstruction.get("createDateTime").getAsString().substring(0, 16).replace("T", ""),
                 DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm"));
 
         this.InstructionId = jsonInstruction.get("id").getAsInt();
-        this.initiatorID = jsonInstruction.get("initiatorID").getAsInt();
+
+        if (!jsonInstruction.get("initiatorID").isJsonNull()) {
+            this.initiatorID = jsonInstruction.get("initiatorID").getAsInt();
+        }
+
+
         this.instructionTypeId = jsonInstruction.get("instructionTypeID").getAsInt();
 
 
