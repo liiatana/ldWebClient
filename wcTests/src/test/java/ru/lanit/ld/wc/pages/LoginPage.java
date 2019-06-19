@@ -24,6 +24,8 @@ public class LoginPage {
 
     public InstructionsSection LoginAs(UserInfo user) {
 
+
+
         fillLoginInfomation(user);
         sleep(6000);
         return page(InstructionsSection.class);
@@ -47,6 +49,7 @@ public class LoginPage {
         userPassword.sendKeys(Keys.CONTROL + "a");
         userPassword.sendKeys(user.getPassword());
 
+        sleep(1000);
         loginButton.click();
     }
 

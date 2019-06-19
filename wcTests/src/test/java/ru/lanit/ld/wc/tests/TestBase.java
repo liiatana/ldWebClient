@@ -28,6 +28,12 @@ public class TestBase {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide().screenshots(true).savePageSource(false));
         app.init();
 
+        app.allureManager.addEnviromentInfo("BackVersion",app.UserList.users.get(0).getUserApi().getBackVersion());
+
+        LoginPage lp = new LoginPage();
+
+        app.allureManager.addEnviromentInfo("FrontVersion", lp.open().version.getText());
+
 
     }
 

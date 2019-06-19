@@ -26,7 +26,7 @@ public class ApplicationManager {
     public UserInfo focusedUser;
     public viewState defaultViewState;
 
-    public LogManager logManager;
+    public AllureManager allureManager;
 
 
     public ApplicationManager(String browser, String browserSize) {
@@ -75,8 +75,8 @@ public class ApplicationManager {
        // System.setProperty("selenide.browser", browser);
 
         //exportEnviromentInfornationToFile();
-        logManager=new LogManager(properties.getProperty("data.allureProrertyFilePath"));
-        logManager.exportEnviromentInfornationToFile(this);
+        allureManager =new AllureManager(properties.getProperty("data.allureProrertyFilePath"));
+        allureManager.exportEnviromentInfornationToFile(this);
 
     }
 
