@@ -69,7 +69,7 @@ public class InstructionsSection {
         //в диалоговом окне нажать кнопку ОК
         this.Dialog.buttonOK.click();
 
-        sleep(7000);
+        sleep(10000);
     }
 
 }
