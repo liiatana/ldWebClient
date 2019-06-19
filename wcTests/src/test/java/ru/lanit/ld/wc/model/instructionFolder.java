@@ -41,6 +41,14 @@ public class instructionFolder {
     }
 
     @Override
+    public String toString() {
+        return "instructionFolder{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(id, name);
     }
