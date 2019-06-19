@@ -89,6 +89,28 @@ public class Users {
 
     }
 
+    public Users anyUserExcept(int numberOfReceivers,UserInfo excludedUser) {
+
+        List<UserInfo> usersCollection = new ArrayList<UserInfo>();
+        /*for (UserInfo user : this.users) {
+
+                usersCollection.add(user);
+        }*/
+        usersCollection.addAll(this.users);
+        usersCollection.remove(excludedUser);
+
+        Collections.shuffle(usersCollection);
+
+
+        Users newlist = new Users();
+        newlist.users = usersCollection.subList(0, numberOfReceivers);
+
+        return newlist;
+
+
+
+    }
+
     public int[] Ids() {
 
         int[] ids = new int[this.users.size()];
