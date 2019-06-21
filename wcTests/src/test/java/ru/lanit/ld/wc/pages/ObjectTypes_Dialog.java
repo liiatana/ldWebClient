@@ -25,21 +25,13 @@ public class ObjectTypes_Dialog {
     }
 
     public Set<String> getTypesList() {
-        // Arrays.stream(availableTypes.texts().toString().split(",")).toArray();
-        //Object[] array = Arrays.stream(availableTypes.texts().toString().substring(1, availableTypes.texts().toString().length() - 1).split(",")).toArray();
+
         sleep(1000);
-
-       // List<?> collect = Arrays.stream(availableTypes.texts().toString().substring(1, availableTypes.texts().toString().length() - 1).split(","))
-        //        .collect(Collectors.toSet());
-
-        //collect.stream().collect(Collectors.toSet());
         Set<String> collect1 = new HashSet<>();
 
         collect1 = Arrays.stream(availableTypes.texts().toString().substring(1, availableTypes.texts().toString().length() - 1).toUpperCase(). split(", "))
                 .collect(Collectors.toSet());
 
-        //Consumer<? super String> trimmer = String .trim();
-        //collect1.stream().forEach(trimmer);
         return collect1;
     }
 
