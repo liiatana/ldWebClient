@@ -16,6 +16,7 @@ public class InstructionsSection {
     public CancelOK_Dialog Dialog;
     public SmallReportForm SmallReport;
     public InstructionCardView cardView;
+    public ObjectTypes_Dialog objectTypes_Dialog;
     //public ToolTips toolTips;
 
     public ElementsCollection InstructionListWithPreview = $$(By.xpath("//div[@class=\"data-iteraror marginless-list\"]/*"));
@@ -32,6 +33,7 @@ public class InstructionsSection {
         SmallReport=new SmallReportForm();
         cardView=new InstructionCardView();
         //toolTips = new ToolTips();
+        objectTypes_Dialog= new ObjectTypes_Dialog();
     }
 
     public ViewInstruction openInstructionView(int ID) {
@@ -61,12 +63,7 @@ public class InstructionsSection {
         //обновить список папки
         this.ActionPanel.refreshList();
 
-        FolderList folderList;
-
-        //получить список сообщений папки
-        folderList =  app.UserList.getUserById(focusedInstruction.getReceiverID()[0])  .getUserApi().getFolderList(1999, 10);
-
-        int num=folderList.getInstructionNumInFolder(focusedInstruction.getInstructionId());
+        int num = getFolderNumInList(focusedInstruction, app);
 
         //нажать кнопку Отчитаться/Отказать для сообщения
         this.cardView.quickReport(reportType, num);
@@ -78,6 +75,15 @@ public class InstructionsSection {
         sleep(4000);
 
         return num;
+    }
+
+    public int getFolderNumInList(Instruction focusedInstruction, ApplicationManager app) {
+        FolderList folderList;
+
+        //получить список сообщений папки
+        folderList =  app.UserList.getUserById(focusedInstruction.getReceiverID()[0]).getUserApi().getFolderList(focusedInstruction.getFolder().getId(), 10);
+
+        return folderList.getInstructionNumInFolder(focusedInstruction.getInstructionId());
     }
 
 }
