@@ -100,7 +100,7 @@ public class iReadUnreadState_ListView_Tests extends TestBase {
     }
 
 
-    @Test(dataProvider = "Object", priority = 1, description = "Проверка наличия обратной операции в меню")
+  @Test(dataProvider = "Object", priority = 1, description = "Проверка наличия обратной операции в меню")
     public void checkReverseOperationMenu_InList(Instruction instr,int num, String expected_fontWeight, String expected_menuText, Boolean expected_redCircleState) {
 
         Assert.assertEquals(instSection.cardView.ActionsMenu(num).filter(Condition.text(expected_menuText)).size(), 1);
@@ -110,9 +110,9 @@ public class iReadUnreadState_ListView_Tests extends TestBase {
     @Test(dataProvider = "Object", priority = 1, description = "Проверка количества операций вида Пометить как *")
     public void checkMenuOperationsCount_InList(Instruction instr,int num, String expected_fontWeight, String expected_menuText, Boolean expected_redCircleState) {
 
-        Assert.assertEquals(instSection.cardView.ActionsMenu(num).filter(Condition.text("Пометить как")).size(), 1);
+        Assert.assertEquals(instSection.cardView.ActionsMenu(num).filter(Condition.matchText("Пометить как")).size(), 1);
         instSection.cardView.closeMenu(num);
-    }
+   }
 
 
     @AfterClass
