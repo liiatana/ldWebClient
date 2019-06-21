@@ -54,8 +54,6 @@ public class iResendInstruction_AvailableTypes_ListView_Tests extends TestBase {
                     .withText( String.format("Сообщение %s ",i)) // текст сообщения. Если не задано по умолчанию = текст из типа сообщения. Всегда к тексту добавляется + timestamp
                     .withReceiverID(new int[]{instructionReceiver.getId()});// получатель = наш фокусный пользователь
 
-            //instResponse instResponse = instructionInitiator.getUserApi().createInstruction(instr, true);
-            //Instruction instruction = instructionReceiver.getUserApi().getInstruction(instResponse.getInstructionId());
             instr=instructionReceiver.getUserApi().getInstruction(instructionInitiator.getUserApi().createInstruction(instr, true).getInstructionId());
             instrList.add(instr);
 
@@ -88,11 +86,8 @@ public class iResendInstruction_AvailableTypes_ListView_Tests extends TestBase {
         //в меню выбрать действие "Перенаправить"
         instSection.cardView.ResendButtonClick( instSection.getFolderNumInList(focusedInstruction,app) ) ;
 
-
         //сравнить предполагаемый отчет с фактическим
         assertThat(instSection.objectTypes_Dialog.getTypesList() , equalTo(instructionReceiver.getUserTypes().getInstructionTypesListAsString(isExpectedOnlyControlTypes)));
-
-
 
     }
 
