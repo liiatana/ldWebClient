@@ -188,4 +188,11 @@ public class InstructionCardView {
 
         return inst;
     }
+
+
+    // --------КнопкА Перенаправить-----
+
+    public void ResendButtonClick(int folderNumInList) {
+        cards.get(folderNumInList).$$x(".//span").filterBy(Condition.text("forward")).first().click();
+    }
 }

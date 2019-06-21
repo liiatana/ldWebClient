@@ -1,11 +1,9 @@
 package ru.lanit.ld.wc.model;
 
-import ru.lanit.ld.wc.appmanager.ApplicationManager;
 
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class InstructionTypes {
     public List<instructionType> typeList;
@@ -29,9 +27,9 @@ public class InstructionTypes {
         this.typeList=app.focusedUser.getUserApi().instructionTypesInfo();
     }*/
 
-    public instructionType getType(int n) {
+    /*public instructionType getType(int n) {
         return typeList.get(n);
-    }
+    }*/
 
     public instructionType getAnyNoticeType() {
         return getInstructionType(false, -1);
@@ -142,4 +140,56 @@ public class InstructionTypes {
         return null;
 
     }
+
+    public instructionType getAnyWithRedirectedAsControl(boolean isAsControl) {
+        List<instructionType> types = new ArrayList<instructionType>();
+
+        for (int i = 0; i <= this.getTypeList().size() - 1; i++) {
+            if (isAsControl)
+            {
+                if (this.typeList.get(i).getUseControl()&& this.typeList.get(i).isRedirectAsControl()){
+                    types.add(this.typeList.get(i));
+                }
+            }else{
+                if (this.typeList.get(i).getUseControl()&& !this.typeList.get(i).isRedirectAsControl()){
+                    types.add(this.typeList.get(i));
+                }
+            }
+        }
+        Collections.shuffle(types);
+
+        if (types.size() > 0) {
+            Collections.shuffle(types);
+            return types.get(0);
+        } else return null;
+
+
+    }
+
+    public Set<String> getInstructionTypesListAsString(boolean isExpectedOnlyControlTypes) {
+
+        //n ull;
+        Set<String> collect1 = new HashSet<>();
+
+        for (int i = 0; i <= this.getTypeList().size() - 1; i++) {
+            if (!isExpectedOnlyControlTypes)
+            {
+                collect1.add(this.getTypeList().get(i).getName().toUpperCase());
+            }else{
+                if (this.getTypeList().get(i).getUseControl()){
+                    collect1.add(this.getTypeList().get(i).getName().toUpperCase());
+                }
+            }
+        }
+
+      return collect1;
+    }
+
+    /*public InstructionTypes AllTasks() {
+        InstructionTypes tasks=new InstructionTypes();
+        Predicate<? super instructionType> task=instructionType::getUseControl;
+        tasks=this.typeList.stream().filter(task).map();
+
+    }*/
+
 }
