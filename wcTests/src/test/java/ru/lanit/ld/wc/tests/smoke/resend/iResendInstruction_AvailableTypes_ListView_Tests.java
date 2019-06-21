@@ -88,15 +88,8 @@ public class iResendInstruction_AvailableTypes_ListView_Tests extends TestBase {
         //в меню выбрать действие "Перенаправить"
         instSection.cardView.ResendButtonClick( instSection.getFolderNumInList(focusedInstruction,app) ) ;
 
-        //перейти в папку Исходящая и считать данные по отчету из списка
-        //List<?> typesList = instSection.objectTypes_Dialog.getTypesList();
-       // List<?> instructionTypesListAsString = instructionReceiver.getUserTypes().getInstructionTypesListAsString(isExpectedOnlyControlTypes);
-        //Set<String> typesList = instSection.objectTypes_Dialog.getTypesList();
-        //Set<String> instructionTypesListAsString = instructionReceiver.getUserTypes().getInstructionTypesListAsString(isExpectedOnlyControlTypes);
 
         //сравнить предполагаемый отчет с фактическим
-        //assertThat(new HashSet<Object>(typesList) , equalTo(new HashSet<Object>(instructionTypesListAsString)));
-        //assertThat(new HashSet<Object>(typesList) , equalTo(new HashSet<Object>(instructionTypesListAsString)));
         assertThat(instSection.objectTypes_Dialog.getTypesList() , equalTo(instructionReceiver.getUserTypes().getInstructionTypesListAsString(isExpectedOnlyControlTypes)));
 
 

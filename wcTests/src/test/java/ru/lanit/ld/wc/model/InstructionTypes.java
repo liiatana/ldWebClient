@@ -168,7 +168,7 @@ public class InstructionTypes {
 
     public Set<String> getInstructionTypesListAsString(boolean isExpectedOnlyControlTypes) {
 
-        //n ull;
+        
         Set<String> collect1 = new HashSet<>();
 
         for (int i = 0; i <= this.getTypeList().size() - 1; i++) {
