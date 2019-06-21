@@ -49,7 +49,7 @@ public class InstructionsSection {
 
     public InstructionsSection goTo(String section,String rootFolder, String additionalPath){
         ActionPanel.openObjectTree();
-        SideBar.goToSection(section,rootFolder, additionalPath);
+        SideBar.goTo(section,rootFolder, additionalPath);
         return this;
     }
 
@@ -57,7 +57,7 @@ public class InstructionsSection {
 
 
 
-    public void clickOnReportButton(Instruction focusedInstruction, boolean reportType, ApplicationManager app) {
+    public int clickOnReportButton(Instruction focusedInstruction, boolean reportType, ApplicationManager app) {
         //обновить список папки
         this.ActionPanel.refreshList();
 
@@ -66,14 +66,18 @@ public class InstructionsSection {
         //получить список сообщений папки
         folderList =  app.UserList.getUserById(focusedInstruction.getReceiverID()[0])  .getUserApi().getFolderList(1999, 10);
 
+        int num=folderList.getInstructionNumInFolder(focusedInstruction.getInstructionId());
+
         //нажать кнопку Отчитаться/Отказать для сообщения
-        this.cardView.quickReport(reportType, folderList.getInstructionNumInFolder(focusedInstruction.getInstructionId()));
+        this.cardView.quickReport(reportType, num);
         //в диалоговом окне нажать кнопку ОК
         this.Dialog.buttonOK.click();
 
        // this.toolTips.getToolTips();
 
-        sleep(10000);
+        sleep(4000);
+
+        return num;
     }
 
 }

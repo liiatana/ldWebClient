@@ -233,15 +233,19 @@ public class Instruction {
 
     public Instruction withInitiatorID(int[] initiatorID) {
         this.initiatorID = initiatorID[0];
-        if (this.reportReceiverID == 0) {
+        /*if (this.reportReceiverID == 0) {
             this.reportReceiverID = this.initiatorID;
-        }
+        }*/
+
+
         return this;
     }
 
 
     public int getReportReceiverID() {
-        return reportReceiverID;
+        if (reportReceiverID>0){
+            return reportReceiverID;}
+        else return initiatorID;
     }
 
     public Instruction withReportReceiverID(int[] reportReceiverID) {
@@ -461,7 +465,7 @@ public class Instruction {
     }
 
 
-    public String toString() {
+  /*  public String toString() {
         return "Instruction: {" +
                 "Id="+InstructionId+
                 ", receiverID=" + Arrays.toString(receiverID) +
@@ -472,6 +476,7 @@ public class Instruction {
                 ", execAuditorID=" + execAuditorID +
                 ", initiatorID=" + initiatorID +
                 ", reportReceiverID=" + reportReceiverID +
+                ", creationDate=" + creationDate +
                 ", startDate=" + startDate +
                 ", executionDate=" + executionDate +
                 ", execInterval=" + execInterval +
@@ -483,9 +488,43 @@ public class Instruction {
                 ", instructionTypeId=" + instructionTypeId +
                 ", operationTypeId=" + operationTypeId +
                 '}';
-    }
+    }*/
 
     @Override
+    public String toString() {
+        return "Instruction{" +
+                "receiverID=" + Arrays.toString(receiverID) +
+                ", text='" + text + '\'' +
+                ", subject='" + subject + '\'' +
+                ", comment='" + comment + '\'' +
+                ", documentId=" + documentId +
+                ", execAuditorID=" + execAuditorID +
+                ", initiatorID=" + initiatorID +
+                ", reportReceiverID=" + reportReceiverID +
+                ", startDate=" + startDate +
+                ", executionDate=" + executionDate +
+                ", execInterval=" + execInterval +
+                ", execIntervalType=" + execIntervalType +
+                ", sendType=" + sendType +
+                ", control=" + control +
+                ", withExecutive=" + withExecutive +
+                ", reportToExecutive=" + reportToExecutive +
+                ", fileIds=" + Arrays.toString(fileIds) +
+                ", instructionTypeId=" + instructionTypeId +
+                ", operationTypeId=" + operationTypeId +
+                ", InstructionId=" + InstructionId +
+                ", instructionType=" + instructionType +
+                ", creationDate=" + creationDate +
+                ", state=" + state +
+                ", stateName='" + stateName + '\'' +
+                ", permissions=" + permissions +
+                ", result='" + result + '\'' +
+                ", folder=" + folder +
+                ", report=" + report +
+                '}';
+    }
+
+  /* @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -525,6 +564,50 @@ public class Instruction {
         result1 = 31 * result1 + Arrays.hashCode(receiverID);
         result1 = 31 * result1 + Arrays.hashCode(fileIds);
         return result1;
+    }*/
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Instruction that = (Instruction) o;
+        return documentId == that.documentId &&
+                execAuditorID == that.execAuditorID &&
+                initiatorID == that.initiatorID &&
+                reportReceiverID == that.reportReceiverID &&
+                execInterval == that.execInterval &&
+                execIntervalType == that.execIntervalType &&
+                sendType == that.sendType &&
+                control == that.control &&
+                withExecutive == that.withExecutive &&
+                reportToExecutive == that.reportToExecutive &&
+                instructionTypeId == that.instructionTypeId &&
+                operationTypeId == that.operationTypeId &&
+                InstructionId == that.InstructionId &&
+                state == that.state &&
+                Arrays.equals(receiverID, that.receiverID) &&
+                Objects.equals(text, that.text) &&
+                Objects.equals(subject, that.subject) &&
+                Objects.equals(comment, that.comment) &&
+                Objects.equals(startDate, that.startDate) &&
+                Objects.equals(executionDate, that.executionDate) &&
+                Arrays.equals(fileIds, that.fileIds) &&
+                Objects.equals(instructionType, that.instructionType) &&
+                Objects.equals(creationDate, that.creationDate) &&
+                Objects.equals(stateName, that.stateName) &&
+                Objects.equals(permissions, that.permissions) &&
+                Objects.equals(result, that.result) &&
+                Objects.equals(folder, that.folder) &&
+                Objects.equals(report, that.report);
+    }
+
+    @Override
+    public int hashCode() {
+        int result1 = Objects.hash(text, subject, comment, documentId, execAuditorID, initiatorID, reportReceiverID, startDate, executionDate, execInterval, execIntervalType, sendType, control, withExecutive, reportToExecutive, instructionTypeId, operationTypeId, InstructionId, instructionType, creationDate, state, stateName, permissions, result, folder, report);
+        result1 = 31 * result1 + Arrays.hashCode(receiverID);
+        result1 = 31 * result1 + Arrays.hashCode(fileIds);
+        return result1;
     }
 
     public Instruction getOnlyListViewInformation(boolean isFromReceiverView) {
@@ -532,7 +615,7 @@ public class Instruction {
 
         if(isFromReceiverView){
              inst.initiatorID=this.initiatorID;
-             inst.reportReceiverID=this.initiatorID;// костыль
+             //inst.reportReceiverID=this.initiatorID;// костыль
         }
         else {
             inst.receiverID[0]= this.receiverID[0];
@@ -540,7 +623,8 @@ public class Instruction {
 
         inst.instructionType=this.instructionType;
         inst.stateName=this.stateName;
-        inst.startDate=this.startDate;
+        //inst.startDate=this.startDate;
+        inst.creationDate=this.creationDate;
         inst.executionDate=this.executionDate;
         inst.text=this.text;
 

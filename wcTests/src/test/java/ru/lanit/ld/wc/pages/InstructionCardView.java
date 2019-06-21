@@ -67,6 +67,7 @@ public class InstructionCardView {
         //cards.get(instructionNumInFolder).lastChild().find("div.v-menu.menu-vert.v-menu--inline > div > button > div > i").click();
         cards.get(instructionNumInFolder).$x("./*//div[@class=\"v-menu menu-vert v-menu--inline\"]").click();
         //return cards.get(instructionNumInFolder).$$x("//div[@role=\"listitem\"]");
+        sleep(1000);
         return  cards.get(instructionNumInFolder).$$x("//div[@class=\"v-menu__content theme--light menuable__content__active\"]/*//div[@role=\"listitem\"]");
     }
 
@@ -163,10 +164,10 @@ public class InstructionCardView {
     }
 
     // --------Считать информацию о сообщении из списка-----
-    public Instruction getIstructionInfo(int focusedInstructionNum, ApplicationManager app, UserInfo user, boolean viewAsReceiver) {
+    public Instruction getIstructionInfo(int focusedInstructionNum, ApplicationManager app, UserInfo user, boolean irFlag) {
         Instruction inst=new Instruction();
 
-        if(viewAsReceiver){
+        if(irFlag){
             inst.withInitiatorID(new int[]{app.UserList.getUserIdByFIO(getReceiverNameAsSE(focusedInstructionNum).getText())});
             //inst.withReportReceiverID(new int[]{});
         }
@@ -174,14 +175,16 @@ public class InstructionCardView {
 
             inst.withReceiverID(new int[]{app.UserList.getUserIdByFIO(getReceiverNameAsSE(focusedInstructionNum).getText())});
         }
-        inst.withText(getInstructionTextAsSE(focusedInstructionNum).getText())
-                .withInstructionType( user.getUserTypes().getInstructionTypeIdByName( getInstructionTypeAsSe(focusedInstructionNum).getText()))
+
+        inst    .withInstructionType( user.getUserTypes().getInstructionTypeIdByName( getInstructionTypeAsSe(focusedInstructionNum).getText()))
                 .withStateName(getInstructionStateAsSe(focusedInstructionNum).getText())
-                .withStartDate(getCreationDateAsLocalDate(focusedInstructionNum));
+                //.withStartDate(getCreationDateAsLocalDate(focusedInstructionNum))
+                .withCreationDate(getCreationDateAsLocalDate(focusedInstructionNum));
                 //.withReportReceiverID(new int[] {-1});
 
-
-
+        if (!getInstructionTextAsSE(focusedInstructionNum).getText().isEmpty()){
+            inst.withText(getInstructionTextAsSE(focusedInstructionNum).getText());
+        }
 
         return inst;
     }
