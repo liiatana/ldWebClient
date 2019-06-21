@@ -31,7 +31,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class iResendInstruction_AvailableTypes_ListView_Tests extends TestBase {
 
     InstructionsSection instSection;
-    Instruction instr, focusInstructionNewState, reportInstruction;
+    Instruction instr;
     List<Instruction> instrList = new ArrayList<Instruction>();
 
     UserInfo instructionInitiator, instructionReceiver;
