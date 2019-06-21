@@ -2,6 +2,7 @@ package ru.lanit.ld.wc.tests.smoke.iMake_reports;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -11,6 +12,7 @@ import ru.lanit.ld.wc.pages.LoginPage;
 import ru.lanit.ld.wc.tests.TestBase;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class iMakeReport_WithoutForm_ListView_Tests extends TestBase {
@@ -100,7 +102,7 @@ public class iMakeReport_WithoutForm_ListView_Tests extends TestBase {
     }
 
     @Test(dataProvider = "TaskWithoutCheck", priority = 1, description = "Сценарий: пользователь нажал кнопку Отчитаться/Отказать, " +
-            "а затем в диалоговом окне подтвердил отправку отчета. Проверка текущей папки сообщения")
+            "а затем в диалоговом окне подтвердил отправку отчета. Проверка текущей папки исходного сообщения")
     public void MakeReport_checkInstructionNewFolder(Instruction focusedInstruction, boolean reportType, String expectedResult) {
 
         //Нажать кнопку Отчитаться/Отказать и подтвердить отправку отчета
@@ -116,7 +118,7 @@ public class iMakeReport_WithoutForm_ListView_Tests extends TestBase {
 
 
     @Test(dataProvider = "TaskWithoutCheck", priority = 1, description = "Сценарий: пользователь нажал кнопку Отчитаться/Отказать, " +
-            "а затем в диалоговом окне подтвердил отправку отчета. Проверка текущей папки сообщения")
+            "а затем в диалоговом окне подтвердил отправку отчета. Проверка текущей папки созданного отчета")
     public void MakeReport_checkReportNewFolder(Instruction focusedInstruction, boolean reportType, String expectedResult) {
 
         //Нажать кнопку Отчитаться/Отказать и подтвердить отправку отчета
@@ -151,23 +153,25 @@ public class iMakeReport_WithoutForm_ListView_Tests extends TestBase {
 
     }
 
+    @Test(dataProvider = "TaskWithoutCheck", priority = 1, description = "Сценарий: пользователь нажал кнопку Отчитаться/Отказать, " +
+            "а затем в диалоговом окне НЕ подтвердил отправку отчета. Проверка, что сообщение уже выкушено")
+    public void MakeReport_checkInstructionInList(Instruction focusedInstruction, boolean reportType, String expectedResult) {
+
+        //Нажать кнопку Отчитаться/Отказать и подтвердить отправку отчета
+        int i = instSection.clickOnReportButton(focusedInstruction, reportType, app);
+
+        //считать сообщение из списка
+        Instruction newInstruction= instSection.cardView.getIstructionInfo(i,app,instructionInitiator,true);
+
+        //сравнить исходный и текущий объект
+        assertThat(newInstruction,not (focusedInstruction.getOnlyListViewInformation(true)));
+       // Assert.assertEquals(focusInstructionNewState,focusedInstruction.getOnlyListViewInformation(true));
+    }
 
 
 
-   /* private void clickOnReportButton(Instruction focusedInstruction, boolean reportType) {
-        //обновить список папки
-        instSection.ActionPanel.refreshList();
 
-        //получить список сообщений папки
-        folderList = instructionReceiver.getUserApi().getFolderList(1999, 10);
 
-        //нажать кнопку Отчитаться/Отказать для сообщения
-        instSection.cardView.quickReport(reportType, folderList.getInstructionNumInFolder(focusedInstruction.getInstructionId()));
-        //в диалоговом окне нажать кнопку ОК
-        instSection.Dialog.buttonOK.click();
-
-        sleep(5000);
-    }*/
 
 
 }

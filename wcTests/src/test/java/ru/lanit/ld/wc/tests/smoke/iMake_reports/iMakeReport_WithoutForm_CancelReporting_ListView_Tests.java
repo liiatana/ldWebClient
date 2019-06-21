@@ -41,7 +41,7 @@ public class iMakeReport_WithoutForm_CancelReporting_ListView_Tests extends Test
 
         instResponse instResponse = instructionInitiator.getUserApi().createInstruction(instr1, true);
         instr1.withInstructionId(instResponse.getInstructionId())
-                .withStartDate(app.focusedUser.getUserApi().getInstruction(instResponse.getInstructionId()).getCreationDate())
+                .withCreationDate(app.focusedUser.getUserApi().getInstruction(instResponse.getInstructionId()).getCreationDate())
                 .withStateName(app.focusedUser.getUserApi().getInstruction(instResponse.getInstructionId()).getStateName());
 
 
@@ -54,7 +54,7 @@ public class iMakeReport_WithoutForm_CancelReporting_ListView_Tests extends Test
                 .withReceiverID(new int[]{app.focusedUser.getId()});// получатель = наш фокусный пользователь
         instResponse = instructionInitiator.getUserApi().createInstruction(instr2, true);
         instr2.withInstructionId(instResponse.getInstructionId())
-                .withStartDate(app.focusedUser.getUserApi().getInstruction(instResponse.getInstructionId()).getCreationDate())
+                .withCreationDate(app.focusedUser.getUserApi().getInstruction(instResponse.getInstructionId()).getCreationDate())
                 .withStateName(app.focusedUser.getUserApi().getInstruction(instResponse.getInstructionId()).getStateName());
 
         // авторизация
@@ -83,7 +83,7 @@ public class iMakeReport_WithoutForm_CancelReporting_ListView_Tests extends Test
         //получить новое состояние сообщения
         Instruction focusInstructionNewState=app.focusedUser.getUserApi().getInstruction(focusedInstruction.getInstructionId());
 
-        //проверить наличие отчета по сообщению
+        //проверить result по сообщению
         Assert.assertTrue(StringUtils.length(focusInstructionNewState.getResult())==0);
     }
 
