@@ -1,17 +1,18 @@
 package ru.lanit.ld.wc.pages;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
+import ru.lanit.ld.wc.model.instructionType;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.sleep;
 
 public class ObjectTypes_Dialog {
 
@@ -29,7 +30,7 @@ public class ObjectTypes_Dialog {
         sleep(1000);
         Set<String> collect1 = new HashSet<>();
 
-        collect1 = Arrays.stream(availableTypes.texts().toString().substring(1, availableTypes.texts().toString().length() - 1).toUpperCase(). split(", "))
+        collect1 = Arrays.stream(availableTypes.texts().toString().substring(1, availableTypes.texts().toString().length() - 1).toUpperCase().split(", "))
                 .collect(Collectors.toSet());
 
         return collect1;
@@ -37,5 +38,13 @@ public class ObjectTypes_Dialog {
 
     public void close() {
         area.$x("./*//i").click();
+    }
+
+
+    public NewInstructionPage chooseType(instructionType type) {
+
+        availableTypes.filter(Condition.text(type.getName())).first().click();
+        sleep(2000);
+        return new NewInstructionPage();
     }
 }

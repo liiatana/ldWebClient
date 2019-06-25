@@ -1,27 +1,18 @@
 package ru.lanit.ld.wc.tests.smoke.resend;
 
-import com.codeborne.selenide.Condition;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 import ru.lanit.ld.wc.model.Instruction;
 import ru.lanit.ld.wc.model.UserInfo;
-import ru.lanit.ld.wc.model.instResponse;
 import ru.lanit.ld.wc.model.instructionType;
 import ru.lanit.ld.wc.pages.InstructionsSection;
 import ru.lanit.ld.wc.pages.LoginPage;
 import ru.lanit.ld.wc.tests.TestBase;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.Set;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalToIgnoringCase;
-import static org.hamcrest.Matchers.is;
-
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -81,7 +72,7 @@ public class iResendInstruction_AvailableTypes_ListView_Tests extends TestBase {
     }
 
     @Test(dataProvider = "InstructionTypes", priority = 1, description = "Перенаправить сообщение. Проверка доступных типов для перенаправления")
-    public void MakeReport_checkReportInOutcomingList(Instruction focusedInstruction, boolean isExpectedOnlyControlTypes) {
+    public void resendInstruction_checkAvailableInstructionList(Instruction focusedInstruction, boolean isExpectedOnlyControlTypes) {
 
         //в меню выбрать действие "Перенаправить"
         instSection.cardView.ResendButtonClick( instSection.getFolderNumInList(focusedInstruction,app) ) ;

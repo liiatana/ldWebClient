@@ -2,8 +2,6 @@ package ru.lanit.ld.wc.model;
 
 
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class InstructionTypes {
     public List<instructionType> typeList;
@@ -183,6 +181,12 @@ public class InstructionTypes {
         }
 
       return collect1;
+    }
+
+    public instructionType getType(boolean instructionTypeFlag) {
+
+        instructionType type = instructionTypeFlag ? this.getAnyNoticeType() : this.getAnyTaskType();
+        return type;
     }
 
     /*public InstructionTypes AllTasks() {
