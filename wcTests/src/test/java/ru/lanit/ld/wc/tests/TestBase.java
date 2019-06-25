@@ -32,7 +32,7 @@ public class TestBase {
 
         LoginPage lp = new LoginPage();
 
-        app.allureManager.addEnviromentInfo("FrontVersion", lp.open().version.getText());
+        app.allureManager.addEnviromentInfo("FrontVersion", lp.open().version.getText().substring(2));
 
         app.focusedUser.getUserApi().makeHomeAsLastUrl();
 

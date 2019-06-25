@@ -14,7 +14,7 @@ public class __Version extends TestBase {
     public void getFrontVersion() {
         LoginPage lp = new LoginPage();
         //app.allureManager.addEnviromentInfo("FrontVersion", lp.open().version.getText());
-        assertThat(lp.open().version.getText(),equalTo("v 3.5.19.6"));
+        assertThat(lp.open().version.getText().substring(2),equalTo("3.5.19.6"));
     }
 
 
