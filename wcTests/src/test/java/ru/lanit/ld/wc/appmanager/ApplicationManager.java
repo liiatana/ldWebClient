@@ -49,7 +49,7 @@ public class ApplicationManager {
         UserList.load(this);
         focusedUser = UserList.users.get(0);
 
-        focusedUser.getUserApi().makeHomeAsLastUrl();
+        //focusedUser.getUserApi().makeHomeAsLastUrl();
 
 
         baseUrl = properties.getProperty("web.baseUrl");
@@ -60,51 +60,34 @@ public class ApplicationManager {
                 System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
                 break;
 
+            case  ("firefox"):
+                System.setProperty("webdriver.gecko.driver", "C:\\Drivers\\geckodriver.exe");
+                break;
         }
 
 
 
         Configuration.browser = browser;
         Configuration.baseUrl = baseUrl;
-        Configuration.timeout = 30000;
+        Configuration.timeout = 20000;
         Configuration.browserSize = defaultBrowserSize;
         Configuration.screenshots=true;
         Configuration.reopenBrowserOnFail=true;
-        //Configuration.browserVersion="74";
+
+        //Configuration.browserBinary="C:\\Drivers";
+
 
        // System.setProperty("selenide.browser", browser);
 
-        //exportEnviromentInfornationToFile();
+
         allureManager =new AllureManager(properties.getProperty("data.allureProrertyFilePath"));
         allureManager.exportEnviromentInfornationToFile(this);
 
     }
 
-   /* private void exportEnviromentInfornationToFile() throws IOException {
-        File allureEnvFile = new File("allure-results\\environment.properties");
-        if (allureEnvFile.exists()) {
-            allureEnvFile.delete();
-        }
-        allureEnvFile.createNewFile();
-        try (FileWriter writer = new FileWriter(allureEnvFile, false);) {
-            writer.write("Browser=" + browser);
-            writer.write(System.lineSeparator());
-            writer.write("BrowserSize=" + Configuration.browserSize);
-            writer.write(System.lineSeparator());
-            writer.write("Stand=" + baseUrl);
-            writer.write(System.lineSeparator());
-            writer.write("FrontVersion=" + version);
-            writer.write(System.lineSeparator());
-            writer.write("Back=" + properties.getProperty("web.apiUrl"));
-
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }*/
-
 
     public void stop() {
-        //wd.quit();
+
         focusedUser.getUserApi().makeHomeAsLastUrl();
     }
 

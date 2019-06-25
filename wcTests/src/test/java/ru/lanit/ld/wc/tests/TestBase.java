@@ -34,6 +34,8 @@ public class TestBase {
 
         app.allureManager.addEnviromentInfo("FrontVersion", lp.open().version.getText());
 
+        app.focusedUser.getUserApi().makeHomeAsLastUrl();
+
 
     }
 
