@@ -22,7 +22,7 @@ public class __Version extends TestBase {
     public void getBackVersion() {
         //app.allureManager.addEnviromentInfo("BackVersion",app.UserList.users.get(0).getUserApi().getBackVersion());
 
-        assertThat(app.UserList.users.get(0).getUserApi().getBackVersion(),equalTo("3.5.38.51"));
+        assertThat(app.UserList.users.get(0).getUserApi().getBackVersion(),equalTo("3.5.38.52"));
     }
 
 }
