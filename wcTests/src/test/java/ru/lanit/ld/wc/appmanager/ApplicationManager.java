@@ -74,12 +74,6 @@ public class ApplicationManager {
         Configuration.screenshots=true;
         Configuration.reopenBrowserOnFail=true;
 
-        //Configuration.browserBinary="C:\\Drivers";
-
-
-       // System.setProperty("selenide.browser", browser);
-
-
         allureManager =new AllureManager(properties.getProperty("data.allureProrertyFilePath"));
         allureManager.exportEnviromentInfornationToFile(this);
 
