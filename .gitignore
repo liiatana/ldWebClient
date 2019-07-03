@@ -25,3 +25,4 @@ wcTests/src/test/resources/*.json
 *.properties
 *.json
 *.json
+*.json
