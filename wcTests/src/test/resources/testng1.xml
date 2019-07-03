@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Notice" verbose="1" >
+    <test name="NoticeCreate" >
+        <classes>
+            <class name="ru.lanit.ld.wc.tests.smoke.iNotice_Create_Tests" />
+            <class name="ru.lanit.ld.wc.tests.smoke.iNotice_ListView_Tests" />
+        </classes>
+    </test>
+
+</suite>

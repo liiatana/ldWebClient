@@ -21,6 +21,8 @@ public class TestBase {
     // в настроках запуска теста нужно дописать  -Dbrowser=firefox( в поле VM)
     // -DbrowserSize="1024х768"
     //-Dbrowser=firefox -DbrowserSize=1800x1400
+    //gradlew cleanTest test
+    //gradlew cleanTest test -Pbrowser=firefox
 
     @BeforeSuite
     public void setUp() throws Exception {

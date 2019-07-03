@@ -34,17 +34,28 @@ dependencies{
 
 test{
     useTestNG {
-        // suites 'src/test/recources/testng.xml'
+         suites 'src/test/resources/testng.xml'
     }
-	
+
     if(project.hasProperty('browser'))    {
-        systemProperty 'browser', "&{browser}"
+        systemProperty 'browser', "${browser}"
+        //systemProperty 'browser', System.getProperty('browser')
     }
     if(project.hasProperty('browserSize'))    {
-        systemProperty 'browserSize', "&{browserSize}"
+        systemProperty 'browserSize', "${browserSize}"
 
     }
 
+    
+}
 
+task mytest(type: Test) {
+    useTestNG {
+        suites 'src/test/resources/testng1.xml'
+        //dependsOn 'cleanTest'
+    }
+    
+    
+    
 }
 
