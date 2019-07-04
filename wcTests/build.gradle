@@ -10,29 +10,13 @@ repositories{
 
 dependencies{
     compile 'org.testng:testng:7.0.0-beta1'
-    //testCompile group: 'org.testng', name: 'testng', version: '7.0.0-beta4'
-    
-    //implementation 'com.codeborne:selenide:5.1.0' //25.06.2019
     compile group: 'com.codeborne', name: 'selenide', version: '5.2.4'
-
-    //implementation 'io.qameta.allure:allure-testng:2.10.0' //25.06.2019
     compile group: 'io.qameta.allure', name: 'allure-testng', version: '2.12.1'
-
-
-    //implementation 'io.qameta.allure:allure-selenide:2.10.0' //25.06.2019
     compile group: 'io.qameta.allure', name: 'allure-selenide', version: '2.12.1'
-
-
-    // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
-    //compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1' //25.06.2019
     compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
-
     compile 'com.jayway.restassured:rest-assured:2.9.0'//библиотека для работы c rest, см https://github.com/rest-assured/rest-assured //25.06.2019=последняя
-
     compile 'org.hamcrest:java-hamcrest:2.0.0.0'//проверки fluent //25.06.2019=последняя
     implementation("org.slf4j:slf4j-jdk14:1.8.0-beta2")
-    //testCompile group: 'org.hamcrest', name: 'java-hamcrest', version: '2.0.0.0'
-    
 }
 
 test{
@@ -48,8 +32,6 @@ test{
         systemProperty 'browserSize', "${browserSize}"
 
     }
-
-    
 }
 
 task smoke(type: Test) {
@@ -58,7 +40,6 @@ task smoke(type: Test) {
 
     useTestNG {
         suites 'src/test/resources/smoke.xml'
-        //dependsOn 'cleanTest'
     }
 
     if(project.hasProperty('browser'))    {
