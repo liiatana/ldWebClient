@@ -52,14 +52,22 @@ test{
     
 }
 
-task mytest(type: Test) {
+task smoke(type: Test) {
 
     systemProperty "file.encoding", "utf-8"
 
-    //options.encoding = 'UTF-8'
     useTestNG {
-        suites 'src/test/resources/testng1.xml'
+        suites 'src/test/resources/smoke.xml'
         //dependsOn 'cleanTest'
+    }
+
+    if(project.hasProperty('browser'))    {
+        systemProperty 'browser', "${browser}"
+        //systemProperty 'browser', System.getProperty('browser')
+    }
+    if(project.hasProperty('browserSize'))    {
+        systemProperty 'browserSize', "${browserSize}"
+
     }
     
 }
