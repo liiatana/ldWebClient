@@ -53,7 +53,7 @@ public class ActionPanel {
         PlusButton.click();
         //div[@class="v-list create-global-menu theme--light"]/div
         plusButtonMenu.filterBy(Condition.text("Сообщение")).get(0).click();
-        sleep(2000);
+        sleep(1000);
         InstructionTypes.findBy(Condition.text(app.focusedUser.getUserTypes().getInstructionTypeNameById(NewInstruction.getInstructionTypeId()))).click();
         return page(NewInstructionPage.class);
     }
