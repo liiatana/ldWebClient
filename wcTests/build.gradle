@@ -37,7 +37,7 @@ dependencies{
 
 test{
     useTestNG {
-         suites 'src/test/resources/testng.xml'
+         //suites 'src/test/resources/testng.xml'
     }
 
     if(project.hasProperty('browser'))    {
@@ -63,11 +63,10 @@ task smoke(type: Test) {
 
     if(project.hasProperty('browser'))    {
         systemProperty 'browser', "${browser}"
-        //systemProperty 'browser', System.getProperty('browser')
     }
+    
     if(project.hasProperty('browserSize'))    {
         systemProperty 'browserSize', "${browserSize}"
-
     }
     
 }
