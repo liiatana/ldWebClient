@@ -1,5 +1,8 @@
 apply plugin: 'java'
 
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = "UTF-8"
+
 repositories{
     mavenCentral()
 }
@@ -50,12 +53,14 @@ test{
 }
 
 task mytest(type: Test) {
+
+    systemProperty "file.encoding", "utf-8"
+
+    //options.encoding = 'UTF-8'
     useTestNG {
         suites 'src/test/resources/testng1.xml'
         //dependsOn 'cleanTest'
     }
-    
-    
     
 }
 
