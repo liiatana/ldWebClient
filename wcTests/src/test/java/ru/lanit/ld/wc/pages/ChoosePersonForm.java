@@ -16,7 +16,8 @@ public class ChoosePersonForm {
     private SelenideElement searchField = $(By.xpath("//input[@id=\"search\"]"));
     private ElementsCollection persons = $$(By.xpath("//div[@id=\"selector\"]/div/div"));
 
-    private ElementsCollection choosenPersons = $$(By.xpath("//div[@class=\"layout ml-2 column\"]/div/*"));
+    private ElementsCollection choosenPersons = $$(By.xpath("//div[@class=\"layout ml-2 column\"]/div/*/span"));
+
 
     //private SelenideElement buttonOk = $(By.xpath("//div[@class=\"small-button rounded-button elevation-0 v-btn theme--light primary\"]/*//button[1]"));
     //button[@class="small-button rounded-button elevation-0 v-btn theme--light primary"]
