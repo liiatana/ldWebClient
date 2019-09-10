@@ -14,7 +14,7 @@ public class __Version extends TestBase {
     public void getFrontVersion() {
         LoginPage lp = new LoginPage();
         //app.allureManager.addEnviromentInfo("FrontVersion", lp.open().version.getText());
-        assertThat(lp.open().version.getText().substring(2),equalTo("3.5.20.1"));
+        assertThat(lp.open().version.getText().substring(2),equalTo("3.5.22.11"));
     }
 
 
@@ -22,7 +22,7 @@ public class __Version extends TestBase {
     public void getBackVersion() {
         //app.allureManager.addEnviromentInfo("BackVersion",app.UserList.users.get(0).getUserApi().getBackVersion());
 
-        assertThat(app.UserList.users.get(0).getUserApi().getBackVersion(),equalTo("3.5.20.1"));
+        assertThat(app.UserList.users.get(0).getUserApi().getBackVersion(),equalTo("3.5.22.11"));
     }
 
 }

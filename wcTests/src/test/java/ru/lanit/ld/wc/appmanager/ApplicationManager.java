@@ -57,11 +57,11 @@ public class ApplicationManager {
 
         switch (browser) {
             case  ("chrome"):
-                System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
+                System.setProperty("webdriver.chrome.driver", "C:\\1\\chromedriver.exe");
                 break;
 
             case  ("firefox"):
-                System.setProperty("webdriver.gecko.driver", "C:\\Drivers\\geckodriver.exe");
+                System.setProperty("webdriver.gecko.driver", "C:\\1\\geckodriver.exe");
                 break;
         }
 

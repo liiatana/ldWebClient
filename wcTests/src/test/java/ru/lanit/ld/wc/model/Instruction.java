@@ -77,6 +77,10 @@ public class Instruction {
             this.initiatorID = jsonInstruction.get("initiatorID").getAsInt();
         }
 
+        if (!jsonInstruction.get("creatorID").isJsonNull()) {
+            this.initiatorID = jsonInstruction.get("creatorID").getAsInt();
+        }
+
 
         this.instructionTypeId = jsonInstruction.get("instructionTypeID").getAsInt();
 

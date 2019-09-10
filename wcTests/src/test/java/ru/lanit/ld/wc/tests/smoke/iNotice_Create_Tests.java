@@ -39,7 +39,8 @@ public class iNotice_Create_Tests extends TestBase {
         instructionInitiator.getUserApi().setViewState(app.defaultViewState, "Instruction", 1999);
 
 
-        instructionReceivers =app.UserList.anyUser(1);// получатель = любые пользователи (число = кол-во получателей)(обязательный)
+        //instructionReceivers =app.UserList.anyUser(1);// получатель = любые пользователи (число = кол-во получателей)(обязательный)
+        instructionReceivers =app.UserList.anyUserExcept(1,instructionInitiator); //.anyUser(1);// получатель = любые пользователи (число = кол-во получателей)(обязательный)
 
         LoginPage lp = new LoginPage();
         instSection = lp.open().LoginAs(instructionInitiator);
@@ -52,6 +53,7 @@ public class iNotice_Create_Tests extends TestBase {
                 .withComment("Без комментариев...") // комментарий. Если не задано по умолчанию = не заполнено
                 .withSubject("UI автотест") // тема сообщения. Если не задано по умолчанию = тема из типа сообщения
                 .withReceiverID(instructionReceivers.Ids());// получатель = любые пользователи (число = кол-во получателей)(обязательный)
+
 
         NewInstructionPage newInstructionPage = instSection.ActionPanel.createNewByPlusButton(newInstruction, app);
         sleep(5000);

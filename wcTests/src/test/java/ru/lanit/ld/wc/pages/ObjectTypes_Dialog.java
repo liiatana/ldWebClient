@@ -16,11 +16,15 @@ import static com.codeborne.selenide.Selenide.sleep;
 
 public class ObjectTypes_Dialog {
 
-    private SelenideElement area = $(By.xpath("//div[@class=\"v-dialog modal v-dialog--active v-dialog--persistent\"]"));
+    private SelenideElement area = //$(By.xpath("//div[@class=\"v-dialog modal v-dialog--active v-dialog--persistent\"]"));
+    $(By.xpath("//div[@class=\"card v-card v-sheet theme--light\"]"));
+
+    //div[@class="card v-card v-sheet theme--light"]/*//ul/li
 
     public SelenideElement caption = area.$(By.xpath("//*/div[@class=\"v-card__title title font-weight-bold pb-0\""));
 
     public ElementsCollection availableTypes = area.$$(By.xpath("/*//ul[@class=\"pl-0\"]/li"));
+    //public ElementsCollection availableTypes = area.$$(By.xpath("/*//ul/li"));
 
     public ObjectTypes_Dialog() {
     }

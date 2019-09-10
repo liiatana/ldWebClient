@@ -29,7 +29,8 @@ public class iMakeReport_WithoutForm_CancelReporting_ListView_Tests extends Test
         //установить вид по умолчанию
         app.focusedUser.getUserApi().setViewState(app.defaultViewState, "Instruction", 1999);
 
-        instructionInitiator = app.UserList.anyUser(1).users.get(0); // инициатор
+        //instructionInitiator = app.UserList.anyUser(1).users.get(0); // инициатор
+        instructionInitiator = app.UserList.anyUserExcept(1,app.focusedUser).users.get(0);// инициатор
 
         // отправить сообщение для создания положительного отчета
         instructionType type_positive = instructionInitiator.getUserTypes().getControlTypeWithoutCheck(true);

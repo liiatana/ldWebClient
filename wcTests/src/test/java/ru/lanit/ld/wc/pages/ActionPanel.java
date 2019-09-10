@@ -20,7 +20,9 @@ public class ActionPanel {
 
     private ElementsCollection InstructionTypes = //$$(By.xpath("//div[@class=\"v-menu__content theme--light menuable__content__active\"]/div[@role=\"list\"]"));
             //$$(By.xpath("//div[@class=\"v-menu__content theme--light menuable__content__active\"]/div[@role=\"list\"]/*/a"));
-            $$(By.xpath("//div[@class=\"v-card v-sheet theme--light\"]/*//ul/li"));
+            //$$(By.xpath("//div[@class=\"v-card v-sheet theme--light\"]/*//ul/li"));
+    $$(By.xpath("//ul[@class=\"pl-0\"]/li"));
+
 
     private SelenideElement refreshButton = $(By.xpath("(//span[@class=\"v-tooltip v-tooltip--bottom\"])[2]"));
 
