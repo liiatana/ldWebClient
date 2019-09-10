@@ -26,3 +26,5 @@ wcTests/src/test/resources/*.json
 *.json
 *.json
 *.json
+wcTests/chromedriver.exe
+wcTests/geckodriver.exe

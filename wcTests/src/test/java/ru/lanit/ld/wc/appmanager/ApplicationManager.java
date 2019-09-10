@@ -55,7 +55,7 @@ public class ApplicationManager {
         baseUrl = properties.getProperty("web.baseUrl");
         apiUrl=properties.getProperty("web.apiUrl");
 
-        switch (browser) {
+        /*switch (browser) {
             case  ("chrome"):
                 System.setProperty("webdriver.chrome.driver", "C:\\1\\chromedriver.exe");
                 break;
@@ -63,7 +63,7 @@ public class ApplicationManager {
             case  ("firefox"):
                 System.setProperty("webdriver.gecko.driver", "C:\\1\\geckodriver.exe");
                 break;
-        }
+        }*/
 
 
 
